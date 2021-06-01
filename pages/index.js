@@ -10,7 +10,22 @@ export default function Home() {
       </div>
 
       <footer className={styles.footer}>
-        Logo, Currencies and Commodities Stripe
+        <div className={styles.logo}>
+          <Image 
+            src="/TElogo.svg"
+            alt="Trading Economic Logo"
+            height='100vh'
+            width='auto'
+          />
+        </div>
+        <div className={styles.floating}>
+          <div className={styles.currencies}>
+            Currencies
+          </div>
+          <div className={styles.commodities}>
+            Commodities
+          </div>
+        </div>
       </footer>
     </div>
   )
