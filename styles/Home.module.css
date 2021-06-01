@@ -53,21 +53,26 @@
 }
 
 .currencies {
+  display: flex;
   background-color: white;
   color: #121C2B;
   height: 5vh;
   width: 100%;
+  text-align: left;
   justify-content: left;
   align-items: center;
+  padding-left: 1em;
 }
 
 .commodities {
   background-color: #121C2B;
+  display: flex;
   color: white;
   height: 5vh;
   width: 100%;
   justify-content: left;
   align-items: center;
+  padding-left: 1em;
 }
 
 .title a {
