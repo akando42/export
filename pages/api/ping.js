@@ -1,4 +1,4 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+// Ping route to test API
 
 export default (req, res) => {
   res.status(200).json({ name: 'Hoang Do' })
