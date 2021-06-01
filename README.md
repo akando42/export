@@ -18,17 +18,18 @@ You can start editing the page by modifying `pages/index.js`. The page auto-upda
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-## Learn More
+## ToDo
+[ ] Pull API Data from Trading Economics
+[ ] Replacement Boiler Plate Content with Correct Collor Scheme
+[ ] Create Logo Component
+[ ] Create Floating Stripe Component
+[ ] Create Export Table Component
+[ ] Create Countries Dropdown Component
 
-To learn more about Next.js, take a look at the following resources:
+[ ] Pull and Display Currencies Content
+[ ] Pull and Display Commodities Content
+[ ] Pull and Display US Export by Categories
+[ ] Pull and Display China Export by Categories 
+[ ] Load Data From List of Countries
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[ ] Load Pipe Chart Export Data by Countries via Nivo Library
