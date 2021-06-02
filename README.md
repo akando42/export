@@ -1,7 +1,9 @@
 ## ToDo
 [X] Replacement Boiler Plate Content with Correct Collor Scheme
 [ ] Pull and Display Currencies Content
-https://api.tradingeconomics.com/markets/currencies
+https://api.tradingeconomics.com/markets/currency?c=guest:guest&cross=USD&format=json
+
+(JSON FORMAT)
 
 [ ] Pull and Display Commodities Content
 https://api.tradingeconomics.com/markets/commodities
@@ -13,8 +15,6 @@ https://tailwindcss.com/docs/guides/nextjs
 [ ] Create Floating Stripe Component
 [ ] Create Export Table Component
 [ ] Create Countries Dropdown Component
-
-
 
 [ ] Pull and Display US Export by Categories
 https://api.tradingeconomics.com/comtrade/country/portugal/portugal/exports/
@@ -35,9 +35,9 @@ https://comtrade.tradingeconomics.com/comtrade/share?r=chn&c=0000&v=piechartcate
 - https://github.com/plouc/nivo
 
 KEY:SECRET for Trading Economics
-`
-blwvmxl5x1rk8qk:jodtirdtxtxvyld
-`
+- Free Account  ==> blwvmxl5x1rk8qk:jodtirdtxtxvyld
+- Guest Account ==> guest:guest
+
 
 ## Getting Started
 
