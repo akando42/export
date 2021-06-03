@@ -1,30 +1,20 @@
 ## ToDo
 [X] Replacement Boiler Plate Content with Correct Collor Scheme
-[ ] Pull and Display Currencies Content
-https://api.tradingeconomics.com/markets/currency?c=guest:guest&cross=USD&format=json
 
-(JSON FORMAT)
+[X] Pull Commodities Content
+https://api.tradingeconomics.com/markets/commodities?c=guest:guest&format=json
 
-[ ] Pull and Display Commodities Content
-https://api.tradingeconomics.com/markets/commodities
+[X] Pull Currencies Content
+https://api.tradingeconomics.com/markets/currency?c=blwvmxl5x1rk8qk:jodtirdtxtxvyld&cross=USD&format=json
 
-[ ] Add TailwindCSS 
-https://tailwindcss.com/docs/guides/nextjs
+[X] Pull Export by Countries
+[ ] JSON APIs for Exports, Currencies and Commodities
+https://techblog.tomgreuter.nl/nextjs-api-routes/
 
 [ ] Create Logo Component
 [ ] Create Floating Stripe Component
 [ ] Create Export Table Component
 [ ] Create Countries Dropdown Component
-
-[ ] Pull and Display US Export by Categories
-https://api.tradingeconomics.com/comtrade/country/portugal/portugal/exports/
-
-[ ] Pull and Display China Export by Categories 
-https://api.tradingeconomics.com/historical/country/China/indicator/Exports?c=blwvmxl5x1rk8qk:jodtirdtxtxvyld
-
-Pie Chart Export by Categories for FREE country
-https://comtrade.tradingeconomics.com/comtrade/share?r=chn&c=0000&v=piechartcategories&t=2&title=%20China%20Exports%20By%20Category
-
 
 [ ] Load Data From List of Countries
 

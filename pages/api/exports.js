@@ -1,7 +1,13 @@
-const endpoint = "https://comtrade.tradingeconomics.com/comtrade/?r=mex&c=XX&t=2&treemap=categories&format=json"
+import axios from "axios"
 
-export default(req, res) => {
-	res.status(200).json({
-		export: 'Link: ' + endpoint
-	})
+export default async (req, res) => {
+  const url = `https://comtrade.tradingeconomics.com/comtrade/?r=mex&c=XX&t=2&treemap=categories&format=json`
+  await axios
+    .get(url)
+    .then(({ data }) => {
+      res.status(200).json({ data })
+    })
+    .catch(({ err }) => {
+      res.status(400).json({ err })
+    })
 }
