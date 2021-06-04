@@ -23,8 +23,34 @@
   width: 100%;
   height: 80vh;
   margin: 3vh;
+  display: flex;
+  justify-content: left;
+  padding: 1em;
 
 }
+
+.table {
+  display: flex;
+  color:  white;
+  align-items: top;
+  background-color: white;
+  color:  #121C2B;
+  padding:  1em;
+  margin:  1em;
+  width: 50vw;
+}
+
+.chart {
+  display: flex;
+  color:  white;
+  align-items: center;
+  background-color: white;
+  color:  #121C2B;
+  padding:  1em;
+  margin:  1em;
+  width: 50vw;
+}
+
 
 .footer {
   width: 100%;

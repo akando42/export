@@ -8,17 +8,19 @@ https://api.tradingeconomics.com/markets/commodities?c=guest:guest&format=json
 https://api.tradingeconomics.com/markets/currency?c=blwvmxl5x1rk8qk:jodtirdtxtxvyld&cross=USD&format=json
 
 [X] Pull Export by Countries
-[ ] JSON APIs for Exports, Currencies and Commodities
+https://comtrade.tradingeconomics.com/comtrade/?r=mex&c=XX&t=2&treemap=categories&format=json
+
+[X] JSON APIs for Exports, Currencies and Commodities
 https://techblog.tomgreuter.nl/nextjs-api-routes/
 
-[ ] Create Logo Component
-[ ] Create Floating Stripe Component
-[ ] Create Export Table Component
+[ ] Create Export Table Component with Country Export data
+[ ] Load PIE Chart Export Data by Countries via Nivo Library
 [ ] Create Countries Dropdown Component
 
+[ ] Create Floating Stripe Component
 [ ] Load Data From List of Countries
 
-[ ] Load Pipe Chart Export Data by Countries via Nivo Library
+[ ] Create Logo Component
 
 ## Libraries to Use
 - https://github.com/AndreasFaust/react-ticker 
@@ -37,6 +39,6 @@ First, run the development server at localhost:3000
 yarn dev
 ```
 
-API routes is accessible at http://localhost:3000/api/hello] and editable at `pages/api/ping.js`
+API routes is accessible at http://localhost:3000/api/ping and editable at `pages/api/ping.js`
 
 

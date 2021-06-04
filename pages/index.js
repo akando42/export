@@ -7,7 +7,12 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.export}>
-        Export Panel
+        <div className={styles.table}>
+          Table
+        </div>
+        <div className={styles.chart}>
+          Chart
+        </div>
       </div>
 
       <footer className={styles.footer}>
