@@ -16,16 +16,22 @@ export default function Home({products}) {
             <span className={styles.itemValue}>
               <strong>Value</strong>
             </span> 
+            <span className={styles.itemDate}>
+              <strong> Year </strong>
+            </span>
           </div>
           {
             products.map((product) => (
               <div className={styles.tableRow}>
                 <span className={styles.itemName}>
-                  {product.parent_name}
+                  {product.cat_name}
                 </span> 
 
                 <span className={styles.itemValue}>
                   <NumberFormat value={product.value} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                </span>
+                <span className={styles.itemDate}> 
+                  {product.date}
                 </span>
               </div> 
             ))

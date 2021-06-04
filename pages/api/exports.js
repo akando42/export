@@ -1,7 +1,7 @@
 import axios from "axios"
 
 export default async (req, res) => {
-  const url = `https://comtrade.tradingeconomics.com/comtrade/?r=mex&c=XX&t=2&treemap=categories&format=json`
+  const url = `https://comtrade.tradingeconomics.com/comtrade/?r=usa&c=XX&t=2&treemap=categories&format=json`
   await axios
     .get(url)
     .then(({ data }) => {

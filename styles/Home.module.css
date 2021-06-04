@@ -74,7 +74,7 @@
 }
 .itemName {
   text-align: left;
-  width: 20vw;
+  width: 50vw;
   padding-top: 1em;
 }
 
@@ -82,7 +82,11 @@
   text-align: left;
   width: 20vw;
   padding-top: 1em;
-  padding-left: 6em;
+}
+
+.itemDate {
+  text-align: left;
+  padding-top: 1em;
 }
 
 .chart {
