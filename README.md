@@ -20,7 +20,9 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 [ ] Create Floating Stripe Component
 [ ] Load Data From List of Countries
 
-[ ] Create Logo Component
+[ ] Create LOGO components
+[ ] Refactor CODES in the Components
+
 
 ## Libraries to Use
 - https://github.com/AndreasFaust/react-ticker 

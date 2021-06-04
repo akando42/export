@@ -5,7 +5,10 @@ export default async (req, res) => {
   await axios
     .get(url)
     .then(({ data }) => {
-      res.status(200).json({ data })
+      let products = data.sort(function(a,b){
+        return b.value - a.value
+      })
+      res.status(200).json(products.slice(0,10))
     })
     .catch(({ err }) => {
       res.status(400).json({ err })
