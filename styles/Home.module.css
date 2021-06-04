@@ -39,6 +39,7 @@
   padding:  1em;
   margin:  1em;
   width: 50vw;
+  overflow: scroll;
 }
 
 /* Export Table Title */
@@ -66,12 +67,20 @@
 }
 
 /*Export Table Data*/
+.tableName {
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  font-weight: bold;
+  font-size: 21px;
+}
 
 .tableRow {
   display:  flex;
   align-items: left;
   width: 100%;
 }
+
 .itemName {
   text-align: left;
   width: 50vw;

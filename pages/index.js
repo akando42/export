@@ -9,6 +9,12 @@ export default function Home({products}) {
     <div className={styles.container}>
       <div className={styles.export}>
         <div className={styles.table}>
+          <div className={styles.tableName}>
+            United States
+          </div>
+          <div className={styles.tableName}>
+            Exports by Categories
+          </div>
           <div className={styles.tableRow}>
             <span className={styles.itemName}>
               <strong>Annual Exports by Categories </strong>
