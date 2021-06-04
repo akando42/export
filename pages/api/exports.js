@@ -8,7 +8,7 @@ export default async (req, res) => {
       let products = data.sort(function(a,b){
         return b.value - a.value
       })
-      res.status(200).json(products.slice(0,10))
+      res.status(200).json(products.slice(0,20))
     })
     .catch(({ err }) => {
       res.status(400).json({ err })

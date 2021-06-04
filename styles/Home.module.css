@@ -31,6 +31,7 @@
 
 .table {
   display: flex;
+  flex-direction: column;
   color:  white;
   align-items: top;
   background-color: white;
@@ -38,6 +39,50 @@
   padding:  1em;
   margin:  1em;
   width: 50vw;
+}
+
+/* Export Table Title */
+
+.tableTitle {
+  display: flex;
+  align-items: left;
+  width: 100%;
+  background-color: red;
+  height: 1em;
+}
+
+.titleName {
+  font-weight: bold;
+  background-color: #c4c4c4;
+  text-align: left;
+  width: 20vw;
+}
+
+.titleValue {
+  font-weight: bold;
+  text-align: right;
+  background-color: #c4c4c4;
+  content: '$'
+}
+
+/*Export Table Data*/
+
+.tableRow {
+  display:  flex;
+  align-items: left;
+  width: 100%;
+}
+.itemName {
+  text-align: left;
+  width: 20vw;
+  padding-top: 1em;
+}
+
+.itemValue {
+  text-align: left;
+  width: 20vw;
+  padding-top: 1em;
+  padding-left: 6em;
 }
 
 .chart {
@@ -50,7 +95,6 @@
   margin:  1em;
   width: 50vw;
 }
-
 
 .footer {
   width: 100%;
