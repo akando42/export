@@ -45,7 +45,7 @@ export default function Home({products}) {
       <footer className={styles.footer}>
         <div className={styles.logo}>
           <Image 
-            src="/TElogo.svg"
+            src="/TElogo.png"
             alt="Trading Economic Logo"
             height='100vh'
             width='auto'
@@ -65,7 +65,7 @@ export default function Home({products}) {
 }
 
 export async function getServerSideProps() {
-  const response = await fetch('http://localhost:3000/api/exports') 
+  const response = await fetch('https://trading-economics-export.netlify.app/api/exports') 
   const products = await response.json()
   return {
     props: {
