@@ -13,7 +13,8 @@ https://comtrade.tradingeconomics.com/comtrade/?r=mex&c=XX&t=2&treemap=categorie
 [X] JSON APIs for Exports, Currencies and Commodities
 https://techblog.tomgreuter.nl/nextjs-api-routes/
 
-[ ] Create Export Table Component with Country Export data
+[X] Create Export Table Component with Country Export data
+
 [ ] Load PIE Chart Export Data by Countries via Nivo Library
 [ ] Create Countries Dropdown Component
 
