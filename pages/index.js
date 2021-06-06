@@ -174,7 +174,7 @@ export default function Home({products, pieData, productPie}) {
 }
 
 export async function getServerSideProps() {
-  const response = await fetch('http://localhost:3000/api/exports') 
+  const response = await fetch('https://trading-economics-export.netlify.app/api/exports') 
   const products = await response.json()
   const productPie = products.slice(0,10)
   const pieData = [
