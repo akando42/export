@@ -15,13 +15,14 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 
 [X] Create Export Table Component with Country Export data
 
-[ ] Load PIE Chart Export Data by Countries via Nivo Library
-[ ] Create Countries Dropdown Component
+[X] Render PIE Chart with Sample Data
 
+[ ] Reformat Export Data into Pie Chart
+
+[ ] Create Countries Dropdown Component
 [ ] Create Floating Stripe Component
 [ ] Load Data From List of Countries
 
-[ ] Create LOGO components
 [ ] Refactor CODES in the Components
 
 

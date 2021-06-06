@@ -5,9 +5,7 @@ import Ticker from 'react-ticker'
 import NumberFormat from 'react-number-format'
 import { ResponsivePieCanvas } from '@nivo/pie'
 
-
-
-export default function Home({products, pieData }) {
+export default function Home({products, pieData, productPie}) {
   return (
     <div className={styles.container}>
       <div className={styles.export}>
@@ -31,7 +29,7 @@ export default function Home({products, pieData }) {
           </div>
           {
             products.map((product) => (
-              <div className={styles.tableRow}>
+              <div className={styles.tableRow} key={product.symbol}>
                 <span className={styles.itemName}>
                   {product.cat_name}
                 </span> 
@@ -48,7 +46,7 @@ export default function Home({products, pieData }) {
         </div>
         <div className={styles.chart}>
           <ResponsivePieCanvas
-              data={pieData}
+              data={productPie}
               margin={{ top: 40, right: 200, bottom: 40, left: 80 }}
               innerRadius={0.5}
               padAngle={0.7}
@@ -176,8 +174,9 @@ export default function Home({products, pieData }) {
 }
 
 export async function getServerSideProps() {
-  const response = await fetch('https://trading-economics-export.netlify.app/api/exports') 
+  const response = await fetch('http://localhost:3000/api/exports') 
   const products = await response.json()
+  const productPie = products.slice(0,10)
   const pieData = [
     {
       "id": "erlang",
@@ -290,7 +289,7 @@ export async function getServerSideProps() {
     ]
   return {
     props: {
-      products, pieData
+      products, pieData, productPie
     }
   }
 }
