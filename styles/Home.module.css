@@ -67,9 +67,22 @@
 }
 
 /*Export Table Data*/
-.tableName {
+.selection {
   align-items: center;
   text-align: center;
+  width: auto;
+  font-weight: bold;
+  font-size: 21px;
+  border-width: 0px;
+}
+
+.option {
+  text-align: center;
+}
+
+.tableName {
+  align-items: left;
+  text-align: left;
   width: 100%;
   font-weight: bold;
   font-size: 21px;

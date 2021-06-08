@@ -11,9 +11,18 @@ export default function Home({products, pieData, topProducts}) {
       <div className={styles.export}>
         <div className={styles.table}>
           <div className={styles.tableName}>
-            United States
-          </div>
-          <div className={styles.tableName}>
+            <select className={styles.selection}>
+              <option> United States </option>
+              <option> China </option>
+              <option> Japan </option>
+              <option> Germany </option>
+              <option> India </option>
+              <option> United Kingdom </option>
+              <option> France </option>
+              <option> Italy </option>
+              <option> Brazil </option>
+              <option> Canada </option>
+            </select>
             Exports by Categories
           </div>
           <div className={styles.tableRow}>
@@ -175,6 +184,7 @@ export default function Home({products, pieData, topProducts}) {
 }
 
 export async function getServerSideProps() {
+  const selectedCountry = "United States"
   const response = await fetch('https://trading-economics-export.netlify.app/api/exports') 
   const products = await response.json()
 
@@ -185,6 +195,7 @@ export async function getServerSideProps() {
   for (var c = 0; c < topProducts.length; c++){
       topProducts[c].id = topProducts[c].cat_name;
       topProducts[c].label = topProducts[c].cat_name;
+      // topProducts[c].value = Math.floor(topProducts[c].value / totalExport * 100);
   }
 
   const pieData = [
