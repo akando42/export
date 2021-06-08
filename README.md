@@ -24,7 +24,7 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 
 [X] Create Countries Dropdown Component
 
-[ ] API with Top 10 Economies in Request
+[X] API with Top 10 Economies in Request
 (USA, CHN, JPN, DEU, IND, GBR, FRA, ITA, BRA, CAN)
 
 [ ] Create Floating Stripe Component

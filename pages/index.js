@@ -12,16 +12,16 @@ export default function Home({products, pieData, topProducts}) {
         <div className={styles.table}>
           <div className={styles.tableName}>
             <select className={styles.selection}>
-              <option> United States </option>
-              <option> China </option>
-              <option> Japan </option>
-              <option> Germany </option>
-              <option> India </option>
-              <option> United Kingdom </option>
-              <option> France </option>
-              <option> Italy </option>
-              <option> Brazil </option>
-              <option> Canada </option>
+              <option value='usa'> United States </option>
+              <option value='chn'> China </option>
+              <option value='jpn'> Japan </option>
+              <option value='deu'> Germany </option>
+              <option value='ind'> India </option>
+              <option value='gbr'> United Kingdom </option>
+              <option value='fra'> France </option>
+              <option value='ita'> Italy </option>
+              <option value='bra'> Brazil </option>
+              <option value='can'> Canada </option>
             </select>
             Exports by Categories
           </div>
@@ -139,23 +139,23 @@ export default function Home({products, pieData, topProducts}) {
                       id: 'lines'
                   }
               ]}
-              legends={[
-                  {
-                      anchor: 'right',
-                      direction: 'column',
-                      justify: false,
-                      translateX: 140,
-                      translateY: 0,
-                      itemsSpacing: 2,
-                      itemWidth: 60,
-                      itemHeight: 14,
-                      itemTextColor: '#999',
-                      itemDirection: 'left-to-right',
-                      itemOpacity: 1,
-                      symbolSize: 14,
-                      symbolShape: 'circle'
-                  }
-              ]}
+              // legends={[
+              //     {
+              //         anchor: 'top',
+              //         direction: 'column',
+              //         justify: false,
+              //         translateX: 140,
+              //         translateY: 0,
+              //         itemsSpacing: 2,
+              //         itemWidth: 60,
+              //         itemHeight: 14,
+              //         itemTextColor: '#999',
+              //         itemDirection: 'left-to-right',
+              //         itemOpacity: 1,
+              //         symbolSize: 14,
+              //         symbolShape: 'circle'
+              //     }
+              // ]}
           />
         </div>
       </div>
