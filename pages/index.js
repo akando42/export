@@ -160,6 +160,7 @@ export default function Home({products, pieData, productPie}) {
             width='auto'
           />
         </div>
+
         <div className={styles.floating}>
           <div className={styles.currencies}>
             Currencies
@@ -177,6 +178,14 @@ export async function getServerSideProps() {
   const response = await fetch('https://trading-economics-export.netlify.app/api/exports') 
   const products = await response.json()
   const productPie = products.slice(0,10)
+  var totalExport = products.map(product => product.value).reduce((total, value) => total + value);
+
+  for (var c = 0; c < productPie.length; c++){
+      productPie[c].id = productPie[c].cat_name;
+      productPie[c].label = productPie[c].cat_name;
+      productPie[c].value = Math.floor((productPie[c].value / totalExport) * 100);
+  }
+
   const pieData = [
     {
       "id": "erlang",
