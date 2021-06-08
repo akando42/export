@@ -184,8 +184,8 @@ export default function Home({products, pieData, topProducts}) {
 }
 
 export async function getServerSideProps() {
-  const selectedCountry = "United States"
-  const response = await fetch('https://trading-economics-export.netlify.app/api/exports') 
+  const selectedCountry = "usa"
+  const response = await fetch('https://trading-economics-export.netlify.app/api/exports?country='+selectedCountry) 
   const products = await response.json()
 
   var totalExport = products.map(product => product.value).reduce((total, value) => total + value)

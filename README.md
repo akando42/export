@@ -17,12 +17,17 @@ https://comtrade.tradingeconomics.com/comtrade/?r=mex&c=XX&t=2&treemap=categorie
 https://techblog.tomgreuter.nl/nextjs-api-routes/
 
 [X] Create Export Table Component with Country Export data
+
 [X] Render PIE Chart with Sample Data
+
 [X] Reformat Export Data into Pie Chart
 
-[ ] Create Countries Dropdown Component
+[X] Create Countries Dropdown Component
+
+[ ] API with Top 10 Economies in Request
+(USA, CHN, JPN, DEU, IND, GBR, FRA, ITA, BRA, CAN)
+
 [ ] Create Floating Stripe Component
-[ ] Load Data From List of Countries
 
 [ ] Refactor CODES in the Components
 
