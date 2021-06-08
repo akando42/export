@@ -5,7 +5,7 @@ import Ticker from 'react-ticker'
 import NumberFormat from 'react-number-format'
 import { ResponsivePieCanvas } from '@nivo/pie'
 
-export default function Home({products, pieData, productPie}) {
+export default function Home({products, pieData, topProducts}) {
   return (
     <div className={styles.container}>
       <div className={styles.export}>
@@ -46,7 +46,7 @@ export default function Home({products, pieData, productPie}) {
         </div>
         <div className={styles.chart}>
           <ResponsivePieCanvas
-              data={productPie}
+              data={topProducts}
               margin={{ top: 40, right: 200, bottom: 40, left: 80 }}
               innerRadius={0.5}
               padAngle={0.7}
@@ -177,13 +177,14 @@ export default function Home({products, pieData, productPie}) {
 export async function getServerSideProps() {
   const response = await fetch('https://trading-economics-export.netlify.app/api/exports') 
   const products = await response.json()
-  const productPie = products.slice(0,10)
-  var totalExport = products.map(product => product.value).reduce((total, value) => total + value);
 
-  for (var c = 0; c < productPie.length; c++){
-      productPie[c].id = productPie[c].cat_name;
-      productPie[c].label = productPie[c].cat_name;
-      productPie[c].value = Math.floor((productPie[c].value / totalExport) * 100);
+  var totalExport = products.map(product => product.value).reduce((total, value) => total + value)
+  const topProducts = products.slice(0,10)
+  
+
+  for (var c = 0; c < topProducts.length; c++){
+      topProducts[c].id = topProducts[c].cat_name;
+      topProducts[c].label = topProducts[c].cat_name;
   }
 
   const pieData = [
@@ -298,7 +299,7 @@ export async function getServerSideProps() {
     ]
   return {
     props: {
-      products, pieData, productPie
+      products, pieData,topProducts
     }
   }
 }
