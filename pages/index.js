@@ -319,8 +319,8 @@ export default class Home extends Component {
             <Image 
               src="/TElogo.png"
               alt="Trading Economic Logo"
-              height='100vh'
-              width='auto'
+              height='100'
+              width='100'
             />
           </div>
           <div className={styles.floating}>
