@@ -123,11 +123,13 @@ export default class Home extends Component {
         }],
       selectedCountry: 'usa',
       products: [], 
-      topProducts: []
+      topProducts: [],
+      currencies: []
     }
 
     this.pullData = this.pullData.bind(this)
     this.selectCountry = this.selectCountry.bind(this)
+    this.pullExchanges = this.pullExchanges.bind(this)
   }
 
   async pullData(selectedCountry){
@@ -151,9 +153,28 @@ export default class Home extends Component {
 
     this.pullData(event.target.value)
   }
+  async pullExchanges(){
+    await axios.get(`/api/currencies`).then(res => {
+      console.log("Currencies", res.data.data.rates)
+      let currencyData = res.data.data.rates
+      let currencyBasket = []
+      for (const key in currencyData) {
+        console.log(key, currencyData[key])
+        currencyBasket.push({
+          'name': key,
+          'rate': currencyData[key]
+        })
+      }
+
+      this.setState({
+        currencies: currencyBasket
+      })
+    })
+  }
 
   componentDidMount(){
     this.pullData('usa')
+    this.pullExchanges()
   }
 
   render(){
@@ -325,7 +346,18 @@ export default class Home extends Component {
           </div>
           <div className={styles.floating}>
             <div className={styles.currencies}>
-              Currencies
+              {
+                this.state.currencies.map((currency) => {
+                  let curr = currency.name
+                  let rate = currency.rate.toFixed(2)
+                  return (
+                    <div className={styles.currency}>
+                      <span className={styles.symbol}>{curr}</span>
+                      <span className={styles.rate}>{rate}</span>
+                    </div>
+                  )
+                })
+              }
             </div>
             <div className={styles.commodities}>
               Commodities

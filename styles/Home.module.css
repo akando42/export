@@ -150,8 +150,8 @@
 
 .currencies {
   display: flex;
-  background-color: white;
-  color: #121C2B;
+  background-color: #121C2B;
+  color: #F2f2f2;
   height: 5vh;
   width: 100%;
   text-align: left;
@@ -160,15 +160,30 @@
   padding-left: 1em;
 }
 
-.commodities {
-  background-color: #121C2B;
+.currency {
+  width: 150px;
+  height: 30px;
   display: flex;
-  color: white;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.commodities {
+  background-color: #F2f2f2;
+  display: flex;
+  color: #121C2B;
+  border: 1px solid #121C2B;
   height: 5vh;
   width: 100%;
   justify-content: left;
   align-items: center;
   padding-left: 1em;
+}
+
+.symbol {
+  font-weight: 700;
+  margin-right: 6px;
 }
 
 .title a {
@@ -245,6 +260,8 @@
   font-size: 1.25rem;
   line-height: 1.5;
 }
+
+
 
 
 @media (max-width: 600px) {
