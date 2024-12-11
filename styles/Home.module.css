@@ -202,6 +202,61 @@
   overflow: hidden;
 }
 
+.stock {
+  width: 150px;
+  height: 30px;
+  display: flex;
+  margin: 0 20px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: #121C2B;
+}
+
+.stockSymbol {
+  font-weight: 700;
+  margin-right: 5px;
+}
+
+.price {
+  margin-right: 5px; 
+}
+
+
+.changeIndicator {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.negChange {
+  color: red;
+  font-weight: 700;
+}
+
+.posChange {
+  color: blue;
+  font-weight: 700;
+}
+
+.triangleUp {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 12px solid blue;
+  margin-right: 2px;
+}
+
+.triangleDown {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 12px solid red;
+  margin-right: 2px;
+}
+
 .slideRight {
   display: flex;
   height: 5vh;

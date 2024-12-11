@@ -125,18 +125,73 @@ export default class Home extends Component {
       products: [], 
       topProducts: [],
       currencies: [],
-      slidingBasket: []
+      slidingBasket: [],
+      companies: [
+        {
+          'country':'usa',
+          'currency': '',
+          'megacorps': []
+        },
+        {
+          'country':'chn',
+          'currency': '',
+          'megacorps': [`TCEHY`,`PTR`,`IDCBY`,`BABA`, `CICHY`, `PNGAY`, `BIDU`, `JD`, `PDD`, `CIHKY`]
+        },
+        {
+          'country':'jpn',
+          'currency': '',
+          'megacorps': []
+        },
+        {
+          'country':'deu',
+          'currency': '',
+          'megacorps': []
+        },
+        {
+          'country':'ind',
+          'currency': '',
+          'megacorps': []
+        },
+        {
+          'country':'gbr',
+          'currency': '',
+          'megacorps': []
+        },
+        {
+          'country':'fra',
+          'currency': '',
+          'megacorps': []
+        },
+        {
+          'country':'ita',
+          'currency': '',
+          'megacorps': []
+        },
+        {
+          'country':'bra',
+          'currency': '',
+          'megacorps': []
+        },
+        {
+          'country':'rus',
+          'currency': '',
+          'megacorps': []
+        }
+      ], 
+      stocks: [], 
+      stockBasket: []
     }
 
     this.pullData = this.pullData.bind(this)
     this.selectCountry = this.selectCountry.bind(this)
     this.pullExchanges = this.pullExchanges.bind(this)
     this.pushCurrencySlide = this.pushCurrencySlide.bind(this)
+    this.pullCompanies = this.pullCompanies.bind(this)
   }
 
   async pullData(selectedCountry){
     axios.get(`/api/exports?country=${selectedCountry}`).then(res => {
-      console.log("Products \n",res.data)
+      // console.log("Products \n",res.data)
       let products = res.data
       var totalExport = products.map(product => product.value).reduce((total, value) => total + value)
       const topProducts = products.slice(0,10)
@@ -158,12 +213,12 @@ export default class Home extends Component {
 
   async pullExchanges(){
     await axios.get(`/api/currencies`).then(res => {
-      console.log("Currencies", res.data.data.eur)
+      // console.log("Currencies", res.data.data.eur)
       let currencyData = res.data.data.eur
-      let selectedBasket = [`CAD`,`USD`,`JPY`,`KRW`,`CNY`,`MMK`,`VND`,`LAK`,`KHR`,`THB`,`AUD`,`GBP`,`MXN`]
+      let selectedBasket = [`CAD`,`USD`,`JPY`,`KRW`,`CNY`,`MMK`,`VND`,`LAK`,`KHR`,`THB`,`AUD`,`GBP`,`MXN`,'BRL','INR']
       let currencyBasket = []
       for (const key in currencyData) {
-        console.log(key, currencyData[key])
+        // console.log(key, currencyData[key])
         if (selectedBasket.includes(key.toUpperCase())){
           currencyBasket.push({
             'name': key,
@@ -192,9 +247,31 @@ export default class Home extends Component {
      })
   }
 
+  async pullCompanies(){
+    let chnCorps = this.state.companies.filter(company => company.country === `chn`)[0]['megacorps']
+    let queryString = chnCorps.join(",")
+    console.log(queryString)
+    await axios
+      .get(`/api/companies?corps=${queryString}`)
+      .then(res => {
+        let stocks = res.data.data
+        console.log(stocks)
+        let stockBasket = []
+        for(let i = 0; i < 10; i++){
+          stockBasket = stockBasket.concat(stocks)
+        }
+        this.setState({
+          stocks: stocks, 
+          stockBasket: stockBasket
+        })
+      })
+    
+  }
+
   componentDidMount(){
     this.pullData('usa')
     this.pullExchanges()
+    this.pullCompanies()
     // setInterval(console.log("Updating"), 1000);
   }
 
@@ -368,6 +445,7 @@ export default class Home extends Component {
                   this.state.slidingBasket.map((currency) => {
                     let curr = currency.name.toUpperCase()
                     let rate = currency.rate.toFixed(2)
+                    let color = '#'
                     return (
                       <div className={styles.currency}>
                         <span className={styles.symbol}>{curr}</span>
@@ -381,13 +459,27 @@ export default class Home extends Component {
             <div className={styles.commodities}>
               <div className={styles.slideRight}>
                 {
-                  this.state.slidingBasket.map((currency) => {
-                    let curr = currency.name.toUpperCase()
-                    let rate = currency.rate.toFixed(2)
+                  this.state.stockBasket.map((stock) => {
+                    let price = stock.price
+                    let change = (stock.changes/stock.price * 100).toFixed(2)
+                    
                     return (
-                      <div className={styles.currency}>
-                        <span className={styles.symbol}>{curr}</span>
-                        <span className={styles.rate}>{rate}</span>
+                      <div className={styles.stock}>
+                        <span className={styles.stockSymbol}>{stock.symbol}</span>
+                        <span className={styles.price}>{price}</span>
+                        {
+                          change < 0
+                          ? <div className={styles.changeIndicator}>
+                              <span className={styles.triangleDown}></span>
+                              <span className={styles.negChange}>{change}%</span>
+                            </div>
+                          : <div className={styles.changeIndicator}>
+                              <span className={styles.triangleUp}></span>
+                              <span className={styles.posChange}>{change}%</span>
+                            </div>
+
+                        }
+                       
                       </div>
                     )
                   })
@@ -400,138 +492,3 @@ export default class Home extends Component {
     )
   }
 }
-
-// export async function getServerSideProps() {
-//   const selectedCountry = "usa"
-//   // const response = await fetch('/api/exports?country='+selectedCountry) 
-//   // const products = await response.json()
-
-//   let products = axios.get(`/api/exports?country=${selectedCountry}`)
-
-//   var totalExport = products.map(product => product.value).reduce((total, value) => total + value)
-//   const topProducts = products.slice(0,10)
-  
-
-//   for (var c = 0; c < topProducts.length; c++){
-//       topProducts[c].id = topProducts[c].cat_name;
-//       topProducts[c].label = topProducts[c].cat_name;
-//       // topProducts[c].value = Math.floor(topProducts[c].value / totalExport * 100);
-//   }
-
-//   const pieData = [
-//     {
-//       "id": "erlang",
-//       "label": "erlang",
-//       "value": 320,
-//       "color": "hsl(22, 70%, 50%)"
-//     },
-//     {
-//       "id": "php",
-//       "label": "php",
-//       "value": 256,
-//       "color": "hsl(69, 70%, 50%)"
-//     },
-//     {
-//       "id": "rust",
-//       "label": "rust",
-//       "value": 98,
-//       "color": "hsl(9, 70%, 50%)"
-//     },
-//     {
-//       "id": "stylus",
-//       "label": "stylus",
-//       "value": 575,
-//       "color": "hsl(256, 70%, 50%)"
-//     },
-//     {
-//       "id": "elixir",
-//       "label": "elixir",
-//       "value": 567,
-//       "color": "hsl(66, 70%, 50%)"
-//     },
-//     {
-//       "id": "css",
-//       "label": "css",
-//       "value": 477,
-//       "color": "hsl(207, 70%, 50%)"
-//     },
-//     {
-//       "id": "python",
-//       "label": "python",
-//       "value": 584,
-//       "color": "hsl(228, 70%, 50%)"
-//     },
-//     {
-//       "id": "sass",
-//       "label": "sass",
-//       "value": 132,
-//       "color": "hsl(178, 70%, 50%)"
-//     },
-//     {
-//       "id": "hack",
-//       "label": "hack",
-//       "value": 257,
-//       "color": "hsl(310, 70%, 50%)"
-//     },
-//     {
-//       "id": "javascript",
-//       "label": "javascript",
-//       "value": 437,
-//       "color": "hsl(287, 70%, 50%)"
-//     },
-//     {
-//       "id": "c",
-//       "label": "c",
-//       "value": 167,
-//       "color": "hsl(267, 70%, 50%)"
-//     },
-//     {
-//       "id": "lisp",
-//       "label": "lisp",
-//       "value": 446,
-//       "color": "hsl(191, 70%, 50%)"
-//     },
-//     {
-//       "id": "ruby",
-//       "label": "ruby",
-//       "value": 329,
-//       "color": "hsl(356, 70%, 50%)"
-//     },
-//     {
-//       "id": "scala",
-//       "label": "scala",
-//       "value": 437,
-//       "color": "hsl(58, 70%, 50%)"
-//     },
-//     {
-//       "id": "go",
-//       "label": "go",
-//       "value": 244,
-//       "color": "hsl(97, 70%, 50%)"
-//     },
-//     {
-//       "id": "make",
-//       "label": "make",
-//       "value": 136,
-//       "color": "hsl(251, 70%, 50%)"
-//     },
-//     {
-//       "id": "haskell",
-//       "label": "haskell",
-//       "value": 522,
-//       "color": "hsl(109, 70%, 50%)"
-//     },
-//     {
-//       "id": "java",
-//       "label": "java",
-//       "value": 168,
-//       "color": "hsl(20, 70%, 50%)"
-//     }
-//     ]
-
-//   return {
-//     props: {
-//       products, pieData,topProducts
-//     }
-//   }
-// }
