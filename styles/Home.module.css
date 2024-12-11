@@ -123,11 +123,12 @@
 }
 
 .footer {
-  width: 100%;
+  width: 98vw;
+  background-color: red;
   height: 10vh;
   color: white; 
   display: flex;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
 }
 
@@ -140,13 +141,13 @@
 
 .logo {
   height: 10vh;
-  width:  100px;
+  width:  10vh;
 }
 
 .floating {
   height: 10vh;
   color: black;
-  width: 100%;
+  width: 93vw;
   background-color: #121C2B;
 }
 
@@ -154,7 +155,6 @@
   overflow: hidden;
   background-color: #121C2B;
   color: #F2f2f2;
-  width: 100%;
   text-align: left;
   height: 5vh;
 }
