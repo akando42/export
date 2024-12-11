@@ -27,9 +27,9 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 [X] API with Top 10 Economies in Request
 (USA, CHN, JPN, DEU, IND, GBR, FRA, ITA, BRA, RUS)
 
-[ ] Create Floating Stripe Component
+[X] Create Floating Stripe Component
 
-[ ] Refactor CODES in the Components
+[ ] Refactor CODES for Pie Chart
 
 [ ] Add MapBox Location Coordinates for each countries
 

@@ -194,10 +194,31 @@ export default class Home extends Component {
       // console.log("Products \n",res.data)
       let products = res.data
       var totalExport = products.map(product => product.value).reduce((total, value) => total + value)
+      var chartData = []
+      let USDollar = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      });
       const topProducts = products.slice(0,10)
+
+
+
+      topProducts.map((product) => {
+        
+        let value = (product.value/1000000).toFixed(2)
+        let name = product.cat_name
+        let inMillion = USDollar.format(value)
+         console.log(inMillion)
+        chartData.push({
+          id: name, 
+          value: value, 
+          valueFormat: inMillion
+        })
+      })
+
       this.setState({
         products: products, 
-        topProducts: topProducts
+        topProducts: chartData
       })
     })
   }
