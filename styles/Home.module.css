@@ -144,29 +144,49 @@
 }
 
 .floating {
+  height: 10vh;
   color: black;
   width: 100%;
+  background-color: #121C2B;
 }
 
 .currencies {
-  display: flex;
+  overflow: hidden;
   background-color: #121C2B;
   color: #F2f2f2;
-  height: 5vh;
   width: 100%;
   text-align: left;
+  height: 5vh;
+}
+
+.slideLeft {
+  display: flex;
+  height: 5vh;
+  width: 100%;
+  flex-direction: row;
   justify-content: left;
   align-items: center;
   padding-left: 1em;
+  animation: sliding_left 30s linear infinite
 }
 
 .currency {
   width: 150px;
   height: 30px;
   display: flex;
+  margin: 0 20px;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+@keyframes sliding_left {
+  0% {
+      transform: translateX(0);
+  }
+  100% {
+      transform: translateX(-100%);
+  }
 }
 
 .commodities {
@@ -179,6 +199,27 @@
   justify-content: left;
   align-items: center;
   padding-left: 1em;
+  overflow: hidden;
+}
+
+.slideRight {
+  display: flex;
+  height: 5vh;
+  width: 100%;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  padding-left: 1em;
+  animation: sliding_left 90s linear infinite
+}
+
+@keyframes sliding_right {
+  0% {
+      transform: translateX(0);
+  }
+  100% {
+      transform: translateX(200%);
+  }
 }
 
 .symbol {

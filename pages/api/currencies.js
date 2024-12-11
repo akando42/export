@@ -9,7 +9,8 @@ export default async (req, res) => {
   let yesterdayString = `${year}-${month}-${date}`
   console.log("YES", yesterdayString)
   let currencyBasket = 'CAD,USD,JPY,KRW,CNY,MMK,VND,LAK,KHR,THB,AUD,GBP,MXN'
-  const url = `https://api.exchangeratesapi.io/v1/${yesterdayString}?access_key=bc92112e343dfe65fdb46826e78df43b&symbols=${currencyBasket}&format=1`
+  // const url = `https://api.exchangeratesapi.io/v1/${yesterdayString}?access_key=bc92112e343dfe65fdb46826e78df43b&symbols=${currencyBasket}&format=1`
+  const url = `https://latest.currency-api.pages.dev/v1/currencies/eur.json`
   await axios
     .get(url)
     .then(({ data }) => {
@@ -19,6 +20,6 @@ export default async (req, res) => {
       res.status(400).json({ err })
     })
 }
-
+// https://latest.currency-api.pages.dev/v1/currencies/eur.json
 // https://api.exchangeratesapi.io/v1/latest?access_key=bc92112e343dfe65fdb46826e78df43b&base=USD&symbols=GBP,JPY,EUR
 // https://api.exchangeratesapi.io/v1/2024-12-01?access_key=bc92112e343dfe65fdb46826e78df43b&symbols=USD,AUD,CAD,PLN,MXN&format=1

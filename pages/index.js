@@ -124,12 +124,14 @@ export default class Home extends Component {
       selectedCountry: 'usa',
       products: [], 
       topProducts: [],
-      currencies: []
+      currencies: [],
+      slidingBasket: []
     }
 
     this.pullData = this.pullData.bind(this)
     this.selectCountry = this.selectCountry.bind(this)
     this.pullExchanges = this.pullExchanges.bind(this)
+    this.pushCurrencySlide = this.pushCurrencySlide.bind(this)
   }
 
   async pullData(selectedCountry){
@@ -153,28 +155,47 @@ export default class Home extends Component {
 
     this.pullData(event.target.value)
   }
+
   async pullExchanges(){
     await axios.get(`/api/currencies`).then(res => {
-      console.log("Currencies", res.data.data.rates)
-      let currencyData = res.data.data.rates
+      console.log("Currencies", res.data.data.eur)
+      let currencyData = res.data.data.eur
+      let selectedBasket = [`CAD`,`USD`,`JPY`,`KRW`,`CNY`,`MMK`,`VND`,`LAK`,`KHR`,`THB`,`AUD`,`GBP`,`MXN`]
       let currencyBasket = []
       for (const key in currencyData) {
         console.log(key, currencyData[key])
-        currencyBasket.push({
-          'name': key,
-          'rate': currencyData[key]
-        })
+        if (selectedBasket.includes(key.toUpperCase())){
+          currencyBasket.push({
+            'name': key,
+            'rate': currencyData[key]
+          })
+        }
+      }
+
+      let slidingBasket = []
+      for(let i = 0; i < 10; i++){
+        slidingBasket = slidingBasket.concat(currencyBasket)
       }
 
       this.setState({
-        currencies: currencyBasket
+        currencies: currencyBasket, 
+        slidingBasket: slidingBasket
       })
     })
+  }
+
+  async pushCurrencySlide(){
+     let currrentBasket = this.state.currencies
+     console.log(currrentBasket)
+     this.setState({
+       slidingBasket: this.state.slidingBasket.concat(currrentBasket)
+     })
   }
 
   componentDidMount(){
     this.pullData('usa')
     this.pullExchanges()
+    // setInterval(console.log("Updating"), 1000);
   }
 
   render(){
@@ -336,31 +357,42 @@ export default class Home extends Component {
         </div>
 
         <footer className={styles.footer}>
-          <div className={styles.logo}>
-            <Image 
-              src="/TElogo.png"
-              alt="Trading Economic Logo"
-              height='100'
-              width='100'
-            />
-          </div>
+          <img 
+            className={styles.logo}
+            src="/TElogo.png"
+          />
           <div className={styles.floating}>
             <div className={styles.currencies}>
-              {
-                this.state.currencies.map((currency) => {
-                  let curr = currency.name
-                  let rate = currency.rate.toFixed(2)
-                  return (
-                    <div className={styles.currency}>
-                      <span className={styles.symbol}>{curr}</span>
-                      <span className={styles.rate}>{rate}</span>
-                    </div>
-                  )
-                })
-              }
+              <div className={styles.slideLeft}>
+                {
+                  this.state.slidingBasket.map((currency) => {
+                    let curr = currency.name.toUpperCase()
+                    let rate = currency.rate.toFixed(2)
+                    return (
+                      <div className={styles.currency}>
+                        <span className={styles.symbol}>{curr}</span>
+                        <span className={styles.rate}>{rate}</span>
+                      </div>
+                    )
+                  })
+                }
+              </div>
             </div>
             <div className={styles.commodities}>
-              Commodities
+              <div className={styles.slideRight}>
+                {
+                  this.state.slidingBasket.map((currency) => {
+                    let curr = currency.name.toUpperCase()
+                    let rate = currency.rate.toFixed(2)
+                    return (
+                      <div className={styles.currency}>
+                        <span className={styles.symbol}>{curr}</span>
+                        <span className={styles.rate}>{rate}</span>
+                      </div>
+                    )
+                  })
+                }
+              </div>
             </div>
           </div>
         </footer>
