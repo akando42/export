@@ -205,7 +205,7 @@ export default class Home extends Component {
 
       topProducts.map((product) => {
         
-        let value = (product.value/1000000).toFixed(2)
+        let value = (product.value/totalExport*100).toFixed(2)
         let name = product.cat_name
         let inMillion = USDollar.format(value)
          console.log(inMillion)
