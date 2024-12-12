@@ -19,10 +19,11 @@
 .export {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   width: 100vw;
   height: 90vh;
+  padding: 10px;
 }
 
 /* Export Table Title */
@@ -33,7 +34,7 @@
   align-items: top;
   border:  1px solid #121C2B;
   padding: 20px 10px;
-  margin: 1em;
+  /*margin: 1em;*/
   width: 62vw;
   height: 84vh;
 }

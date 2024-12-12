@@ -33,7 +33,7 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 
 [X] Add MapBox Location Coordinates for each countries
 
-[ ] Fly to Capital Location after Country Selection
+[X] Fly to Capital Location after Country Selection
 
 [ ] Load Top 10 Companies for each Countries
 

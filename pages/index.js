@@ -181,7 +181,9 @@ export default class Home extends Component {
         }
       ], 
       stocks: [], 
-      stockBasket: []
+      stockBasket: [], 
+      nations: ['usa','chn','jpn','deu','ind','gbr','fra','ita','bra','rus'],
+      counter: 0
     }
 
     this.pullData = this.pullData.bind(this)
@@ -189,6 +191,7 @@ export default class Home extends Component {
     this.pullExchanges = this.pullExchanges.bind(this)
     this.pushCurrencySlide = this.pushCurrencySlide.bind(this)
     this.pullCompanies = this.pullCompanies.bind(this)
+    this.loopSelection = this.loopSelection.bind(this)
   }
 
   async pullData(selectedCountry){
@@ -215,10 +218,10 @@ export default class Home extends Component {
         })
       })
 
-      const trigger = document.getElementById("trigger")
-      trigger.setAttribute("data-lat", this.state.countryData.lat)
-      trigger.setAttribute("data-lng", this.state.countryData.lng)
-      trigger.click()
+      // const trigger = document.getElementById("trigger")
+      // trigger.setAttribute("data-lat", this.state.countryData.lat)
+      // trigger.setAttribute("data-lng", this.state.countryData.lng)
+      // trigger.click()
 
       this.setState({
         products: products, 
@@ -290,7 +293,7 @@ export default class Home extends Component {
 
   async pushCurrencySlide(){
      let currrentBasket = this.state.currencies
-     console.log(currrentBasket)
+     // console.log(currrentBasket)
      this.setState({
        slidingBasket: this.state.slidingBasket.concat(currrentBasket)
      })
@@ -299,12 +302,12 @@ export default class Home extends Component {
   async pullCompanies(){
     let chnCorps = this.state.companies.filter(company => company.country === `chn`)[0]['megacorps']
     let queryString = chnCorps.join(",")
-    console.log(queryString)
+    // console.log(queryString)
     await axios
       .get(`/api/companies?corps=${queryString}`)
       .then(res => {
         let stocks = res.data.data
-        console.log(stocks)
+        // console.log(stocks)
         let stockBasket = []
         for(let i = 0; i < 10; i++){
           stockBasket = stockBasket.concat(stocks)
@@ -316,130 +319,54 @@ export default class Home extends Component {
       })  
   }
 
+  async loopSelection(){    
+    console.log()
+    let nations = this.state.nations
+    let counter = this.state.counter
+    let selectedNation = nations[counter]
+    const selector = document.getElementById("country_selector")
+    let value = selector.options[counter].value
+    let lng = selector.options[counter].dataset.lng
+    let lat = selector.options[counter].dataset.lat
+
+    selector.selectedIndex = counter
+    selector.dispatchEvent(new Event('change'))
+
+    console.log("SELECT ",selectedNation, counter, value, lng, lat)
+
+    const trigger = document.getElementById("trigger")
+    trigger.setAttribute("data-lat", lat)
+    trigger.setAttribute("data-lng", lng)
+    trigger.click()
+
+    this.pullData(selectedNation)
+
+    if (counter < 9){
+      this.setState({
+        counter: counter + 1
+      })
+    } else {
+      this.setState({
+        counter: 0
+      })
+    }
+  }
+
+  componentWillMount(){
+    clearInterval()
+  }
+
   componentDidMount(){
     this.pullData('usa')
     this.pullExchanges()
     this.pullCompanies()
+    setInterval(this.loopSelection, 8000)
   }
 
   render(){
     return (
       <div className={styles.container}>
         <div className={styles.export}>
-          
-          <div className={styles.table}>
-            <div className={styles.tableName}>
-              <select 
-                className={styles.selection}
-                onChange={this.selectCountry}
-              >
-                <option 
-                  value='usa'
-                  data-lng="-77.04410423472449"
-                  data-lat="38.9046802783378"
-                > 
-                  United States 
-                </option>
-                <option 
-                  value='chn'
-                  data-lng="116.40565993343536"
-                  data-lat="39.90260546559617"
-                >
-                  China 
-                </option>
-                <option 
-                  value='jpn'
-                  data-lng="139.7449267536858"
-                  data-lat="35.677182219118635"
-                > Japan </option>
-                <option 
-                  value='deu'
-                  data-lng="13.41305121178803"
-                  data-lat="52.51884772950167"
-                > Germany </option>
-
-                <option 
-                  value='ind'
-                  data-lng="77.19593602326063"
-                  data-lat="28.518579319021935"
-                > 
-                  India 
-                </option>
-
-                <option 
-                  value='gbr'
-                  data-lng="-0.11465266233424798"
-                  data-lat="51.502460331435785"
-                > 
-                  United Kingdom 
-                </option>
-                <option 
-                  value='fra'
-                  data-lng="2.3511543507860155"
-                  data-lat="48.857266311821164"
-                > 
-                  France 
-                </option>
-
-                <option 
-                  value='ita'
-                  data-lng="12.489983230893142"
-                  data-lat="41.90228734946103"
-                >
-                  Italy 
-                </option>
-
-                <option 
-                  value='bra'
-                  data-lng="-47.88242930280692"
-                  data-lat="-15.800832822859613"
-                >
-                  Brazil
-                </option>
-
-                <option 
-                  value='rus'
-                  data-lng="37.67106783588022"
-                  data-lat="55.7398329490853"
-                >
-                  Russia 
-                </option>
-              </select>
-              Exports by Categories
-            </div>
-
-            <div className={styles.tableRow}>
-              <span className={styles.itemName}>
-                <strong>Annual Exports by Categories </strong>
-              </span>
-              <span className={styles.itemValue}>
-                <strong>Value</strong>
-              </span> 
-              <span className={styles.itemDate}>
-                <strong> Year </strong>
-              </span>
-            </div>
-
-            <div className={styles.tableData}>
-              {
-                this.state.products.map((product) => (
-                  <div className={styles.tableRow} key={product.symbol}>
-                    <span className={styles.itemName}>
-                      {product.cat_name}
-                    </span> 
-
-                    <span className={styles.itemValue}>
-                      <NumberFormat value={product.value} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-                    </span>
-                    <span className={styles.itemDate}> 
-                      {product.date}
-                    </span>
-                  </div> 
-                ))
-              }
-            </div>
-          </div>
-
           <div className={styles.rightPanel}>
             <div className={styles.map}>
               <Map 
@@ -561,7 +488,119 @@ export default class Home extends Component {
               />
             </div>
           </div>
+          <div className={styles.table}>
+            <div className={styles.tableName}>
+              <select 
+                className={styles.selection}
+                onChange={this.selectCountry}
+                id="country_selector"
+              >
+                <option 
+                  value='usa'
+                  data-lng="-77.04410423472449"
+                  data-lat="38.9046802783378"
+                > 
+                  United States 
+                </option>
+                <option 
+                  value='chn'
+                  data-lng="116.40565993343536"
+                  data-lat="39.90260546559617"
+                >
+                  China 
+                </option>
+                <option 
+                  value='jpn'
+                  data-lng="139.7449267536858"
+                  data-lat="35.677182219118635"
+                > Japan </option>
+                <option 
+                  value='deu'
+                  data-lng="13.41305121178803"
+                  data-lat="52.51884772950167"
+                > Germany </option>
 
+                <option 
+                  value='ind'
+                  data-lng="77.19593602326063"
+                  data-lat="28.518579319021935"
+                > 
+                  India 
+                </option>
+
+                <option 
+                  value='gbr'
+                  data-lng="-0.11465266233424798"
+                  data-lat="51.502460331435785"
+                > 
+                  United Kingdom 
+                </option>
+                <option 
+                  value='fra'
+                  data-lng="2.3511543507860155"
+                  data-lat="48.857266311821164"
+                > 
+                  France 
+                </option>
+
+                <option 
+                  value='ita'
+                  data-lng="12.489983230893142"
+                  data-lat="41.90228734946103"
+                >
+                  Italy 
+                </option>
+
+                <option 
+                  value='bra'
+                  data-lng="-47.88242930280692"
+                  data-lat="-15.800832822859613"
+                >
+                  Brazil
+                </option>
+
+                <option 
+                  value='rus'
+                  data-lng="37.67106783588022"
+                  data-lat="55.7398329490853"
+                >
+                  Russia 
+                </option>
+              </select>
+              Exports by Categories
+            </div>
+
+            <div className={styles.tableRow}>
+              <span className={styles.itemName}>
+                <strong>Annual Exports by Categories </strong>
+              </span>
+              <span className={styles.itemValue}>
+                <strong>Value</strong>
+              </span> 
+              <span className={styles.itemDate}>
+                <strong> Year </strong>
+              </span>
+            </div>
+
+            <div className={styles.tableData}>
+              {
+                this.state.products.map((product) => (
+                  <div className={styles.tableRow} key={product.symbol}>
+                    <span className={styles.itemName}>
+                      {product.cat_name}
+                    </span> 
+
+                    <span className={styles.itemValue}>
+                      <NumberFormat value={product.value} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                    </span>
+                    <span className={styles.itemDate}> 
+                      {product.date}
+                    </span>
+                  </div> 
+                ))
+              }
+            </div>
+          </div>
         </div>
         <footer className={styles.footer}>
           <img 
