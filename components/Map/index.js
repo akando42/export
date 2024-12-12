@@ -64,30 +64,30 @@ export default class Map extends Component {
 	    // Restart spinning the globe when interaction is complete
 	    map.on('mouseup', () => {
 	        userInteracting = false;
-	        spinGlobe();
+	        // spinGlobe();
 	    });
 
 	    // These events account for cases where the mouse has moved
 	    // off the map, so 'mouseup' will not be fired.
 	    map.on('dragend', () => {
 	        userInteracting = false;
-	        spinGlobe();
+	        // spinGlobe();
 	    });
 	    map.on('pitchend', () => {
 	        userInteracting = false;
-	        spinGlobe();
+	        // spinGlobe();
 	    });
 	    map.on('rotateend', () => {
 	        userInteracting = false;
-	        spinGlobe();
+	        // spinGlobe();
 	    });
 
 	    // When animation is complete, start spinning if there is no ongoing interaction
 	    map.on('moveend', () => {
-	        spinGlobe();
+	        // spinGlobe();
 	    });   
 
-	    spinGlobe();
+	    // spinGlobe();
 	}
 
 

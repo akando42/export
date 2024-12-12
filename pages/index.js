@@ -215,6 +215,11 @@ export default class Home extends Component {
         })
       })
 
+      const trigger = document.getElementById("trigger")
+      trigger.setAttribute("data-lat", this.state.countryData.lat)
+      trigger.setAttribute("data-lng", this.state.countryData.lng)
+      trigger.click()
+
       this.setState({
         products: products, 
         topProducts: chartData
@@ -224,18 +229,35 @@ export default class Home extends Component {
 
   async selectCountry(e){
     console.log("SELECT COUNTRY ", e.target.value)
-    console.log("LNG", e.target.options[e.target.selectedIndex].dataset.lng)
-    console.log("LAT", e.target.options[e.target.selectedIndex].dataset.lat)
+    let lng = e.target.options[e.target.selectedIndex].dataset.lng
+    let lat = e.target.options[e.target.selectedIndex].dataset.lat
+
+    console.log("Capital coordinate ",lng, lat)
 
     this.setState({
       selectedCountry: e.target.value,
       countryData: {
-        'lng': e.target.options[e.target.selectedIndex].dataset.lng,
-        'lat': e.target.options[e.target.selectedIndex].dataset.lat
+        'lng': lng,
+        'lat': lat
       }
     })
 
+    const trigger = document.getElementById("trigger")
+    trigger.setAttribute("data-lat", lat)
+    trigger.setAttribute("data-lng", lng)
+    trigger.click()
+
     this.pullData(e.target.value)
+  }
+
+  async flyTo(event){
+    const lng = event.target.dataset.lng
+    const lat = event.target.dataset.lat
+
+    const trigger = document.getElementById("trigger")
+    trigger.setAttribute("data-lat", lat)
+    trigger.setAttribute("data-lng", lng)
+    trigger.click()
   }
 
   async pullExchanges(){
@@ -298,7 +320,6 @@ export default class Home extends Component {
     this.pullData('usa')
     this.pullExchanges()
     this.pullCompanies()
-    // setInterval(console.log("Updating"), 1000);
   }
 
   render(){
@@ -438,16 +459,18 @@ export default class Home extends Component {
                   padAngle={0.7}
                   cornerRadius={3}
                   activeOuterRadiusOffset={8}
-                  colors={{ scheme: 'blues' }}
+                  colors={{ scheme: 'spectral' }}
                   borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.6 ] ] }}
                   enableArcLinkLabels={false}
-                  enableArcLabels={false}
+                  enableArcLabels={true}
                   arcLinkLabelsSkipAngle={10}
                   arcLinkLabelsTextColor="#000"
-                  arcLinkLabelsThickness={2}
+                  arcLinkLabelsThickness={6}
                   arcLinkLabelsColor={{ from: 'color' }}
                   arcLabelsSkipAngle={10}
-                  arcLabelsTextColor="#333333"
+                  arcLabelsRadiusOffset={0.75}
+                  arcLabelsTextColor="#121C2B"
+                  arcLinkLabelsThickness={6}
                   defs={[
                       {
                           id: 'dots',
@@ -516,6 +539,23 @@ export default class Home extends Component {
                               id: 'javascript'
                           },
                           id: 'lines'
+                      }
+                  ]}
+                  legends={[
+                      {
+                          anchor: 'right',
+                          direction: 'column',
+                          justify: false,
+                          translateX: 140,
+                          translateY: 0,
+                          itemsSpacing: 2,
+                          itemWidth: 60,
+                          itemHeight: 14,
+                          itemTextColor: '#999',
+                          itemDirection: 'left-to-right',
+                          itemOpacity: 1,
+                          symbolSize: 14,
+                          symbolShape: 'circle'
                       }
                   ]}
               />
