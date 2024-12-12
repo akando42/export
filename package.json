@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "mapbox-gl": "^2.0.0",
     "@nivo/bar": "^0.70.1",
     "@nivo/core": "^0.70.1",
     "@nivo/pie": "^0.70.1",

@@ -6,6 +6,7 @@ import NumberFormat from 'react-number-format'
 import { ResponsivePieCanvas } from '@nivo/pie'
 import axios from "axios"
 import {Component} from "react"
+import Map from "../components/Map"
 
 
 export default class Home extends Component {
@@ -122,6 +123,10 @@ export default class Home extends Component {
           "color": "hsl(20, 70%, 50%)"
         }],
       selectedCountry: 'usa',
+      countryData: {
+        'lng': 105,
+        'lat': 21
+      },
       products: [], 
       topProducts: [],
       currencies: [],
@@ -300,6 +305,7 @@ export default class Home extends Component {
     return (
       <div className={styles.container}>
         <div className={styles.export}>
+          
           <div className={styles.table}>
             <div className={styles.tableName}>
               <select 
@@ -319,6 +325,7 @@ export default class Home extends Component {
               </select>
               Exports by Categories
             </div>
+
             <div className={styles.tableRow}>
               <span className={styles.itemName}>
                 <strong>Annual Exports by Categories </strong>
@@ -330,130 +337,131 @@ export default class Home extends Component {
                 <strong> Year </strong>
               </span>
             </div>
-            {
-              this.state.products.map((product) => (
-                <div className={styles.tableRow} key={product.symbol}>
-                  <span className={styles.itemName}>
-                    {product.cat_name}
-                  </span> 
 
-                  <span className={styles.itemValue}>
-                    <NumberFormat value={product.value} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-                  </span>
-                  <span className={styles.itemDate}> 
-                    {product.date}
-                  </span>
-                </div> 
-              ))
-            }
+            <div className={styles.tableData}>
+              {
+                this.state.products.map((product) => (
+                  <div className={styles.tableRow} key={product.symbol}>
+                    <span className={styles.itemName}>
+                      {product.cat_name}
+                    </span> 
+
+                    <span className={styles.itemValue}>
+                      <NumberFormat value={product.value} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                    </span>
+                    <span className={styles.itemDate}> 
+                      {product.date}
+                    </span>
+                  </div> 
+                ))
+              }
+            </div>
           </div>
-          <div className={styles.chart}>
-            <ResponsivePieCanvas
-                data={this.state.topProducts}
-                margin={{ top: 40, right: 200, bottom: 40, left: 80 }}
-                innerRadius={0.5}
-                padAngle={0.7}
-                cornerRadius={3}
-                activeOuterRadiusOffset={8}
-                colors={{ scheme: 'paired' }}
-                borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.6 ] ] }}
-                arcLinkLabelsSkipAngle={10}
-                arcLinkLabelsTextColor="#333333"
-                arcLinkLabelsThickness={2}
-                arcLinkLabelsColor={{ from: 'color' }}
-                arcLabelsSkipAngle={10}
-                arcLabelsTextColor="#333333"
-                defs={[
-                    {
-                        id: 'dots',
-                        type: 'patternDots',
-                        background: 'inherit',
-                        color: 'rgba(255, 255, 255, 0.3)',
-                        size: 4,
-                        padding: 1,
-                        stagger: true
-                    },
-                    {
-                        id: 'lines',
-                        type: 'patternLines',
-                        background: 'inherit',
-                        color: 'rgba(255, 255, 255, 0.3)',
-                        rotation: -45,
-                        lineWidth: 6,
-                        spacing: 10
-                    }
-                ]}
-                fill={[
-                    {
-                        match: {
-                            id: 'ruby'
-                        },
-                        id: 'dots'
-                    },
-                    {
-                        match: {
-                            id: 'c'
-                        },
-                        id: 'dots'
-                    },
-                    {
-                        match: {
-                            id: 'go'
-                        },
-                        id: 'dots'
-                    },
-                    {
-                        match: {
-                            id: 'python'
-                        },
-                        id: 'dots'
-                    },
-                    {
-                        match: {
-                            id: 'scala'
-                        },
-                        id: 'lines'
-                    },
-                    {
-                        match: {
-                            id: 'lisp'
-                        },
-                        id: 'lines'
-                    },
-                    {
-                        match: {
-                            id: 'elixir'
-                        },
-                        id: 'lines'
-                    },
-                    {
-                        match: {
-                            id: 'javascript'
-                        },
-                        id: 'lines'
-                    }
-                ]}
-                // legends={[
-                //     {
-                //         anchor: 'top',
-                //         direction: 'column',
-                //         justify: false,
-                //         translateX: 140,
-                //         translateY: 0,
-                //         itemsSpacing: 2,
-                //         itemWidth: 60,
-                //         itemHeight: 14,
-                //         itemTextColor: '#999',
-                //         itemDirection: 'left-to-right',
-                //         itemOpacity: 1,
-                //         symbolSize: 14,
-                //         symbolShape: 'circle'
-                //     }
-                // ]}
-            />
+
+          <div className={styles.rightPanel}>
+            <div className={styles.map}>
+              <Map 
+                width="32vw"
+                height="38vh"
+                data={this.state.countryData}
+                zoom="2" 
+                lng="90.09105767050022"
+                lat="12.74421786982952"
+              />       
+            </div>
+            <div className={styles.chart}>
+              <ResponsivePieCanvas
+                  data={this.state.topProducts}
+                  margin={{ top: 10, bottom: 10, right: 10,  left: 10 }}
+                  innerRadius={0.2}
+                  padAngle={0.7}
+                  cornerRadius={3}
+                  activeOuterRadiusOffset={8}
+                  colors={{ scheme: 'blues' }}
+                  borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.6 ] ] }}
+                  enableArcLinkLabels={false}
+                  enableArcLabels={false}
+                  arcLinkLabelsSkipAngle={10}
+                  arcLinkLabelsTextColor="#000"
+                  arcLinkLabelsThickness={2}
+                  arcLinkLabelsColor={{ from: 'color' }}
+                  arcLabelsSkipAngle={10}
+                  arcLabelsTextColor="#333333"
+                  defs={[
+                      {
+                          id: 'dots',
+                          type: 'patternDots',
+                          background: 'inherit',
+                          color: 'rgba(255, 255, 255, 0.3)',
+                          size: 4,
+                          padding: 1,
+                          stagger: true
+                      },
+                      {
+                          id: 'lines',
+                          type: 'patternLines',
+                          background: 'inherit',
+                          color: 'rgba(255, 255, 255, 0.3)',
+                          rotation: -45,
+                          lineWidth: 6,
+                          spacing: 10
+                      }
+                  ]}
+                  fill={[
+                      {
+                          match: {
+                              id: 'ruby'
+                          },
+                          id: 'dots'
+                      },
+                      {
+                          match: {
+                              id: 'c'
+                          },
+                          id: 'dots'
+                      },
+                      {
+                          match: {
+                              id: 'go'
+                          },
+                          id: 'dots'
+                      },
+                      {
+                          match: {
+                              id: 'python'
+                          },
+                          id: 'dots'
+                      },
+                      {
+                          match: {
+                              id: 'scala'
+                          },
+                          id: 'lines'
+                      },
+                      {
+                          match: {
+                              id: 'lisp'
+                          },
+                          id: 'lines'
+                      },
+                      {
+                          match: {
+                              id: 'elixir'
+                          },
+                          id: 'lines'
+                      },
+                      {
+                          match: {
+                              id: 'javascript'
+                          },
+                          id: 'lines'
+                      }
+                  ]}
+              />
+            </div>
           </div>
+
         </div>
-
         <footer className={styles.footer}>
           <img 
             className={styles.logo}
@@ -498,9 +506,7 @@ export default class Home extends Component {
                               <span className={styles.triangleUp}></span>
                               <span className={styles.posChange}>{change}%</span>
                             </div>
-
                         }
-                       
                       </div>
                     )
                   })

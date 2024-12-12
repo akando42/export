@@ -29,7 +29,7 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 
 [X] Create Floating Stripe Component
 
-[ ] Refactor CODES for Pie Chart
+[X] Refactor CODES for Pie Chart
 
 [ ] Add MapBox Location Coordinates for each countries
 
