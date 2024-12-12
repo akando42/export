@@ -123,10 +123,7 @@ export default class Home extends Component {
           "color": "hsl(20, 70%, 50%)"
         }],
       selectedCountry: 'usa',
-      countryData: {
-        'lng': 105,
-        'lat': 21
-      },
+      countryData: {lat: "38.9046802783378", lng: "-77.04410423472449"},
       products: [], 
       topProducts: [],
       currencies: [],
@@ -206,10 +203,7 @@ export default class Home extends Component {
       });
       const topProducts = products.slice(0,10)
 
-
-
-      topProducts.map((product) => {
-        
+      topProducts.map((product) => {  
         let value = (product.value/totalExport*100).toFixed(2)
         let name = product.cat_name
         let inMillion = USDollar.format(value)
@@ -228,13 +222,20 @@ export default class Home extends Component {
     })
   }
 
-  async selectCountry(event){
-    console.log("SELECT COUNTRY ", event.target.value)
+  async selectCountry(e){
+    console.log("SELECT COUNTRY ", e.target.value)
+    console.log("LNG", e.target.options[e.target.selectedIndex].dataset.lng)
+    console.log("LAT", e.target.options[e.target.selectedIndex].dataset.lat)
+
     this.setState({
-      selectedCountry: event.target.value
+      selectedCountry: e.target.value,
+      countryData: {
+        'lng': e.target.options[e.target.selectedIndex].dataset.lng,
+        'lat': e.target.options[e.target.selectedIndex].dataset.lat
+      }
     })
 
-    this.pullData(event.target.value)
+    this.pullData(e.target.value)
   }
 
   async pullExchanges(){
@@ -290,8 +291,7 @@ export default class Home extends Component {
           stocks: stocks, 
           stockBasket: stockBasket
         })
-      })
-    
+      })  
   }
 
   componentDidMount(){
@@ -312,16 +312,77 @@ export default class Home extends Component {
                 className={styles.selection}
                 onChange={this.selectCountry}
               >
-                <option value='usa'> United States </option>
-                <option value='chn'> China </option>
-                <option value='jpn'> Japan </option>
-                <option value='deu'> Germany </option>
-                <option value='ind'> India </option>
-                <option value='gbr'> United Kingdom </option>
-                <option value='fra'> France </option>
-                <option value='ita'> Italy </option>
-                <option value='bra'> Brazil </option>
-                <option value='rus'> Russia </option>
+                <option 
+                  value='usa'
+                  data-lng="-77.04410423472449"
+                  data-lat="38.9046802783378"
+                > 
+                  United States 
+                </option>
+                <option 
+                  value='chn'
+                  data-lng="116.40565993343536"
+                  data-lat="39.90260546559617"
+                >
+                  China 
+                </option>
+                <option 
+                  value='jpn'
+                  data-lng="139.7449267536858"
+                  data-lat="35.677182219118635"
+                > Japan </option>
+                <option 
+                  value='deu'
+                  data-lng="13.41305121178803"
+                  data-lat="52.51884772950167"
+                > Germany </option>
+
+                <option 
+                  value='ind'
+                  data-lng="77.19593602326063"
+                  data-lat="28.518579319021935"
+                > 
+                  India 
+                </option>
+
+                <option 
+                  value='gbr'
+                  data-lng="-0.11465266233424798"
+                  data-lat="51.502460331435785"
+                > 
+                  United Kingdom 
+                </option>
+                <option 
+                  value='fra'
+                  data-lng="2.3511543507860155"
+                  data-lat="48.857266311821164"
+                > 
+                  France 
+                </option>
+
+                <option 
+                  value='ita'
+                  data-lng="12.489983230893142"
+                  data-lat="41.90228734946103"
+                >
+                  Italy 
+                </option>
+
+                <option 
+                  value='bra'
+                  data-lng="-47.88242930280692"
+                  data-lat="-15.800832822859613"
+                >
+                  Brazil
+                </option>
+
+                <option 
+                  value='rus'
+                  data-lng="37.67106783588022"
+                  data-lat="55.7398329490853"
+                >
+                  Russia 
+                </option>
               </select>
               Exports by Categories
             </div>
@@ -364,7 +425,7 @@ export default class Home extends Component {
                 width="32vw"
                 height="38vh"
                 data={this.state.countryData}
-                zoom="2" 
+                zoom="1" 
                 lng="90.09105767050022"
                 lat="12.74421786982952"
               />       

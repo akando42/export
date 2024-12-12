@@ -31,7 +31,15 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 
 [X] Refactor CODES for Pie Chart
 
-[ ] Add MapBox Location Coordinates for each countries
+[X] Add MapBox Location Coordinates for each countries
+
+[ ] Fly to Capital Location after Country Selection
+
+[ ] Load Top 10 Companies for each Countries
+
+[ ] Load Relative Currency Exchange
+
+[ ] Display Company Location, Financial and Chart on Click
 
 
 ## Libraries to Use
