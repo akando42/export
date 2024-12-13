@@ -39,6 +39,8 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 
 [X] Load Top 10 Companies for each Countries
 
+[ ] Double Check Exchange Rates Updating on Click
+
 [ ] Display Company Location, Financial and Chart on Click
 
 
