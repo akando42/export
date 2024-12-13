@@ -69,7 +69,7 @@ export default class Home extends Component {
         {
           'country':'rus',
           'currency': '',
-          'megacorps': []
+          'megacorps': [`ROSN`,`VTBR`,`FIVE`,`SGGD`,`MGNT`,`ATAD`,`NLMK`,`NVTK`,`MNOD`,`SVST`]
         }
       ], 
       stocks: [], 

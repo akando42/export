@@ -1,5 +1,5 @@
 ## DEMO
-[Export Driven](https://trading-economics-export.netlify.app)
+[Global Output](https://globaloutput.dystillvision.com)
 
 ## ToDo
 [X] Replacement Boiler Plate Content with Correct Collor Scheme
@@ -37,7 +37,7 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 
 [X] Load Relative Currency Exchange
 
-[ ] Load Top 10 Companies for each Countries
+[X] Load Top 10 Companies for each Countries
 
 [ ] Display Company Location, Financial and Chart on Click
 
@@ -47,4 +47,6 @@ https://stockanalysis.com/list/uk-stocks-us/
 https://en.wikipedia.org/wiki/List_of_largest_French_companies
 https://www.investing.com/equities/france-adrs
 https://www.statista.com/statistics/1402000/largest-listed-companies-in-brazil/
+https://github.com/dopecodez/wikipedia
+https://stockanalysis.com/list/canadian-stocks-us/
 
