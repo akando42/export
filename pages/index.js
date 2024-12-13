@@ -54,17 +54,17 @@ export default class Home extends Component {
         {
           'country':'fra',
           'currency': '',
-          'megacorps': []
+          'megacorps': [`TTE`, `ORAN`, `SNY`, `CSTM`, `LRLCY`, `BNPQY`, `LVMUY`, `CRTO`, `DANOY`, `AXAHY`]
         },
         {
           'country':'ita',
           'currency': '',
-          'megacorps': []
+          'megacorps': [`E`,`RACE`,`ZGN`,`STVN`,`UNCRY`,`ISNPY`,`PRDSY`,`PRYMY`,`TEZNY`,`ARZGY`]
         },
         {
           'country':'bra',
           'currency': '',
-          'megacorps': []
+          'megacorps': [`PBR`,`ITUB`,`BBD`,`VALE`,`ABEV`,`GGB`,`VIV`,`SBS`,`ERJ`,`TIMB`]
         },
         {
           'country':'rus',

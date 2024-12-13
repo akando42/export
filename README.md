@@ -42,3 +42,9 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 [ ] Display Company Location, Financial and Chart on Click
 
 
+## Data Sources
+https://stockanalysis.com/list/uk-stocks-us/
+https://en.wikipedia.org/wiki/List_of_largest_French_companies
+https://www.investing.com/equities/france-adrs
+https://www.statista.com/statistics/1402000/largest-listed-companies-in-brazil/
+
