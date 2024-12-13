@@ -13,6 +13,70 @@ export default class Home extends Component {
   constructor(props){
     super(props)
     this.state = {
+      selectedCountry: 'usa',
+      selectedCurrency: 'usd',
+      countryData: {lat: "38.9046802783378", lng: "-77.04410423472449"},
+      products: [], 
+      topProducts: [],
+      currencies: [],
+      slidingBasket: [],
+      companies: [
+        {
+          'country':'usa',
+          'currency': '',
+          'megacorps': [`WMT`,`AMZN`,`AAPL`,`UNH`,`BRK.A`,`CVS`,`XOM`,`GOOGL`,`MCK`,`COR`]
+        },
+        {
+          'country':'chn',
+          'currency': '',
+          'megacorps': [`TCEHY`,`PTR`,`IDCBY`,`BABA`,`CICHY`,`PNGAY`,`BIDU`,`JD`,`PDD`,`CIHKY`]
+        },
+        {
+          'country':'jpn',
+          'currency': '',
+          'megacorps': [`TM`,`HMC`,`SONY`,`MC`,`MUFG`,`MFG`,`CJPRY`,`NMR`,`NSANF`,`ALPMY`]
+        },
+        {
+          'country':'deu',
+          'currency': 'eur',
+          'megacorps': [`BAYRY`,`DTEGY`,`IMUX`,`DAI`,`DB`,`SAP`,`POAHY`,`VWAGY`,`HDELY`, `DHLGY`]
+        },
+        {
+          'country':'ind',
+          'currency': '',
+          'megacorps': [`INFY`, `IBN`,`HDB`,`WIT`, `MMYT`, `RDY`, `WNS`, `SIFY`, `YTRA`, `ZCAR`]
+        },
+        {
+          'country':'gbr',
+          'currency': '',
+          'megacorps': [`SHEL`,`BP`,`RIO`,`HSBC`,`LYG`,`ARM`,`VOD`,`AZN`,`BTI`,`DEO`,`LIN`,`UL`]
+        },
+        {
+          'country':'fra',
+          'currency': '',
+          'megacorps': []
+        },
+        {
+          'country':'ita',
+          'currency': '',
+          'megacorps': []
+        },
+        {
+          'country':'bra',
+          'currency': '',
+          'megacorps': []
+        },
+        {
+          'country':'rus',
+          'currency': '',
+          'megacorps': []
+        }
+      ], 
+      stocks: [], 
+      stockBasket: [], 
+      nations: ['usa','chn','jpn','deu','ind','gbr','fra','ita','bra','rus'],
+      counter: 0,
+      autoCode: 0,
       pieSampleData: [
         {
           "id": "erlang",
@@ -122,70 +186,6 @@ export default class Home extends Component {
           "value": 168,
           "color": "hsl(20, 70%, 50%)"
         }],
-      selectedCountry: 'usa',
-      selectedCurrency: 'usd',
-      countryData: {lat: "38.9046802783378", lng: "-77.04410423472449"},
-      products: [], 
-      topProducts: [],
-      currencies: [],
-      slidingBasket: [],
-      companies: [
-        {
-          'country':'usa',
-          'currency': '',
-          'megacorps': [`WMT`,`AMZN`,`AAPL`,`UNH`,`BRK.A`,`CVS`,`XOM`,`GOOGL`,`MCK`,`COR`]
-        },
-        {
-          'country':'chn',
-          'currency': '',
-          'megacorps': [`TCEHY`,`PTR`,`IDCBY`,`BABA`,`CICHY`,`PNGAY`,`BIDU`,`JD`,`PDD`,`CIHKY`]
-        },
-        {
-          'country':'jpn',
-          'currency': '',
-          'megacorps': [`TM`,`HMC`,`SONY`,`MC`,`MUFG`,`MFG`,`CJPRY`,`NMR`,`NSANF`,`ALPMY`]
-        },
-        {
-          'country':'deu',
-          'currency': 'eur',
-          'megacorps': [`BAYRY`,`DTEGY`,`IMUX`,`DAI`,`DB`,`SAP`,`POAHY`,`VWAGY`,`HDELY`, `DHLGY`]
-        },
-        {
-          'country':'ind',
-          'currency': '',
-          'megacorps': [`INFY`, `IBN`,`HDB`,`WIT`, `MMYT`, `RDY`, `WNS`, `SIFY`, `YTRA`, `ZCAR`]
-        },
-        {
-          'country':'gbr',
-          'currency': '',
-          'megacorps': []
-        },
-        {
-          'country':'fra',
-          'currency': '',
-          'megacorps': []
-        },
-        {
-          'country':'ita',
-          'currency': '',
-          'megacorps': []
-        },
-        {
-          'country':'bra',
-          'currency': '',
-          'megacorps': []
-        },
-        {
-          'country':'rus',
-          'currency': '',
-          'megacorps': []
-        }
-      ], 
-      stocks: [], 
-      stockBasket: [], 
-      nations: ['usa','chn','jpn','deu','ind','gbr','fra','ita','bra','rus'],
-      counter: 0,
-      autoCode: 0,
     }
 
     this.pullData = this.pullData.bind(this)
@@ -381,6 +381,7 @@ export default class Home extends Component {
   render(){
     return (
       <div className={styles.container}>
+
         <div className={styles.export}>
           <div className={styles.rightPanel}>
             <div className={styles.map}>
@@ -626,6 +627,7 @@ export default class Home extends Component {
             </div>
           </div>
         </div>
+
         <footer className={styles.footer}>
           <img 
             className={styles.logo}
@@ -679,6 +681,7 @@ export default class Home extends Component {
             </div>
           </div>
         </footer>
+
       </div>
     )
   }
