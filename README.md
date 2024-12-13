@@ -35,9 +35,9 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 
 [X] Fly to Capital Location after Country Selection
 
-[ ] Load Top 10 Companies for each Countries
+[X] Load Relative Currency Exchange
 
-[ ] Load Relative Currency Exchange
+[ ] Load Top 10 Companies for each Countries
 
 [ ] Display Company Location, Financial and Chart on Click
 

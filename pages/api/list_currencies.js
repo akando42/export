@@ -3,7 +3,7 @@ import axios from "axios"
 
 export default async (req, res) => {
 	await axios
-		.get(`https://api.exchangeratesapi.io/v1/symbols?access_key=bc92112e343dfe65fdb46826e78df43b`)
+		.get(`https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json`)
 		.then(response => {
 			if (response.status == 200){
 				res.status(200).json({
@@ -20,6 +20,5 @@ export default async (req, res) => {
 		})
 
 }
-
 
 // https://api.exchangeratesapi.io/v1/symbols?access_key=bc92112e343dfe65fdb46826e78df43b

@@ -1,20 +1,26 @@
 import axios from "axios"
 
 export default async (req, res) => {
-  let today = new Date()
-  let yesterday = new Date(today - 86400000); 
-  let year = yesterday.getFullYear()
-  let month = yesterday.getMonth() + 1
-  let date = yesterday.getDate()
-  let yesterdayString = `${year}-${month}-${date}`
-  console.log("YES", yesterdayString)
-  let currencyBasket = 'CAD,USD,JPY,KRW,CNY,MMK,VND,LAK,KHR,THB,AUD,GBP,MXN'
+  // let today = new Date()
+  // let yesterday = new Date(today - 86400000); 
+  // let year = yesterday.getFullYear()
+  // let month = yesterday.getMonth() + 1
+  // let date = yesterday.getDate()
+  // let yesterdayString = `${year}-${month}-${date}`
+  // console.log("YES", yesterdayString)
   // const url = `https://api.exchangeratesapi.io/v1/${yesterdayString}?access_key=bc92112e343dfe65fdb46826e78df43b&symbols=${currencyBasket}&format=1`
-  const url = `https://latest.currency-api.pages.dev/v1/currencies/eur.json`
+
+  const {query, method} = req
+  let base = query.base
+  console.log("BASE CURRENCY", base)
+
+  const url = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${base.toLowerCase()}.json`
   await axios
     .get(url)
     .then(({ data }) => {
-      res.status(200).json({ data })
+      let exchangeRate = data[base.toLowerCase()]
+      console.log(exchangeRate)
+      res.status(200).json({ exchangeRate })
     })
     .catch(({ err }) => {
       res.status(400).json({ err })

@@ -123,6 +123,7 @@ export default class Home extends Component {
           "color": "hsl(20, 70%, 50%)"
         }],
       selectedCountry: 'usa',
+      selectedCurrency: 'usd',
       countryData: {lat: "38.9046802783378", lng: "-77.04410423472449"},
       products: [], 
       topProducts: [],
@@ -132,17 +133,17 @@ export default class Home extends Component {
         {
           'country':'usa',
           'currency': '',
-          'megacorps': []
+          'megacorps': [`WMT`,`AMZN`,`AAPL`,`UNH`,`BRK.A`,`CVS`,`XOM`,`GOOGL`,`MCK`,`COR`]
         },
         {
           'country':'chn',
           'currency': '',
-          'megacorps': [`TCEHY`,`PTR`,`IDCBY`,`BABA`, `CICHY`, `PNGAY`, `BIDU`, `JD`, `PDD`, `CIHKY`]
+          'megacorps': [`TCEHY`,`PTR`,`IDCBY`,`BABA`,`CICHY`,`PNGAY`,`BIDU`,`JD`,`PDD`,`CIHKY`]
         },
         {
           'country':'jpn',
           'currency': '',
-          'megacorps': []
+          'megacorps': [`TM`,`HMC`,`SONY`,`MC`,`MUFG`,`MFG`,`CJPRY`,`NMR`,`NSANF`,`ALPMY`]
         },
         {
           'country':'deu',
@@ -234,6 +235,7 @@ export default class Home extends Component {
 
   async selectCountry(e){
     clearInterval(this.state.autoCode)
+
     console.log("SELECT COUNTRY ", e.target.value)
     let lng = e.target.options[e.target.selectedIndex].dataset.lng
     let lat = e.target.options[e.target.selectedIndex].dataset.lat
@@ -242,6 +244,7 @@ export default class Home extends Component {
 
     this.setState({
       selectedCountry: e.target.value,
+      selectedCurrency: e.target.dataset.currency,
       countryData: {
         'lng': lng,
         'lat': lat
@@ -254,6 +257,8 @@ export default class Home extends Component {
     trigger.click()
 
     this.pullData(e.target.value)
+    this.pullExchanges(e.target.options[e.target.selectedIndex].dataset.currency)
+    this.pullCompanies(e.target.value)
   }
 
   async flyTo(event){
@@ -266,11 +271,11 @@ export default class Home extends Component {
     trigger.click()
   }
 
-  async pullExchanges(){
-    await axios.get(`/api/currencies`).then(res => {
+  async pullExchanges(baseCurrency){
+    await axios.get(`/api/currencies?base=${baseCurrency}`).then(res => {
       // console.log("Currencies", res.data.data.eur)
-      let currencyData = res.data.data.eur
-      let selectedBasket = [`CAD`,`USD`,`JPY`,`KRW`,`CNY`,`MMK`,`VND`,`LAK`,`KHR`,`THB`,`AUD`,`GBP`,`MXN`,'BRL','INR']
+      let currencyData = res.data.exchangeRate
+      let selectedBasket = [`EUR`,`CAD`,`USD`,`JPY`,`KRW`,`CNY`,`MMK`,`VND`,`LAK`,`KHR`,`THB`,`AUD`,`GBP`,`MXN`,'BRL','INR']
       let currencyBasket = []
       for (const key in currencyData) {
         // console.log(key, currencyData[key])
@@ -302,9 +307,9 @@ export default class Home extends Component {
      })
   }
 
-  async pullCompanies(){
-    let chnCorps = this.state.companies.filter(company => company.country === `chn`)[0]['megacorps']
-    let queryString = chnCorps.join(",")
+  async pullCompanies(countryCode){
+    let corps = this.state.companies.filter(company => company.country === countryCode)[0]['megacorps']
+    let queryString = corps.join(",")
     // console.log(queryString)
     await axios
       .get(`/api/companies?corps=${queryString}`)
@@ -368,8 +373,8 @@ export default class Home extends Component {
 
   componentDidMount(){
     this.pullData('usa')
-    this.pullExchanges()
-    this.pullCompanies()
+    this.pullExchanges(this.state.selectedCurrency)
+    this.pullCompanies('usa')
     this.startAuto()
   }
 
@@ -509,6 +514,7 @@ export default class Home extends Component {
                   value='usa'
                   data-lng="-77.04410423472449"
                   data-lat="38.9046802783378"
+                  data-currency="USD"
                 > 
                   United States 
                 </option>
@@ -516,6 +522,7 @@ export default class Home extends Component {
                   value='chn'
                   data-lng="116.40565993343536"
                   data-lat="39.90260546559617"
+                  data-currency="CNY"
                 >
                   China 
                 </option>
@@ -523,17 +530,20 @@ export default class Home extends Component {
                   value='jpn'
                   data-lng="139.7449267536858"
                   data-lat="35.677182219118635"
+                  data-currency="JPY"
                 > Japan </option>
                 <option 
                   value='deu'
                   data-lng="13.41305121178803"
                   data-lat="52.51884772950167"
+                  data-currency="EUR"
                 > Germany </option>
 
                 <option 
                   value='ind'
                   data-lng="77.19593602326063"
                   data-lat="28.518579319021935"
+                  data-currency="INR"
                 > 
                   India 
                 </option>
@@ -542,6 +552,7 @@ export default class Home extends Component {
                   value='gbr'
                   data-lng="-0.11465266233424798"
                   data-lat="51.502460331435785"
+                  data-currency="GBP"
                 > 
                   United Kingdom 
                 </option>
@@ -549,6 +560,7 @@ export default class Home extends Component {
                   value='fra'
                   data-lng="2.3511543507860155"
                   data-lat="48.857266311821164"
+                  data-currency="EUR"
                 > 
                   France 
                 </option>
@@ -557,6 +569,7 @@ export default class Home extends Component {
                   value='ita'
                   data-lng="12.489983230893142"
                   data-lat="41.90228734946103"
+                  data-currency="EUR"
                 >
                   Italy 
                 </option>
@@ -565,6 +578,7 @@ export default class Home extends Component {
                   value='bra'
                   data-lng="-47.88242930280692"
                   data-lat="-15.800832822859613"
+                  data-currency="BRL"
                 >
                   Brazil
                 </option>
@@ -573,6 +587,7 @@ export default class Home extends Component {
                   value='rus'
                   data-lng="37.67106783588022"
                   data-lat="55.7398329490853"
+                  data-currency="RUB"
                 >
                   Russia 
                 </option>
