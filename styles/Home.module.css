@@ -5,6 +5,8 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  background-color: #F0F0F0;
+  color: #131B26;
 }
 
 .main {
@@ -37,13 +39,14 @@
   /*margin: 1em;*/
   width: 62vw;
   height: 84vh;
+  background-color: #FFF;
 }
 
 .tableName {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: flex-end;
   width: 100%;
   font-weight: bold;
   font-size: 12px;
@@ -132,6 +135,7 @@
 }
 
 .map {
+  background-color: #FFF;
   width: 34vw;
   height: 40vh;
   display: flex;
@@ -143,6 +147,7 @@
 }
 
 .chart {
+  background-color: #FFF;
   border: 1px solid #121C2B;
   padding: 10px;
   display: flex;

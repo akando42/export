@@ -97,7 +97,7 @@ export default class Map extends Component {
 		const  mobileOrNot = window.matchMedia("(max-width: 800px)");
 		const attractions = this.props.data;
 
-    	console.log("MOBILE ?",mobileOrNot.matches);
+    	// console.log("MOBILE ?",mobileOrNot.matches);
 
     	const optimalZoom = mobileOrNot.matches && attractions.length >1 ? 1.2 : zoom ;
 
@@ -108,7 +108,7 @@ export default class Map extends Component {
 	        zoom: optimalZoom
 	    });
 
-	    console.log(attractions);
+	    // console.log(attractions);
  
 	    if (attractions.length > 1){
 	    	attractions.map(attraction => {
@@ -162,9 +162,9 @@ export default class Map extends Component {
 		const lng = event.target.dataset.lng
    		const lat = event.target.dataset.lat
 		
-		console.log(
-			"Triggered", lng, lat, this.state.zoom
-		)
+		// console.log(
+		// 	"Triggered", lng, lat, this.state.zoom
+		// )
 		const map = this.state.myMap
         map.flyTo({
         	center: [lng, lat],

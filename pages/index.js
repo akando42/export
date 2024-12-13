@@ -13,7 +13,7 @@ export default class Home extends Component {
   constructor(props){
     super(props)
     this.state = {
-      pieData: [
+      pieSampleData: [
         {
           "id": "erlang",
           "label": "erlang",
@@ -183,7 +183,8 @@ export default class Home extends Component {
       stocks: [], 
       stockBasket: [], 
       nations: ['usa','chn','jpn','deu','ind','gbr','fra','ita','bra','rus'],
-      counter: 0
+      counter: 0,
+      autoCode: 0,
     }
 
     this.pullData = this.pullData.bind(this)
@@ -192,6 +193,7 @@ export default class Home extends Component {
     this.pushCurrencySlide = this.pushCurrencySlide.bind(this)
     this.pullCompanies = this.pullCompanies.bind(this)
     this.loopSelection = this.loopSelection.bind(this)
+    this.startAuto = this.startAuto.bind(this)
   }
 
   async pullData(selectedCountry){
@@ -210,7 +212,7 @@ export default class Home extends Component {
         let value = (product.value/totalExport*100).toFixed(2)
         let name = product.cat_name
         let inMillion = USDollar.format(value)
-         console.log(inMillion)
+        // console.log(inMillion)
         chartData.push({
           id: name, 
           value: value, 
@@ -231,6 +233,7 @@ export default class Home extends Component {
   }
 
   async selectCountry(e){
+    clearInterval(this.state.autoCode)
     console.log("SELECT COUNTRY ", e.target.value)
     let lng = e.target.options[e.target.selectedIndex].dataset.lng
     let lat = e.target.options[e.target.selectedIndex].dataset.lat
@@ -320,7 +323,6 @@ export default class Home extends Component {
   }
 
   async loopSelection(){    
-    console.log()
     let nations = this.state.nations
     let counter = this.state.counter
     let selectedNation = nations[counter]
@@ -352,15 +354,23 @@ export default class Home extends Component {
     }
   }
 
+  async startAuto(){
+    let autoCode = setInterval(this.loopSelection, 8000)
+    console.log("Interval CODE", autoCode)
+    this.setState({
+      autoCode: autoCode
+    })
+  }
+
   componentWillMount(){
-    clearInterval()
+    clearInterval(this.state.autoCode)
   }
 
   componentDidMount(){
     this.pullData('usa')
     this.pullExchanges()
     this.pullCompanies()
-    setInterval(this.loopSelection, 8000)
+    this.startAuto()
   }
 
   render(){
@@ -567,7 +577,6 @@ export default class Home extends Component {
                   Russia 
                 </option>
               </select>
-              Exports by Categories
             </div>
 
             <div className={styles.tableRow}>

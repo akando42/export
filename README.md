@@ -42,23 +42,3 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 [ ] Display Company Location, Financial and Chart on Click
 
 
-## Libraries to Use
-- https://github.com/AndreasFaust/react-ticker 
-- https://github.com/plouc/nivo
-
-KEY:SECRET for Trading Economics
-- Free Account  ==> blwvmxl5x1rk8qk:jodtirdtxtxvyld
-- Guest Account ==> guest:guest
-
-
-## Getting Started
-
-First, run the development server at localhost:3000
-
-```bash
-yarn dev
-```
-
-API routes is accessible at http://localhost:3000/api/ping and editable at `pages/api/ping.js`
-
-
