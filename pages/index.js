@@ -147,13 +147,13 @@ export default class Home extends Component {
         },
         {
           'country':'deu',
-          'currency': '',
-          'megacorps': []
+          'currency': 'eur',
+          'megacorps': [`BAYRY`,`DTEGY`,`IMUX`,`DAI`,`DB`,`SAP`,`POAHY`,`VWAGY`,`HDELY`, `DHLGY`]
         },
         {
           'country':'ind',
           'currency': '',
-          'megacorps': []
+          'megacorps': [`INFY`, `IBN`,`HDB`,`WIT`, `MMYT`, `RDY`, `WNS`, `SIFY`, `YTRA`, `ZCAR`]
         },
         {
           'country':'gbr',
