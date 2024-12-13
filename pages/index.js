@@ -287,13 +287,24 @@ export default class Home extends Component {
         }
       }
 
+      let sortedBasket = currencyBasket.sort(
+        (a, b) => {
+          if (a.rate > b.rate) {
+            return -1;
+          } else if (a.rate < b.rate) {
+            return 1;
+          }
+          return 0;
+        }
+      )
+
       let slidingBasket = []
       for(let i = 0; i < 10; i++){
-        slidingBasket = slidingBasket.concat(currencyBasket)
+        slidingBasket = slidingBasket.concat(sortedBasket)
       }
 
       this.setState({
-        currencies: currencyBasket, 
+        currencies: sortedBasket, 
         slidingBasket: slidingBasket
       })
     })
@@ -637,17 +648,19 @@ export default class Home extends Component {
             <div className={styles.currencies}>
               <div className={styles.slideLeft}>
                 {
-                  this.state.slidingBasket.map((currency) => {
-                    let curr = currency.name.toUpperCase()
-                    let rate = currency.rate.toFixed(2)
-                    let color = '#'
-                    return (
-                      <div className={styles.currency}>
-                        <span className={styles.symbol}>{curr}</span>
-                        <span className={styles.rate}>{rate}</span>
-                      </div>
-                    )
-                  })
+                  this.state.slidingBasket
+                    .map((currency) => {
+                      let curr = currency.name.toUpperCase()
+                      let rate = currency.rate.toFixed(2)
+                      let color = '#'
+                      return (
+                        <div className={styles.currency}>
+                          <span className={styles.symbol}>{curr}</span>
+                          <span className={styles.rate}>{rate}</span>
+                        </div>
+                      )
+                    }
+                  )
                 }
               </div>
             </div>
