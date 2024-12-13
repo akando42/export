@@ -275,7 +275,7 @@ export default class Home extends Component {
     await axios.get(`/api/currencies?base=${baseCurrency}`).then(res => {
       // console.log("Currencies", res.data.data.eur)
       let currencyData = res.data.exchangeRate
-      let selectedBasket = [`EUR`,`CAD`,`USD`,`JPY`,`KRW`,`CNY`,`MMK`,`VND`,`LAK`,`KHR`,`THB`,`AUD`,`GBP`,`MXN`,'BRL','INR']
+      let selectedBasket = [`GBP`,`EUR`,`CAD`,`USD`,`JPY`,`KRW`,`CNY`,`MMK`,`VND`,`LAK`,`KHR`,`THB`,`AUD`,,`MXN`,'BRL','INR','RUB']
       let currencyBasket = []
       for (const key in currencyData) {
         // console.log(key, currencyData[key])
@@ -346,6 +346,7 @@ export default class Home extends Component {
     let value = selector.options[counter].value
     let lng = selector.options[counter].dataset.lng
     let lat = selector.options[counter].dataset.lat
+    let currency = selector.options[counter].dataset.currency
 
     selector.selectedIndex = counter
     selector.dispatchEvent(new Event('change'))
@@ -358,6 +359,8 @@ export default class Home extends Component {
     trigger.click()
 
     this.pullData(selectedNation)
+    this.pullCompanies(selectedNation)
+    this.pullExchanges(currency)
 
     if (counter < 9){
       this.setState({
