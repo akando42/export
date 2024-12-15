@@ -345,9 +345,8 @@
   font-size: 4rem;
 }
 
-.title,
-.description {
-  text-align: center;
+.title, .description {
+  text-align: left;
 }
 
 .description {
@@ -403,13 +402,84 @@
   line-height: 1.5;
 }
 
-.corpLogo {
-  width: 40px;
-  height: 40px;
+.corpSummary {
+  width: 60vw;
+  display: flex;
+  flex-direction: row;
 }
 
+.corpDescription {
+  height: 60vh;
+  overflow-y: scroll;
+  font-size: 17px !important;
+}
 
+.corpName {
+  font-size: 17px;
+  font-weight: 700;
+  padding: 0 0 10px 0;
+}
 
+.pricing {
+  display: flex;
+  flex-direction: column;
+  width: 10vw;
+  align-items: center;
+}
+
+.info {
+  padding: 6px;
+  width: 25vw;
+} 
+
+.metrics {
+  width: 25vw;
+  padding: 6px;
+}
+
+.corpLogo {
+  width: 10vw;
+  height: 10vw;
+  background-color: black;
+  padding: 4px;
+}
+
+.price {
+  color: blue;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.priceChanges {
+  margin: 4px 0 0 0;
+  font-size: 17px;
+  color: blue;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.ticker {
+  background-color: blue;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 10vw;
+  color: white;
+  font-weight: 700;
+  padding: 4px;
+}
+
+.exchange {
+  font-weight: 700;
+  font-size: 17px;
+  padding: 0 0 10px 0;
+}
+
+.metricInfo {
+
+}
 
 @media (max-width: 600px) {
   .grid {

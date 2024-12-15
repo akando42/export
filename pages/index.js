@@ -16,6 +16,7 @@ export default class Home extends Component {
     this.state = {
       selectedCountry: 'usa',
       selectedCurrency: 'usd',
+      showingCorps: true,
       currentCorp: '',
       currentCorpProfile: {
         "symbol": "UNH",
@@ -587,19 +588,81 @@ export default class Home extends Component {
           {
             this.state.showingCorps
             ? <div className={styles.table}>
-                <div>{this.state.currentCorp}</div>
-                <img 
-                  className={styles.corpLogo}
-                  src={this.state.currentCorpProfile.image}
-                >
-                </img>
+                <div className={styles.corpSummary}>
+                  <div className={styles.pricing}>
+                    <img 
+                      className={styles.corpLogo}
+                      src={this.state.currentCorpProfile.image}
+                    />
+                    <div className={styles.priceChanges}>
+                      <span className={styles.triangleUp}></span>
+                      {this.state.currentCorpProfile.changes}
+                    </div>
+                    <div className={styles.price}>
+                      {this.state.currentCorpProfile.price}
+                    </div>
+                    <div className={styles.ticker}>
+                      {this.state.currentCorpProfile.symbol}
+                    </div>
+                  </div>
+                  
+                  <div className={styles.info}>
+                    <div className={styles.corpName}>
+                      {this.state.currentCorpProfile.companyName}
+                    </div>
+                    <div className={styles.corpInfo}>
+                      {this.state.currentCorpProfile.address}
+                    </div>
+                    <div className={styles.corpInfo}>
+                      {this.state.currentCorpProfile.city}, {this.state.currentCorpProfile.state}, {this.state.currentCorpProfile.zip}
+                    </div>
+                    <div className={styles.corpInfo}>
+                      {this.state.currentCorpProfile.phone}
+                    </div>
+                    <div className={styles.corpInfo}>
+                      CEO: {this.state.currentCorpProfile.ceo}
+                    </div>
+                    <div className={styles.corpInfo}>
+                      Employees: {this.state.currentCorpProfile.fullTimeEmployees}
+                    </div>
+                    <div className={styles.corpInfo}>
+                      Sector: {this.state.currentCorpProfile.sector}
+                    </div>
+                    <div className={styles.corpInfo}>
+                      Industry: {this.state.currentCorpProfile.industry}
+                    </div>
+                  </div>
 
-                <div>{this.state.currentCorpProfile.address}</div>
-                <div>{this.state.currentCorpProfile.city}</div>
-                <div>{this.state.currentCorpProfile.country}</div>
-
-
+                  <div className={styles.metrics}>
+                    <div className={styles.exchange}>
+                      {this.state.currentCorpProfile.exchangeShortName} {this.state.currentCorpProfile.exchange} 
+                    </div>
+                    <div className={styles.metricInfo}>
+                      Beta Volatility: {this.state.currentCorpProfile.beta}
+                    </div>
+                    <div className={styles.metricInfo}>
+                      Trading Volume: {this.state.currentCorpProfile.volAvg}
+                    </div>
+                    <div className={styles.metricInfo}>
+                      Market Cap: {this.state.currentCorpProfile.mktCap}
+                    </div>
+                    <div className={styles.metricInfo}>
+                      Last Dividend: {this.state.currentCorpProfile.lastDiv}
+                    </div>
+                    <div className={styles.metricInfo}>
+                      Annual Range: {this.state.currentCorpProfile.range}
+                    </div>
+                  </div>
+                </div>
+                
+                <div className={styles.corpDescription}>
+                  <h2> Description </h2>
+                  <div className={styles.description}>
+                    {this.state.currentCorpProfile.description}
+                  </div>
+                </div>
               </div>
+
             : <div className={styles.table}>
                 <div className={styles.tableName}>
                   <select 
