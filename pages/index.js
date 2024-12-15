@@ -16,7 +16,7 @@ export default class Home extends Component {
     this.state = {
       selectedCountry: 'usa',
       selectedCurrency: 'usd',
-      showingCorps: true,
+      showingCorps: false,
       currentCorp: '',
       currentCorpProfile: {
         "symbol": "UNH",
@@ -654,7 +654,7 @@ export default class Home extends Component {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className={styles.corpDescription}>
                   <h2> Description </h2>
                   <div className={styles.description}>
