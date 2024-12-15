@@ -259,14 +259,16 @@
 .stockSymbol {
   font-weight: 700;
   margin-right: 5px;
+  pointer-events: none;
 }
 
 .price {
   margin-right: 5px; 
+  pointer-events: none;
 }
 
-
 .changeIndicator {
+  pointer-events: none;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -399,6 +401,11 @@
   margin: 0;
   font-size: 1.25rem;
   line-height: 1.5;
+}
+
+.corpLogo {
+  width: 40px;
+  height: 40px;
 }
 
 

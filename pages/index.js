@@ -6,6 +6,7 @@ import NumberFormat from 'react-number-format'
 import { ResponsivePieCanvas } from '@nivo/pie'
 import axios from "axios"
 import {Component} from "react"
+
 import Map from "../components/Map"
 
 
@@ -15,6 +16,45 @@ export default class Home extends Component {
     this.state = {
       selectedCountry: 'usa',
       selectedCurrency: 'usd',
+      currentCorp: '',
+      currentCorpProfile: {
+        "symbol": "UNH",
+        "price": 520.48,
+        "beta": 0.591,
+        "volAvg": 3762201,
+        "mktCap": 478989416320,
+        "lastDiv": 8.4,
+        "range": "436.38-630.73",
+        "changes": 4.72,
+        "companyName": "UnitedHealth Group Incorporated",
+        "currency": "USD",
+        "cik": "0000731766",
+        "isin": "US91324P1021",
+        "cusip": "91324P102",
+        "exchange": "New York Stock Exchange",
+        "exchangeShortName": "NYSE",
+        "industry": "Medical - Healthcare Plans",
+        "website": "https://www.unitedhealthgroup.com",
+        "description": "UnitedHealth Group Incorporated operates as a diversified health care company in the United States. It operates through four segments: UnitedHealthcare, Optum Health, Optum Insight, and Optum Rx. The UnitedHealthcare segment offers consumer-oriented health benefit plans and services for national employers, public sector employers, mid-sized employers, small businesses, and individuals; health care coverage and well-being services to individuals age 50 and older addressing their needs for preventive and acute health care services, as well as services dealing with chronic disease and other specialized issues for older individuals; Medicaid plans, children's health insurance and health care programs; health and dental benefits; and hospital and clinical services. The OptumHealth segment provides access to networks of care provider specialists, health management services, care delivery, consumer engagement, and financial services. This segment serves individuals directly through care delivery systems, employers, payers, and government entities. The OptumInsight segment offers software and information products, advisory consulting arrangements, and managed services outsourcing contracts to hospital systems, physicians, health plans, governments, life sciences companies, and other organizations. The OptumRx segment provides pharmacy care services and programs, including retail network contracting, home delivery, specialty and compounding pharmacy, and purchasing and clinical capabilities, as well as develops programs in the areas of step therapy, formulary management, drug adherence, and disease/drug therapy management. UnitedHealth Group Incorporated was incorporated in 1977 and is based in Minnetonka, Minnesota.",
+        "ceo": "Sir Andrew Philip Witty",
+        "sector": "Healthcare",
+        "country": "US",
+        "fullTimeEmployees": "440000",
+        "phone": "952 936 1300",
+        "address": "UnitedHealth Group Center",
+        "city": "Minnetonka",
+        "state": "MN",
+        "zip": "55343",
+        "dcfDiff": -345.16586,
+        "dcf": 865.6458624115186,
+        "image": "https://images.financialmodelingprep.com/symbol/UNH.png",
+        "ipoDate": "1984-10-17",
+        "defaultImage": false,
+        "isEtf": false,
+        "isActivelyTrading": true,
+        "isAdr": false,
+        "isFund": false
+      },
       countryData: {lat: "38.9046802783378", lng: "-77.04410423472449"},
       products: [], 
       topProducts: [],
@@ -195,6 +235,7 @@ export default class Home extends Component {
     this.pullCompanies = this.pullCompanies.bind(this)
     this.loopSelection = this.loopSelection.bind(this)
     this.startAuto = this.startAuto.bind(this)
+    this.displayCorps = this.displayCorps.bind(this)
   }
 
   async pullData(selectedCountry){
@@ -342,6 +383,7 @@ export default class Home extends Component {
     let nations = this.state.nations
     let counter = this.state.counter
     let selectedNation = nations[counter]
+
     const selector = document.getElementById("country_selector")
     let value = selector.options[counter].value
     let lng = selector.options[counter].dataset.lng
@@ -381,6 +423,21 @@ export default class Home extends Component {
     })
   }
 
+  async displayCorps(event){
+    clearInterval(this.state.autoCode)
+
+    console.log("Target ", event.target.dataset.corp)
+
+    let corpData = this.state.stocks
+      .filter(stock => stock.symbol === event.target.dataset.corp)
+
+    this.setState({
+      showingCorps: true, 
+      currentCorp: event.target.dataset.corp,
+      currentCorpProfile: corpData[0]
+    })
+  }
+
   componentWillMount(){
     clearInterval(this.state.autoCode)
   }
@@ -389,27 +446,34 @@ export default class Home extends Component {
     this.pullData('usa')
     this.pullExchanges(this.state.selectedCurrency)
     this.pullCompanies('usa')
-    this.startAuto()
+    // this.startAuto()
   }
 
   render(){
     return (
       <div className={styles.container}>
-
         <div className={styles.export}>
           <div className={styles.rightPanel}>
             <div className={styles.map}>
-              <Map 
-                width="32vw"
-                height="38vh"
-                data={this.state.countryData}
-                zoom="1" 
-                lng="90.09105767050022"
-                lat="12.74421786982952"
-              />       
+              {
+                this.state.showingCorps
+                ? <div></div>     
+                : <Map 
+                    width="32vw"
+                    height="38vh"
+                    data={this.state.countryData}
+                    zoom="1" 
+                    lng="90.09105767050022"
+                    lat="12.74421786982952"
+                  />
+              }
             </div>
+
             <div className={styles.chart}>
-              <ResponsivePieCanvas
+              {
+                this.state.showingCorps
+                ? <div></div>     
+                : <ResponsivePieCanvas
                   data={this.state.topProducts}
                   margin={{ top: 10, bottom: 10, right: 10,  left: 10 }}
                   innerRadius={0.2}
@@ -515,131 +579,150 @@ export default class Home extends Component {
                           symbolShape: 'circle'
                       }
                   ]}
-              />
-            </div>
-          </div>
-          <div className={styles.table}>
-            <div className={styles.tableName}>
-              <select 
-                className={styles.selection}
-                onChange={this.selectCountry}
-                id="country_selector"
-              >
-                <option 
-                  value='usa'
-                  data-lng="-77.04410423472449"
-                  data-lat="38.9046802783378"
-                  data-currency="USD"
-                > 
-                  United States 
-                </option>
-                <option 
-                  value='chn'
-                  data-lng="116.40565993343536"
-                  data-lat="39.90260546559617"
-                  data-currency="CNY"
-                >
-                  China 
-                </option>
-                <option 
-                  value='jpn'
-                  data-lng="139.7449267536858"
-                  data-lat="35.677182219118635"
-                  data-currency="JPY"
-                > Japan </option>
-                <option 
-                  value='deu'
-                  data-lng="13.41305121178803"
-                  data-lat="52.51884772950167"
-                  data-currency="EUR"
-                > Germany </option>
-
-                <option 
-                  value='ind'
-                  data-lng="77.19593602326063"
-                  data-lat="28.518579319021935"
-                  data-currency="INR"
-                > 
-                  India 
-                </option>
-
-                <option 
-                  value='gbr'
-                  data-lng="-0.11465266233424798"
-                  data-lat="51.502460331435785"
-                  data-currency="GBP"
-                > 
-                  United Kingdom 
-                </option>
-                <option 
-                  value='fra'
-                  data-lng="2.3511543507860155"
-                  data-lat="48.857266311821164"
-                  data-currency="EUR"
-                > 
-                  France 
-                </option>
-
-                <option 
-                  value='ita'
-                  data-lng="12.489983230893142"
-                  data-lat="41.90228734946103"
-                  data-currency="EUR"
-                >
-                  Italy 
-                </option>
-
-                <option 
-                  value='bra'
-                  data-lng="-47.88242930280692"
-                  data-lat="-15.800832822859613"
-                  data-currency="BRL"
-                >
-                  Brazil
-                </option>
-
-                <option 
-                  value='rus'
-                  data-lng="37.67106783588022"
-                  data-lat="55.7398329490853"
-                  data-currency="RUB"
-                >
-                  Russia 
-                </option>
-              </select>
-            </div>
-
-            <div className={styles.tableRow}>
-              <span className={styles.itemName}>
-                <strong>Annual Exports by Categories </strong>
-              </span>
-              <span className={styles.itemValue}>
-                <strong>Value</strong>
-              </span> 
-              <span className={styles.itemDate}>
-                <strong> Year </strong>
-              </span>
-            </div>
-
-            <div className={styles.tableData}>
-              {
-                this.state.products.map((product) => (
-                  <div className={styles.tableRow} key={product.symbol}>
-                    <span className={styles.itemName}>
-                      {product.cat_name}
-                    </span> 
-
-                    <span className={styles.itemValue}>
-                      <NumberFormat value={product.value} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-                    </span>
-                    <span className={styles.itemDate}> 
-                      {product.date}
-                    </span>
-                  </div> 
-                ))
+                  />
               }
             </div>
           </div>
+
+          {
+            this.state.showingCorps
+            ? <div className={styles.table}>
+                <div>{this.state.currentCorp}</div>
+                <img 
+                  className={styles.corpLogo}
+                  src={this.state.currentCorpProfile.image}
+                >
+                </img>
+
+                <div>{this.state.currentCorpProfile.address}</div>
+                <div>{this.state.currentCorpProfile.city}</div>
+                <div>{this.state.currentCorpProfile.country}</div>
+
+
+              </div>
+            : <div className={styles.table}>
+                <div className={styles.tableName}>
+                  <select 
+                    className={styles.selection}
+                    onChange={this.selectCountry}
+                    id="country_selector"
+                  >
+                    <option 
+                      value='usa'
+                      data-lng="-77.04410423472449"
+                      data-lat="38.9046802783378"
+                      data-currency="USD"
+                    > 
+                      United States 
+                    </option>
+                    <option 
+                      value='chn'
+                      data-lng="116.40565993343536"
+                      data-lat="39.90260546559617"
+                      data-currency="CNY"
+                    >
+                      China 
+                    </option>
+                    <option 
+                      value='jpn'
+                      data-lng="139.7449267536858"
+                      data-lat="35.677182219118635"
+                      data-currency="JPY"
+                    > Japan </option>
+                    <option 
+                      value='deu'
+                      data-lng="13.41305121178803"
+                      data-lat="52.51884772950167"
+                      data-currency="EUR"
+                    > Germany </option>
+
+                    <option 
+                      value='ind'
+                      data-lng="77.19593602326063"
+                      data-lat="28.518579319021935"
+                      data-currency="INR"
+                    > 
+                      India 
+                    </option>
+
+                    <option 
+                      value='gbr'
+                      data-lng="-0.11465266233424798"
+                      data-lat="51.502460331435785"
+                      data-currency="GBP"
+                    > 
+                      United Kingdom 
+                    </option>
+                    <option 
+                      value='fra'
+                      data-lng="2.3511543507860155"
+                      data-lat="48.857266311821164"
+                      data-currency="EUR"
+                    > 
+                      France 
+                    </option>
+
+                    <option 
+                      value='ita'
+                      data-lng="12.489983230893142"
+                      data-lat="41.90228734946103"
+                      data-currency="EUR"
+                    >
+                      Italy 
+                    </option>
+
+                    <option 
+                      value='bra'
+                      data-lng="-47.88242930280692"
+                      data-lat="-15.800832822859613"
+                      data-currency="BRL"
+                    >
+                      Brazil
+                    </option>
+
+                    <option 
+                      value='rus'
+                      data-lng="37.67106783588022"
+                      data-lat="55.7398329490853"
+                      data-currency="RUB"
+                    >
+                      Russia 
+                    </option>
+                  </select>
+                </div>
+
+                <div className={styles.tableRow}>
+                  <span className={styles.itemName}>
+                    <strong>Annual Exports by Categories </strong>
+                  </span>
+                  <span className={styles.itemValue}>
+                    <strong>Value</strong>
+                  </span> 
+                  <span className={styles.itemDate}>
+                    <strong> Year </strong>
+                  </span>
+                </div>
+
+                <div className={styles.tableData}>
+                  {
+                    this.state.products.map((product) => (
+                      <div className={styles.tableRow} key={product.symbol}>
+                        <span className={styles.itemName}>
+                          {product.cat_name}
+                        </span> 
+
+                        <span className={styles.itemValue}>
+                          <NumberFormat value={product.value} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                        </span>
+                        <span className={styles.itemDate}> 
+                          {product.date}
+                        </span>
+                      </div> 
+                    ))
+                  }
+                </div>
+              </div>
+          }
         </div>
 
         <footer className={styles.footer}>
@@ -667,6 +750,7 @@ export default class Home extends Component {
                 }
               </div>
             </div>
+
             <div className={styles.commodities}>
               <div className={styles.slideRight}>
                 {
@@ -675,7 +759,12 @@ export default class Home extends Component {
                     let change = (stock.changes/stock.price * 100).toFixed(2)
                     
                     return (
-                      <div className={styles.stock}>
+                      <div 
+                        className={styles.stock}
+                        onClick={this.displayCorps}
+                        data-corp={stock.symbol}
+                        href="/corp"
+                      >
                         <span className={styles.stockSymbol}>{stock.symbol}</span>
                         <span className={styles.price}>{price}</span>
                         {
@@ -684,7 +773,9 @@ export default class Home extends Component {
                               <span className={styles.triangleDown}></span>
                               <span className={styles.negChange}>{change}%</span>
                             </div>
-                          : <div className={styles.changeIndicator}>
+                          : <div
+                              div className={styles.changeIndicator}
+                            >
                               <span className={styles.triangleUp}></span>
                               <span className={styles.posChange}>{change}%</span>
                             </div>
@@ -697,7 +788,6 @@ export default class Home extends Component {
             </div>
           </div>
         </footer>
-
       </div>
     )
   }
