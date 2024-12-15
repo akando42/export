@@ -41,11 +41,13 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 
 [X] Double Check Exchange Rates Updating on Click
 
-[ ] Display Company Summary on Click
+[X] Display Company Summary on Click
 
 [ ] Display Company Satelite Location on Click
 
 [ ] Display Company Financial Statements Charts on Click
+
+[ ] Use Netlify Env for Secret Token
 
 ## Data Sources
 https://stockanalysis.com/list/uk-stocks-us/
