@@ -43,6 +43,8 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 
 [X] Display Company Summary on Click
 
+[ ] Store Stock Sticker Info on Google Cloud Database
+
 [ ] Display Company Satelite Location on Click
 
 [ ] Display Company Financial Statements Charts on Click

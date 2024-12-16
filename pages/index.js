@@ -475,111 +475,111 @@ export default class Home extends Component {
                 this.state.showingCorps
                 ? <div></div>     
                 : <ResponsivePieCanvas
-                  data={this.state.topProducts}
-                  margin={{ top: 10, bottom: 10, right: 10,  left: 10 }}
-                  innerRadius={0.2}
-                  padAngle={0.7}
-                  cornerRadius={3}
-                  activeOuterRadiusOffset={8}
-                  colors={{ scheme: 'spectral' }}
-                  borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.6 ] ] }}
-                  enableArcLinkLabels={false}
-                  enableArcLabels={true}
-                  arcLinkLabelsSkipAngle={10}
-                  arcLinkLabelsTextColor="#000"
-                  arcLinkLabelsThickness={6}
-                  arcLinkLabelsColor={{ from: 'color' }}
-                  arcLabelsSkipAngle={10}
-                  arcLabelsRadiusOffset={0.75}
-                  arcLabelsTextColor="#121C2B"
-                  arcLinkLabelsThickness={6}
-                  defs={[
-                      {
-                          id: 'dots',
-                          type: 'patternDots',
-                          background: 'inherit',
-                          color: 'rgba(255, 255, 255, 0.3)',
-                          size: 4,
-                          padding: 1,
-                          stagger: true
-                      },
-                      {
-                          id: 'lines',
-                          type: 'patternLines',
-                          background: 'inherit',
-                          color: 'rgba(255, 255, 255, 0.3)',
-                          rotation: -45,
-                          lineWidth: 6,
-                          spacing: 10
-                      }
-                  ]}
-                  fill={[
-                      {
-                          match: {
-                              id: 'ruby'
-                          },
-                          id: 'dots'
-                      },
-                      {
-                          match: {
-                              id: 'c'
-                          },
-                          id: 'dots'
-                      },
-                      {
-                          match: {
-                              id: 'go'
-                          },
-                          id: 'dots'
-                      },
-                      {
-                          match: {
-                              id: 'python'
-                          },
-                          id: 'dots'
-                      },
-                      {
-                          match: {
-                              id: 'scala'
-                          },
-                          id: 'lines'
-                      },
-                      {
-                          match: {
-                              id: 'lisp'
-                          },
-                          id: 'lines'
-                      },
-                      {
-                          match: {
-                              id: 'elixir'
-                          },
-                          id: 'lines'
-                      },
-                      {
-                          match: {
-                              id: 'javascript'
-                          },
-                          id: 'lines'
-                      }
-                  ]}
-                  legends={[
-                      {
-                          anchor: 'right',
-                          direction: 'column',
-                          justify: false,
-                          translateX: 140,
-                          translateY: 0,
-                          itemsSpacing: 2,
-                          itemWidth: 60,
-                          itemHeight: 14,
-                          itemTextColor: '#999',
-                          itemDirection: 'left-to-right',
-                          itemOpacity: 1,
-                          symbolSize: 14,
-                          symbolShape: 'circle'
-                      }
-                  ]}
+                    data={this.state.topProducts}
+                    margin={{ top: 10, bottom: 10, right: 10,  left: 10 }}
+                    innerRadius={0.2}
+                    padAngle={0.7}
+                    cornerRadius={3}
+                    activeOuterRadiusOffset={8}
+                    colors={{ scheme: 'spectral' }}
+                    borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.6 ] ] }}
+                    enableArcLinkLabels={false}
+                    enableArcLabels={true}
+                    arcLinkLabelsSkipAngle={10}
+                    arcLinkLabelsTextColor="#000"
+                    arcLinkLabelsThickness={6}
+                    arcLinkLabelsColor={{ from: 'color' }}
+                    arcLabelsSkipAngle={10}
+                    arcLabelsRadiusOffset={0.75}
+                    arcLabelsTextColor="#121C2B"
+                    arcLinkLabelsThickness={6}
+                    defs={[
+                        {
+                            id: 'dots',
+                            type: 'patternDots',
+                            background: 'inherit',
+                            color: 'rgba(255, 255, 255, 0.3)',
+                            size: 4,
+                            padding: 1,
+                            stagger: true
+                        },
+                        {
+                            id: 'lines',
+                            type: 'patternLines',
+                            background: 'inherit',
+                            color: 'rgba(255, 255, 255, 0.3)',
+                            rotation: -45,
+                            lineWidth: 6,
+                            spacing: 10
+                        }
+                    ]}
+                    fill={[
+                        {
+                            match: {
+                                id: 'ruby'
+                            },
+                            id: 'dots'
+                        },
+                        {
+                            match: {
+                                id: 'c'
+                            },
+                            id: 'dots'
+                        },
+                        {
+                            match: {
+                                id: 'go'
+                            },
+                            id: 'dots'
+                        },
+                        {
+                            match: {
+                                id: 'python'
+                            },
+                            id: 'dots'
+                        },
+                        {
+                            match: {
+                                id: 'scala'
+                            },
+                            id: 'lines'
+                        },
+                        {
+                            match: {
+                                id: 'lisp'
+                            },
+                            id: 'lines'
+                        },
+                        {
+                            match: {
+                                id: 'elixir'
+                            },
+                            id: 'lines'
+                        },
+                        {
+                            match: {
+                                id: 'javascript'
+                            },
+                            id: 'lines'
+                        }
+                    ]}
+                    legends={[
+                        {
+                            anchor: 'right',
+                            direction: 'column',
+                            justify: false,
+                            translateX: 140,
+                            translateY: 0,
+                            itemsSpacing: 2,
+                            itemWidth: 60,
+                            itemHeight: 14,
+                            itemTextColor: '#999',
+                            itemDirection: 'left-to-right',
+                            itemOpacity: 1,
+                            symbolSize: 14,
+                            symbolShape: 'circle'
+                        }
+                    ]}
                   />
               }
             </div>
@@ -836,9 +836,7 @@ export default class Home extends Component {
                               <span className={styles.triangleDown}></span>
                               <span className={styles.negChange}>{change}%</span>
                             </div>
-                          : <div
-                              div className={styles.changeIndicator}
-                            >
+                          : <div className={styles.changeIndicator}>
                               <span className={styles.triangleUp}></span>
                               <span className={styles.posChange}>{change}%</span>
                             </div>
