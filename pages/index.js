@@ -1,14 +1,13 @@
+import axios from "axios"
+import Map from "../components/Map"
 import Head from 'next/head'
+
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Ticker from 'react-ticker'
 import NumberFormat from 'react-number-format'
 import { ResponsivePieCanvas } from '@nivo/pie'
-import axios from "axios"
 import {Component} from "react"
-
-import Map from "../components/Map"
-
 
 export default class Home extends Component {
   constructor(props){

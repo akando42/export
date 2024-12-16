@@ -1,11 +1,19 @@
 import axios from "axios"
-import {Firestore} from "@google-cloud/firestore"
+import db from '../../lib/firestore';
+import { collection, getDocs } from "firebase/firestore"
 
 export default async (req, res) => {
-	const firestore = new Firestore()
+	try {
+		const query = await getDocs(
+			collection(db, "stocks")
+		)
+		console.log("Query", query)
+		res.status(200).json({ query})
 
-	const document = firestore.doc('posts/intro-to-firestore');
-	const doc = await document.get()
+	} catch (err){
+		console.log("ERR", err)
+		res.status(400).json({ err })
+	}
 
-	console.log("The doc", doc)
+	
 }
