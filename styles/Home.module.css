@@ -246,7 +246,6 @@
 }
 
 .stock {
-  width: 150px;
   height: 30px;
   display: flex;
   margin: 0 20px;
@@ -262,6 +261,11 @@
   margin-right: 5px;
   pointer-events: none;
   font-size: 12px;
+  min-width: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .price {

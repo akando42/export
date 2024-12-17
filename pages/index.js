@@ -1,7 +1,6 @@
 import axios from "axios"
 import Map from "../components/Map"
 import Head from 'next/head'
-
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Ticker from 'react-ticker'
@@ -64,7 +63,7 @@ export default class Home extends Component {
         {
           'country':'usa',
           'currency': '',
-          'megacorps': [`WMT`,`AMZN`,`AAPL`,`UNH`,`BRK.A`,`CVS`,`XOM`,`GOOGL`,`MCK`,`COR`]
+          'megacorps': [`WMT`,`AMZN`,`AAPL`,`UNH`,`BRK-B`,`CVS`,`XOM`,`GOOGL`,`MCK`,`COR`]
         },
         {
           'country':'chn',
@@ -359,23 +358,29 @@ export default class Home extends Component {
      })
   }
 
-  async pullCompanies(countryCode){
+  pullCompanies(countryCode){
     let corps = this.state.companies.filter(company => company.country === countryCode)[0]['megacorps']
     let queryString = corps.join(",")
     // console.log(queryString)
-    await axios
-      .get(`/api/companies?corps=${queryString}`)
-      .then(res => {
+
+    axios.get(`/api/companies?corps=${queryString}`)
+      .then(async(res) => {
         let stocks = res.data.data
-        // console.log(stocks)
         let stockBasket = []
         for(let i = 0; i < 10; i++){
           stockBasket = stockBasket.concat(stocks)
         }
+        await axios.post(`/api/add_stock`, stocks)
+          .then(res => {
+            console.log("Stock Array",res)
+          })
+
         this.setState({
           stocks: stocks, 
           stockBasket: stockBasket
         })
+
+
       })  
   }
 

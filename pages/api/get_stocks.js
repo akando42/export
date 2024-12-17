@@ -4,16 +4,21 @@ import { collection, getDocs } from "firebase/firestore"
 
 export default async (req, res) => {
 	try {
-		const query = await getDocs(
+		const snapshot = await getDocs(
 			collection(db, "stocks")
 		)
-		console.log("Query", query)
-		res.status(200).json({ query})
+
+		const stocks = snapshot.docs.map((doc) => ({
+		    // * assign id property to each post (from Firestore document id)
+		    id: doc.id,
+		    ...doc.data(),
+		}))
+
+		console.log("Query", stocks)
+		res.status(200).json({ stocks })
 
 	} catch (err){
 		console.log("ERR", err)
 		res.status(400).json({ err })
 	}
-
-	
 }
