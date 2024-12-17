@@ -370,17 +370,16 @@ export default class Home extends Component {
         for(let i = 0; i < 10; i++){
           stockBasket = stockBasket.concat(stocks)
         }
-        await axios.post(`/api/add_stock`, stocks)
-          .then(res => {
-            console.log("Stock Array",res)
-          })
+
+        // await axios.post(`/api/add_stock`, stocks)
+        //   .then(res => {
+        //     console.log("Stock Array",res)
+        //   })
 
         this.setState({
           stocks: stocks, 
           stockBasket: stockBasket
         })
-
-
       })  
   }
 
