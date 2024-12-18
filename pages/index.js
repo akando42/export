@@ -359,28 +359,83 @@ export default class Home extends Component {
   }
 
   pullCompanies(countryCode){
-    let corps = this.state.companies.filter(company => company.country === countryCode)[0]['megacorps']
-    let queryString = corps.join(",")
-    // console.log(queryString)
-
-    axios.get(`/api/companies?corps=${queryString}`)
+    let today = new Date().toLocaleDateString()
+    axios.get(`/api/get_stocks`)
       .then(async(res) => {
-        let stocks = res.data.data
+        // console.log(res.data.stocks)
+        let stocks = res.data.stocks.filter(
+          stock => stock.nation === this.state.selectedCountry
+        )
+        console.log(stocks)
+        stocks = stocks.map(stock => {
+            if (stock.timestamp === today){
+              return stock
+            } else {
+              // Update Stock in Database
+              axios.get(`/api/companies?corps=${stock.symbol}`)
+                .then(async(res) => {
+                  let fresh_stock = res.data.data[0]
+                  console.log("Updated Stock", fresh_stock)
+
+                  let updated_stock = {
+                    'nation': this.state.selectedCountry,
+                    'timestamp': today,
+                    ...fresh_stock
+                  }
+
+                  axios.post(`/api/update_stock?id=${stock.id}`, updated_stock)
+                    .then(res => {
+                      console.log(
+                        updated_stock.symbol,
+                        " have been updated\n",
+                        res.data,
+                        updated_stock
+                      )
+                    })
+
+                  return updated_stock
+                })
+            }
+        })
+
         let stockBasket = []
         for(let i = 0; i < 10; i++){
           stockBasket = stockBasket.concat(stocks)
         }
 
-        // await axios.post(`/api/add_stock`, stocks)
-        //   .then(res => {
-        //     console.log("Stock Array",res)
-        //   })
-
         this.setState({
           stocks: stocks, 
           stockBasket: stockBasket
         })
-      })  
+      })
+
+    // let corps = this.state.companies.filter(company => company.country === countryCode)[0]['megacorps']
+    // let queryString = corps.join(",")
+    // console.log(queryString)
+    // axios.get(`/api/companies?corps=${queryString}`)
+    //   .then(async(res) => {
+    //     let stocks = res.data.data
+    //     stocks = stocks.map(stock => {
+    //       return {
+    //         'nation': this.state.selectedCountry, 
+    //         ...stock
+    //       }
+    //     })
+    //     let stockBasket = []
+    //     for(let i = 0; i < 10; i++){
+    //       stockBasket = stockBasket.concat(stocks)
+    //     }
+
+    //     await axios.post(`/api/add_stock`, stocks)
+    //       .then(res => {
+    //         console.log("Stock Array",res)
+    //       })
+
+    //     this.setState({
+    //       stocks: stocks, 
+    //       stockBasket: stockBasket
+    //     })
+    //   })  
   }
 
   async loopSelection(){    
@@ -821,31 +876,37 @@ export default class Home extends Component {
               <div className={styles.slideRight}>
                 {
                   this.state.stockBasket.map((stock) => {
-                    let price = stock.price
-                    let change = (stock.changes/stock.price * 100).toFixed(2)
+                    console.log(stock)
                     
-                    return (
-                      <div 
-                        className={styles.stock}
-                        onClick={this.displayCorps}
-                        data-corp={stock.symbol}
-                        href="/corp"
-                      >
-                        <span className={styles.stockSymbol}>{stock.symbol}</span>
-                        <span className={styles.price}>{price}</span>
-                        {
-                          change < 0
-                          ? <div className={styles.changeIndicator}>
-                              <span className={styles.triangleDown}></span>
-                              <span className={styles.negChange}>{change}%</span>
-                            </div>
-                          : <div className={styles.changeIndicator}>
-                              <span className={styles.triangleUp}></span>
-                              <span className={styles.posChange}>{change}%</span>
-                            </div>
-                        }
-                      </div>
-                    )
+                    if (stock){
+                      let price = stock.price
+                      let change = (stock.changes/stock.price * 100).toFixed(2)
+                      return (
+                        <div 
+                          className={styles.stock}
+                          onClick={this.displayCorps}
+                          data-corp={stock.symbol}
+                          href="/corp"
+                        >
+                          <span className={styles.stockSymbol}>{stock.symbol}</span>
+                          <span className={styles.price}>{price}</span>
+                          {
+                            change < 0
+                            ? <div className={styles.changeIndicator}>
+                                <span className={styles.triangleDown}></span>
+                                <span className={styles.negChange}>{change}%</span>
+                              </div>
+                            : <div className={styles.changeIndicator}>
+                                <span className={styles.triangleUp}></span>
+                                <span className={styles.posChange}>{change}%</span>
+                              </div>
+                          }
+                        </div>
+                      )
+                    } else {
+                      return (<div></div>)
+                    }
+                    
                   })
                 }
               </div>

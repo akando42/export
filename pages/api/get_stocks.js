@@ -14,7 +14,7 @@ export default async (req, res) => {
 		    ...doc.data(),
 		}))
 
-		console.log("Query", stocks)
+		// console.log("Query", stocks)
 		res.status(200).json({ stocks })
 
 	} catch (err){

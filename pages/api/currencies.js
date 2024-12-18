@@ -12,14 +12,14 @@ export default async (req, res) => {
 
   const {query, method} = req
   let base = query.base
-  console.log("BASE CURRENCY", base)
+  // console.log("BASE CURRENCY", base)
 
   const url = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${base.toLowerCase()}.json`
   await axios
     .get(url)
     .then(({ data }) => {
       let exchangeRate = data[base.toLowerCase()]
-      console.log(exchangeRate)
+      // console.log(exchangeRate)
       res.status(200).json({ exchangeRate })
     })
     .catch(({ err }) => {

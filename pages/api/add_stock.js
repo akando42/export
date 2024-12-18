@@ -8,10 +8,14 @@ export default async (req, res) => {
 		let stocks = req.body
 
 		stocks.map(async(stock) => {
+			let today = new Date().toLocaleDateString()
 			const docRef = await addDoc(
-				collection(db, "stocks"), stock
+				collection(db, "stocks"), {
+					'timestamp':today,
+					...stock
+				}
 			);
-			console.log("STOCK Added",docRef.id)
+			console.log("STOCK Added",docRef.id,today)
 		})
 
 		res.status(200).json({
