@@ -230,7 +230,11 @@ export default class Home extends Component {
           "label": "java",
           "value": 168,
           "color": "hsl(20, 70%, 50%)"
-        }],
+        }
+      ],
+      incomeStatements: [],
+      cashflowStatements: [],
+      balanceSheets: []
     }
 
     this.pullData = this.pullData.bind(this)
@@ -244,6 +248,7 @@ export default class Home extends Component {
     this.loopSelection = this.loopSelection.bind(this)
     this.startAuto = this.startAuto.bind(this)
     this.displayCorps = this.displayCorps.bind(this)
+    this.showFinancials = this.showFinancials.bind(this)
   }
 
   async pullData(selectedCountry){
@@ -512,6 +517,7 @@ export default class Home extends Component {
     })
 
     this.corpHeadquarter(corpData[0])
+    this.showFinancials(event.target.dataset.corp)
   }
 
   async corpHeadquarter(corpData){
@@ -542,6 +548,17 @@ export default class Home extends Component {
       })
    }
 
+
+  async showFinancials(corpSymbol){
+    console.log("LOL ", corpSymbol)
+    await axios.get(`/api/income_statement?corps=${corpSymbol}`)
+      .then(res => {
+        console.log(res.data)
+        this.setState({
+          incomeStatements: res.data.data
+        })
+      })
+  }
 
   componentWillMount(){
     clearInterval(this.state.autoCode)
@@ -586,7 +603,29 @@ export default class Home extends Component {
             <div className={styles.chart}>
               {
                 this.state.showingCorps
-                ? <div></div>     
+                ? <div className={styles.financialStatements}>
+                    <strong> Income Statement </strong>
+                    <div className={styles.incomeStatements}>
+                      <div className={styles.incomeLabels}>
+                        <div>Date</div>
+                        <div>Revenue</div>
+                        <div>EBITDA</div>
+                        <div>Net Income</div>
+                      </div>
+                      {
+                        this.state.incomeStatements.map(income => {
+                          return (
+                            <div className={styles.incomeChart}>
+                              <div>{income.date}</div>
+                              <div>{income.revenue}</div>
+                              <div>{income.ebitda}</div>
+                              <div>{income.netIncome}</div>
+                            </div>
+                          )
+                        })
+                      }
+                    </div>
+                  </div>     
                 : <ResponsivePieCanvas
                     data={this.state.topProducts}
                     margin={{ top: 10, bottom: 10, right: 10,  left: 10 }}
