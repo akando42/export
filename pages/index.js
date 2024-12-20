@@ -877,7 +877,6 @@ export default class Home extends Component {
                 {
                   this.state.stockBasket.map((stock) => {
                     console.log(stock)
-                    
                     if (stock){
                       let price = stock.price
                       let change = (stock.changes/stock.price * 100).toFixed(2)
