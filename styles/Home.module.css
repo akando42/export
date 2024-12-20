@@ -254,6 +254,11 @@
   justify-content: center;
   color: #121C2B;
   font-size: 12px;
+  padding: 0 3px;
+}
+
+.stock:hover {
+  background-color: yellow;
 }
 
 .stockSymbol {

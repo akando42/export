@@ -1,14 +1,15 @@
 import axios from "axios"
 import { SearchBoxCore, SessionToken, SearchSession} from '@mapbox/search-js-core'
+import process from "process"
 
 export default async (req, res) => {
 	let {query, method} = req
-	let addressQuery = query.address
+	let addressQuery = req.body.search
 
 	try {
 		console.log("Address ", addressQuery)
 		const search = new SearchBoxCore(
-			{ accessToken: 'sk.eyJ1IjoiaGlsbG9kZXNpZ24iLCJhIjoiY200cG1qb2ZvMHIzcTJtc25yeHh5MDJoNiJ9.SvqLc-_pTVFgtPzQN8I-lA' }
+			{ accessToken: process.env.mapBoxAccessToken }
 		);
 		console.log("Search \n", search)
 
@@ -16,7 +17,7 @@ export default async (req, res) => {
 		console.log("TOKEN \n", sessionToken)
 
 		const results = await search.suggest(
-			'UnitedHealth Group 55343', 
+			addressQuery, 
 			{ sessionToken }
 		);
 

@@ -105,7 +105,7 @@ export default class Map extends Component {
 	        container: this.mapContainer.current,
 	        style: 'mapbox://styles/hillodesign/clb95v8zd000v15nudmodao0i',
 	        center: [lng, lat],
-	        zoom: optimalZoom
+	        zoom: parseInt(zoom)
 	    });
 
 	    // console.log(attractions);
@@ -138,6 +138,8 @@ export default class Map extends Component {
 	        	    .addTo(map)
 		    	})
 
+	    		this.setState({currentMarker: marker})
+
 	    } else {
 	    	const long = attractions.lng
         	const lat = attractions.lat
@@ -149,6 +151,8 @@ export default class Map extends Component {
 	        	})
         	    .setLngLat([long, lat])
         	    .addTo(map)
+
+        	this.setState({currentMarker: marker})
 	    }
 
 	    this.startSpinGlobe(map)
@@ -159,16 +163,27 @@ export default class Map extends Component {
 	}
 
 	async flyTo(event){
+		const currentMarker = this.state.currentMarker
+		currentMarker.remove()
 		const lng = event.target.dataset.lng
    		const lat = event.target.dataset.lat
+   		const map = this.state.myMap
+
+   		const marker = new mapboxgl
+    	    .Marker({
+        	    color: `black`,
+        	    occludedOpacity: 0.1
+        	})
+    	    .setLngLat([lng, lat])
+    	    .addTo(map)
 		
-		// console.log(
-		// 	"Triggered", lng, lat, this.state.zoom
-		// )
-		const map = this.state.myMap
         map.flyTo({
         	center: [lng, lat],
-        	zoom: 4,
+        	zoom: this.props.zoom,
+        })
+
+        this.setState({
+        	currentMarker: marker
         })
 	}
 

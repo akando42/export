@@ -14,6 +14,12 @@ export default class Home extends Component {
     this.state = {
       selectedCountry: 'usa',
       selectedCurrency: 'usd',
+      countryData:  {"id": "usa",
+        "name": "usa",
+        "lng": "-77.04410423472449",
+        "lat": "38.9046802783378"
+      },
+      markerData: {},
       showingCorps: false,
       currentCorp: '',
       currentCorpProfile: {
@@ -289,6 +295,8 @@ export default class Home extends Component {
       selectedCountry: e.target.value,
       selectedCurrency: e.target.dataset.currency,
       countryData: {
+        'id':e.target.value,
+        'name': e.target.value,
         'lng': lng,
         'lat': lat
       }
@@ -364,13 +372,14 @@ export default class Home extends Component {
 
   pullCompanies(countryCode){
     let today = new Date().toLocaleDateString()
+
     axios.get(`/api/get_stocks`)
       .then(async(res) => {
-        console.log("All Stocks ",res.data.stocks)
+        // console.log("All Stocks ",res.data.stocks)
         let stocks = res.data.stocks.filter(
           stock => stock.nation === this.state.selectedCountry
         )
-        console.log(`Stocks from ${this.state.selectedCountry} \n`, stocks)
+        // console.log(`Stocks from ${this.state.selectedCountry} \n`, stocks)
         stocks = stocks.map(stock => {
             if (stock.timestamp === today){
               return stock
@@ -491,7 +500,6 @@ export default class Home extends Component {
 
   async displayCorps(event){
     clearInterval(this.state.autoCode)
-
     console.log("Target ", event.target.dataset.corp)
 
     let corpData = this.state.stocks
@@ -502,7 +510,36 @@ export default class Home extends Component {
       currentCorp: event.target.dataset.corp,
       currentCorpProfile: corpData[0]
     })
+
+    this.corpHeadquarter(corpData[0])
   }
+
+  async corpHeadquarter(corpData){
+    let corpAddress = corpData.address
+    let corpCity = corpData.city
+    let corpZipcode = corpData.zip
+    let addressQuery = `${corpAddress} ${corpCity} ${corpZipcode}`
+
+    console.log(addressQuery)
+
+    await axios.post(
+      `/api/address_suggestions`, 
+      {'search':addressQuery}
+    ).then(res => {
+        let hqCoordinate = res.data.location[0].properties.coordinates
+
+        this.setState({
+          hqLng: hqCoordinate.longitude,
+          hqLat: hqCoordinate.latitude
+        })
+
+        const trigger = document.getElementById("trigger")
+        trigger.setAttribute("data-lat", hqCoordinate.latitude)
+        trigger.setAttribute("data-lng", hqCoordinate.longitude)
+        trigger.click()
+      })
+   }
+
 
   componentWillMount(){
     clearInterval(this.state.autoCode)
@@ -511,7 +548,7 @@ export default class Home extends Component {
   componentDidMount(){
     this.pullData('usa')
     this.pullExchanges(this.state.selectedCurrency)
-    //this.repopulateDB('usa')
+    // this.repopulateDB('usa')
     this.pullCompanies('usa')
     // this.startAuto()
   }
@@ -524,14 +561,22 @@ export default class Home extends Component {
             <div className={styles.map}>
               {
                 this.state.showingCorps
-                ? <div></div>     
+                ? <Map 
+                    width="32vw"
+                    height="38vh"
+                    data={this.state.markerData}
+                    zoom="10" 
+                    lng={this.state.hqLng}
+                    lat={this.state.hqLat}
+                  />
+
                 : <Map 
                     width="32vw"
                     height="38vh"
                     data={this.state.countryData}
-                    zoom="1" 
-                    lng="90.09105767050022"
-                    lat="12.74421786982952"
+                    zoom="4" 
+                    lat={this.state.countryData.lat}
+                    lng={this.state.countryData.lng}
                   />
               }
             </div>
@@ -855,10 +900,12 @@ export default class Home extends Component {
         </div>
 
         <footer className={styles.footer}>
-          <img 
-            className={styles.logo}
-            src="/TElogo.png"
-          />
+          <a href="/">
+            <img 
+              className={styles.logo}
+              src="/TElogo.png"
+            />
+          </a>
           <div className={styles.floating}>
             <div className={styles.currencies}>
               <div className={styles.slideLeft}>
@@ -884,7 +931,7 @@ export default class Home extends Component {
               <div className={styles.slideRight}>
                 {
                   this.state.stockBasket.map((stock) => {
-                    console.log(stock)
+                    // console.log(stock)
                     if (stock){
                       let price = stock.price
                       let change = (stock.changes/stock.price * 100).toFixed(2)
