@@ -518,7 +518,9 @@ export default class Home extends Component {
     let corpAddress = corpData.address
     let corpCity = corpData.city
     let corpZipcode = corpData.zip
-    let addressQuery = `${corpAddress} ${corpCity} ${corpZipcode}`
+    let corpCountry = corpData.country
+
+    let addressQuery = `${corpAddress} ${corpCity} ${corpCountry} ${corpZipcode}`
 
     console.log(addressQuery)
 
