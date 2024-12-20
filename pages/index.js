@@ -231,7 +231,10 @@ export default class Home extends Component {
     this.selectCountry = this.selectCountry.bind(this)
     this.pullExchanges = this.pullExchanges.bind(this)
     this.pushCurrencySlide = this.pushCurrencySlide.bind(this)
+    
     this.pullCompanies = this.pullCompanies.bind(this)
+    this.repopulateDB = this.repopulateDB.bind(this)
+
     this.loopSelection = this.loopSelection.bind(this)
     this.startAuto = this.startAuto.bind(this)
     this.displayCorps = this.displayCorps.bind(this)
@@ -299,6 +302,7 @@ export default class Home extends Component {
     this.pullData(e.target.value)
     this.pullExchanges(e.target.options[e.target.selectedIndex].dataset.currency)
     this.pullCompanies(e.target.value)
+    //this.repopulateDB(e.target.value)
   }
 
   async flyTo(event){
@@ -362,11 +366,11 @@ export default class Home extends Component {
     let today = new Date().toLocaleDateString()
     axios.get(`/api/get_stocks`)
       .then(async(res) => {
-        // console.log(res.data.stocks)
+        console.log("All Stocks ",res.data.stocks)
         let stocks = res.data.stocks.filter(
           stock => stock.nation === this.state.selectedCountry
         )
-        console.log(stocks)
+        console.log(`Stocks from ${this.state.selectedCountry} \n`, stocks)
         stocks = stocks.map(stock => {
             if (stock.timestamp === today){
               return stock
@@ -408,34 +412,37 @@ export default class Home extends Component {
           stockBasket: stockBasket
         })
       })
+  }
 
-    // let corps = this.state.companies.filter(company => company.country === countryCode)[0]['megacorps']
-    // let queryString = corps.join(",")
-    // console.log(queryString)
-    // axios.get(`/api/companies?corps=${queryString}`)
-    //   .then(async(res) => {
-    //     let stocks = res.data.data
-    //     stocks = stocks.map(stock => {
-    //       return {
-    //         'nation': this.state.selectedCountry, 
-    //         ...stock
-    //       }
-    //     })
-    //     let stockBasket = []
-    //     for(let i = 0; i < 10; i++){
-    //       stockBasket = stockBasket.concat(stocks)
-    //     }
+  async repopulateDB(countryCode){
+    let corps = this.state.companies.filter(company => company.country === countryCode)[0]['megacorps']
+    let queryString = corps.join(",")
+    console.log(queryString)
 
-    //     await axios.post(`/api/add_stock`, stocks)
-    //       .then(res => {
-    //         console.log("Stock Array",res)
-    //       })
+    axios.get(`/api/companies?corps=${queryString}`)
+      .then(async(res) => {
+        let stocks = res.data.data
+        stocks = stocks.map(stock => {
+          return {
+            'nation': this.state.selectedCountry, 
+            ...stock
+          }
+        })
+        let stockBasket = []
+        for(let i = 0; i < 10; i++){
+          stockBasket = stockBasket.concat(stocks)
+        }
 
-    //     this.setState({
-    //       stocks: stocks, 
-    //       stockBasket: stockBasket
-    //     })
-    //   })  
+        await axios.post(`/api/add_stock`, stocks)
+          .then(res => {
+            console.log("Stock Array",res)
+          })
+
+        this.setState({
+          stocks: stocks, 
+          stockBasket: stockBasket
+        })
+      })  
   }
 
   async loopSelection(){    
@@ -504,6 +511,7 @@ export default class Home extends Component {
   componentDidMount(){
     this.pullData('usa')
     this.pullExchanges(this.state.selectedCurrency)
+    //this.repopulateDB('usa')
     this.pullCompanies('usa')
     // this.startAuto()
   }
