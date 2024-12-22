@@ -558,6 +558,22 @@ export default class Home extends Component {
           incomeStatements: res.data.data
         })
       })
+
+    await axios.get(`/api/cashflow_statement?corps=${corpSymbol}`)
+      .then(res => {
+        console.log(res.data)
+        this.setState({
+          cashflowStatements: res.data.data
+        })
+      })
+
+    await axios.get(`/api/balance_sheet?corps=${corpSymbol}`)
+      .then(res => {
+        console.log(res.data)
+        this.setState({
+          balanceSheets: res.data.data
+        })
+      })
   }
 
   componentWillMount(){
@@ -604,7 +620,7 @@ export default class Home extends Component {
               {
                 this.state.showingCorps
                 ? <div className={styles.financialStatements}>
-                    <strong> Income Statement </strong>
+                    <strong> Income Statements </strong>
                     <div className={styles.incomeStatements}>
                       <div className={styles.incomeLabels}>
                         <div>Date</div>
@@ -620,6 +636,56 @@ export default class Home extends Component {
                               <div>{income.revenue}</div>
                               <div>{income.ebitda}</div>
                               <div>{income.netIncome}</div>
+                            </div>
+                          )
+                        })
+                      }
+                    </div>
+                    <strong> Cashflow Statements </strong>
+                    <div className={styles.incomeStatements}>
+                      <div className={styles.incomeLabels}>
+                        <div>Date</div>
+                        <div>Acc Receivables</div>
+                        <div>Acc Payables</div>
+                        <div>Cap Expenditure</div>
+                        <div>Free Cashflow</div>
+                      </div>
+                      {
+                        this.state.cashflowStatements.map(cashflow => {
+                          return (
+                            <div className={styles.incomeChart}>
+                             <div>{cashflow.date}</div>
+                             <div>{cashflow.accountsReceivables}</div>
+                             <div>{cashflow.accountsPayables}</div>
+                             <div>{cashflow.capitalExpenditure}</div>
+                             <div>{cashflow.freeCashFlow}</div>
+                            </div>
+                          )
+                        })
+                      }
+                    </div>
+                    <strong> Balance Sheets </strong>
+                    <div className={styles.incomeStatements}>
+                      <div className={styles.incomeLabels}>
+                        <div>Date</div>
+                        <div>Total Assets</div>
+                        <div>Cash</div>
+                        <div>Inventory</div>
+                        <div>Shorterm Equity</div>
+                        <div>Shorterm Debt</div>
+                        <div>Longterm Debt</div>
+                      </div>
+                      {
+                        this.state.balanceSheets.map(balance => {
+                          return (
+                            <div className={styles.incomeChart}>
+                              <div>{balance.date}</div>
+                              <div>{balance.totalAssets}</div>
+                              <div>{balance.cashAndCashEquivalents}</div>
+                              <div>{balance.inventory}</div>
+                              <div>{balance.cashAndShortTermInvestments}</div>
+                              <div>{balance.shortTermDebt}</div>
+                              <div>{balance.longTermDebt}</div>
                             </div>
                           )
                         })
