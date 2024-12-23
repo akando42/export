@@ -409,8 +409,11 @@ export default class Home extends Component {
       incomeStatements: [],
       cashflowStatements: [],
       balanceSheets: [],
-      statement: "Income Statement"
+      statement: "Income Statement", 
+      mapSize: "32vw"
     }
+
+    this.resizeMap = this.resizeMap.bind(this)
 
     this.pullData = this.pullData.bind(this)
     this.selectCountry = this.selectCountry.bind(this)
@@ -758,11 +761,21 @@ export default class Home extends Component {
     })
   }
 
+  async resizeMap(){
+    console.log("Device Width", window.innerWidth)
+    if (window.innerWidth < 610){
+      this.setState({
+        mapSize: "90vw"
+      })
+    }
+  }
+
   componentWillMount(){
     clearInterval(this.state.autoCode)
   }
 
   componentDidMount(){
+    this.resizeMap()
     this.pullData('usa')
     this.pullExchanges(this.state.selectedCurrency)
     // this.repopulateDB('usa')
@@ -774,13 +787,215 @@ export default class Home extends Component {
     return (
       <div className={styles.container}>
         <div className={styles.export}>
+          {
+            this.state.showingCorps
+            ? <div className={styles.table}>
+                <div className={styles.corpSummary}>
+                  <div className={styles.pricing}>
+                    <img 
+                      className={styles.corpLogo}
+                      src={this.state.currentCorpProfile.image}
+                    />
+                    <div className={styles.priceChanges}>
+                      <span className={styles.triangleUp}></span>
+                      {this.state.currentCorpProfile.changes}
+                    </div>
+                    <div className={styles.price}>
+                      {this.state.currentCorpProfile.price}
+                    </div>
+                    <div className={styles.ticker}>
+                      {this.state.currentCorpProfile.symbol}
+                    </div>
+                  </div>
+                  
+                  <div className={styles.info}>
+                    <div className={styles.corpName}>
+                      {this.state.currentCorpProfile.companyName}
+                    </div>
+                    <div className={styles.corpInfo}>
+                      {this.state.currentCorpProfile.address}
+                    </div>
+                    <div className={styles.corpInfo}>
+                      {this.state.currentCorpProfile.city}, {this.state.currentCorpProfile.state}, {this.state.currentCorpProfile.zip}
+                    </div>
+                    <div className={styles.corpInfo}>
+                      {this.state.currentCorpProfile.phone}
+                    </div>
+                    <div className={styles.corpInfo}>
+                      CEO: {this.state.currentCorpProfile.ceo}
+                    </div>
+                    <div className={styles.corpInfo}>
+                      Employees: {this.state.currentCorpProfile.fullTimeEmployees}
+                    </div>
+                    <div className={styles.corpInfo}>
+                      Sector: {this.state.currentCorpProfile.sector}
+                    </div>
+                    <div className={styles.corpInfo}>
+                      Industry: {this.state.currentCorpProfile.industry}
+                    </div>
+                  </div>
+
+                  <div className={styles.metrics}>
+                    <div className={styles.exchange}>
+                      {this.state.currentCorpProfile.exchangeShortName} {this.state.currentCorpProfile.exchange} 
+                    </div>
+                    <div className={styles.metricInfo}>
+                      Beta Volatility: {this.state.currentCorpProfile.beta}
+                    </div>
+                    <div className={styles.metricInfo}>
+                      Trading Volume: {this.state.currentCorpProfile.volAvg}
+                    </div>
+                    <div className={styles.metricInfo}>
+                      Market Cap: {this.state.currentCorpProfile.mktCap}
+                    </div>
+                    <div className={styles.metricInfo}>
+                      Last Dividend: {this.state.currentCorpProfile.lastDiv}
+                    </div>
+                    <div className={styles.metricInfo}>
+                      Annual Range: {this.state.currentCorpProfile.range}
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.corpDescription}>
+                  <strong> Description </strong>
+                  <div className={styles.description}>
+                    {this.state.currentCorpProfile.description}
+                  </div>
+                </div>
+              </div>
+
+            : <div className={styles.table}>
+                <div className={styles.tableName}>
+                  <select 
+                    className={styles.selection}
+                    onChange={this.selectCountry}
+                    id="country_selector"
+                  >
+                    <option 
+                      value='usa'
+                      data-lng="-77.04410423472449"
+                      data-lat="38.9046802783378"
+                      data-currency="USD"
+                    > 
+                      United States 
+                    </option>
+                    <option 
+                      value='chn'
+                      data-lng="116.40565993343536"
+                      data-lat="39.90260546559617"
+                      data-currency="CNY"
+                    >
+                      China 
+                    </option>
+                    <option 
+                      value='jpn'
+                      data-lng="139.7449267536858"
+                      data-lat="35.677182219118635"
+                      data-currency="JPY"
+                    > Japan </option>
+                    <option 
+                      value='deu'
+                      data-lng="13.41305121178803"
+                      data-lat="52.51884772950167"
+                      data-currency="EUR"
+                    > Germany </option>
+
+                    <option 
+                      value='ind'
+                      data-lng="77.19593602326063"
+                      data-lat="28.518579319021935"
+                      data-currency="INR"
+                    > 
+                      India 
+                    </option>
+
+                    <option 
+                      value='gbr'
+                      data-lng="-0.11465266233424798"
+                      data-lat="51.502460331435785"
+                      data-currency="GBP"
+                    > 
+                      United Kingdom 
+                    </option>
+                    <option 
+                      value='fra'
+                      data-lng="2.3511543507860155"
+                      data-lat="48.857266311821164"
+                      data-currency="EUR"
+                    > 
+                      France 
+                    </option>
+
+                    <option 
+                      value='ita'
+                      data-lng="12.489983230893142"
+                      data-lat="41.90228734946103"
+                      data-currency="EUR"
+                    >
+                      Italy 
+                    </option>
+
+                    <option 
+                      value='bra'
+                      data-lng="-47.88242930280692"
+                      data-lat="-15.800832822859613"
+                      data-currency="BRL"
+                    >
+                      Brazil
+                    </option>
+
+                    <option 
+                      value='rus'
+                      data-lng="37.67106783588022"
+                      data-lat="55.7398329490853"
+                      data-currency="RUB"
+                    >
+                      Russia 
+                    </option>
+                  </select>
+                </div>
+
+                <div className={styles.tableRow}>
+                  <span className={styles.itemName}>
+                    <strong>Annual Exports by Categories </strong>
+                  </span>
+                  <span className={styles.itemValue}>
+                    <strong>Value</strong>
+                  </span> 
+                  <span className={styles.itemDate}>
+                    <strong> Year </strong>
+                  </span>
+                </div>
+
+                <div className={styles.tableData}>
+                  {
+                    this.state.products.map((product) => (
+                      <div className={styles.tableRow} key={product.symbol}>
+                        <span className={styles.itemName}>
+                          {product.cat_name}
+                        </span> 
+
+                        <span className={styles.itemValue}>
+                          <NumberFormat value={product.value} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                        </span>
+                        <span className={styles.itemDate}> 
+                          {product.date}
+                        </span>
+                      </div> 
+                    ))
+                  }
+                </div>
+              </div>
+          }
           <div className={styles.rightPanel}>
             <div className={styles.map}>
               {
                 this.state.showingCorps
                 ? <Map 
-                    width="32vw"
+                    width={this.state.mapSize}
                     height="38vh"
+                    styles={styles.mapBox}
                     data={this.state.markerData}
                     zoom="10" 
                     lng={this.state.hqLng}
@@ -788,7 +1003,7 @@ export default class Home extends Component {
                   />
 
                 : <Map 
-                    width="32vw"
+                    width={this.state.mapSize}
                     height="38vh"
                     data={this.state.countryData}
                     zoom="4" 
@@ -1411,208 +1626,6 @@ export default class Home extends Component {
               }
             </div>
           </div>
-
-          {
-            this.state.showingCorps
-            ? <div className={styles.table}>
-                <div className={styles.corpSummary}>
-                  <div className={styles.pricing}>
-                    <img 
-                      className={styles.corpLogo}
-                      src={this.state.currentCorpProfile.image}
-                    />
-                    <div className={styles.priceChanges}>
-                      <span className={styles.triangleUp}></span>
-                      {this.state.currentCorpProfile.changes}
-                    </div>
-                    <div className={styles.price}>
-                      {this.state.currentCorpProfile.price}
-                    </div>
-                    <div className={styles.ticker}>
-                      {this.state.currentCorpProfile.symbol}
-                    </div>
-                  </div>
-                  
-                  <div className={styles.info}>
-                    <div className={styles.corpName}>
-                      {this.state.currentCorpProfile.companyName}
-                    </div>
-                    <div className={styles.corpInfo}>
-                      {this.state.currentCorpProfile.address}
-                    </div>
-                    <div className={styles.corpInfo}>
-                      {this.state.currentCorpProfile.city}, {this.state.currentCorpProfile.state}, {this.state.currentCorpProfile.zip}
-                    </div>
-                    <div className={styles.corpInfo}>
-                      {this.state.currentCorpProfile.phone}
-                    </div>
-                    <div className={styles.corpInfo}>
-                      CEO: {this.state.currentCorpProfile.ceo}
-                    </div>
-                    <div className={styles.corpInfo}>
-                      Employees: {this.state.currentCorpProfile.fullTimeEmployees}
-                    </div>
-                    <div className={styles.corpInfo}>
-                      Sector: {this.state.currentCorpProfile.sector}
-                    </div>
-                    <div className={styles.corpInfo}>
-                      Industry: {this.state.currentCorpProfile.industry}
-                    </div>
-                  </div>
-
-                  <div className={styles.metrics}>
-                    <div className={styles.exchange}>
-                      {this.state.currentCorpProfile.exchangeShortName} {this.state.currentCorpProfile.exchange} 
-                    </div>
-                    <div className={styles.metricInfo}>
-                      Beta Volatility: {this.state.currentCorpProfile.beta}
-                    </div>
-                    <div className={styles.metricInfo}>
-                      Trading Volume: {this.state.currentCorpProfile.volAvg}
-                    </div>
-                    <div className={styles.metricInfo}>
-                      Market Cap: {this.state.currentCorpProfile.mktCap}
-                    </div>
-                    <div className={styles.metricInfo}>
-                      Last Dividend: {this.state.currentCorpProfile.lastDiv}
-                    </div>
-                    <div className={styles.metricInfo}>
-                      Annual Range: {this.state.currentCorpProfile.range}
-                    </div>
-                  </div>
-                </div>
-
-                <div className={styles.corpDescription}>
-                  <h2> Description </h2>
-                  <div className={styles.description}>
-                    {this.state.currentCorpProfile.description}
-                  </div>
-                </div>
-              </div>
-
-            : <div className={styles.table}>
-                <div className={styles.tableName}>
-                  <select 
-                    className={styles.selection}
-                    onChange={this.selectCountry}
-                    id="country_selector"
-                  >
-                    <option 
-                      value='usa'
-                      data-lng="-77.04410423472449"
-                      data-lat="38.9046802783378"
-                      data-currency="USD"
-                    > 
-                      United States 
-                    </option>
-                    <option 
-                      value='chn'
-                      data-lng="116.40565993343536"
-                      data-lat="39.90260546559617"
-                      data-currency="CNY"
-                    >
-                      China 
-                    </option>
-                    <option 
-                      value='jpn'
-                      data-lng="139.7449267536858"
-                      data-lat="35.677182219118635"
-                      data-currency="JPY"
-                    > Japan </option>
-                    <option 
-                      value='deu'
-                      data-lng="13.41305121178803"
-                      data-lat="52.51884772950167"
-                      data-currency="EUR"
-                    > Germany </option>
-
-                    <option 
-                      value='ind'
-                      data-lng="77.19593602326063"
-                      data-lat="28.518579319021935"
-                      data-currency="INR"
-                    > 
-                      India 
-                    </option>
-
-                    <option 
-                      value='gbr'
-                      data-lng="-0.11465266233424798"
-                      data-lat="51.502460331435785"
-                      data-currency="GBP"
-                    > 
-                      United Kingdom 
-                    </option>
-                    <option 
-                      value='fra'
-                      data-lng="2.3511543507860155"
-                      data-lat="48.857266311821164"
-                      data-currency="EUR"
-                    > 
-                      France 
-                    </option>
-
-                    <option 
-                      value='ita'
-                      data-lng="12.489983230893142"
-                      data-lat="41.90228734946103"
-                      data-currency="EUR"
-                    >
-                      Italy 
-                    </option>
-
-                    <option 
-                      value='bra'
-                      data-lng="-47.88242930280692"
-                      data-lat="-15.800832822859613"
-                      data-currency="BRL"
-                    >
-                      Brazil
-                    </option>
-
-                    <option 
-                      value='rus'
-                      data-lng="37.67106783588022"
-                      data-lat="55.7398329490853"
-                      data-currency="RUB"
-                    >
-                      Russia 
-                    </option>
-                  </select>
-                </div>
-
-                <div className={styles.tableRow}>
-                  <span className={styles.itemName}>
-                    <strong>Annual Exports by Categories </strong>
-                  </span>
-                  <span className={styles.itemValue}>
-                    <strong>Value</strong>
-                  </span> 
-                  <span className={styles.itemDate}>
-                    <strong> Year </strong>
-                  </span>
-                </div>
-
-                <div className={styles.tableData}>
-                  {
-                    this.state.products.map((product) => (
-                      <div className={styles.tableRow} key={product.symbol}>
-                        <span className={styles.itemName}>
-                          {product.cat_name}
-                        </span> 
-
-                        <span className={styles.itemValue}>
-                          <NumberFormat value={product.value} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-                        </span>
-                        <span className={styles.itemDate}> 
-                          {product.date}
-                        </span>
-                      </div> 
-                    ))
-                  }
-                </div>
-              </div>
-          }
         </div>
 
         <footer className={styles.footer}>

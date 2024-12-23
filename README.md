@@ -47,9 +47,9 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 
 [X] Use Netlify Env for Secret Token
 
-[ ] Display Company Satelite Location on Click
+[X] Display Company Satelite Location on Click
 
-[ ] Display Company Financial Statements Charts on Click
+[X] Display Company Financial Statements Charts on Click
 
 ## Data Sources
 https://stockanalysis.com/list/uk-stocks-us/
