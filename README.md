@@ -43,13 +43,13 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 
 [X] Display Company Summary on Click
 
-[ ] Store Stock Sticker Info on Google Cloud Database
+[X] Store Stock Sticker Info on Google Cloud Database
+
+[X] Use Netlify Env for Secret Token
 
 [ ] Display Company Satelite Location on Click
 
 [ ] Display Company Financial Statements Charts on Click
-
-[ ] Use Netlify Env for Secret Token
 
 ## Data Sources
 https://stockanalysis.com/list/uk-stocks-us/

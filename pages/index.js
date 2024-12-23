@@ -234,7 +234,8 @@ export default class Home extends Component {
       ],
       incomeStatements: [],
       cashflowStatements: [],
-      balanceSheets: []
+      balanceSheets: [],
+      statement: "Income Statement"
     }
 
     this.pullData = this.pullData.bind(this)
@@ -249,6 +250,7 @@ export default class Home extends Component {
     this.startAuto = this.startAuto.bind(this)
     this.displayCorps = this.displayCorps.bind(this)
     this.showFinancials = this.showFinancials.bind(this)
+    this.selectStatement = this.selectStatement.bind(this)
   }
 
   async pullData(selectedCountry){
@@ -576,6 +578,13 @@ export default class Home extends Component {
       })
   }
 
+  async selectStatement(event){
+    this.setState({
+      statement: event.target.dataset.statement
+    })
+
+  }
+
   componentWillMount(){
     clearInterval(this.state.autoCode)
   }
@@ -620,77 +629,159 @@ export default class Home extends Component {
               {
                 this.state.showingCorps
                 ? <div className={styles.financialStatements}>
-                    <strong> Income Statements </strong>
-                    <div className={styles.incomeStatements}>
-                      <div className={styles.incomeLabels}>
-                        <div>Date</div>
-                        <div>Revenue</div>
-                        <div>EBITDA</div>
-                        <div>Net Income</div>
-                      </div>
+                    <div className={styles.finStatePanel}>
                       {
-                        this.state.incomeStatements.map(income => {
-                          return (
-                            <div className={styles.incomeChart}>
-                              <div>{income.date}</div>
-                              <div>{income.revenue}</div>
-                              <div>{income.ebitda}</div>
-                              <div>{income.netIncome}</div>
-                            </div>
-                          )
-                        })
+                        this.state.statement === "Income Statement"
+                        ? <strong 
+                            className={styles.statementSelected}
+                            onClick={this.selectStatement}
+                            data-statement="Income Statement"
+                          > 
+                            Income Statements 
+                          </strong >
+                        : <strong 
+                            className={styles.statement}
+                            onClick={this.selectStatement}
+                            data-statement="Income Statement"
+                          > 
+                            Income Statements 
+                          </strong >
+                      }
+                      
+                      {
+                        this.state.statement === "Cashflow Statement"
+                        ? <strong 
+                            className={styles.statementSelected}
+                            onClick={this.selectStatement}
+                            data-statement="Cashflow Statement"
+                          > 
+                            Cashflow Statements 
+                          </strong>
+                        : <strong 
+                            className={styles.statement}
+                            onClick={this.selectStatement}
+                            data-statement="Cashflow Statement"
+                          > 
+                            Cashflow Statements 
+                          </strong>
+                      }
+                     
+                      {
+                        this.state.statement === "Balance Sheet"
+                        ? <strong 
+                            className={styles.statementSelected}
+                            onClick={this.selectStatement}
+                            data-statement="Balance Sheet"
+                          > 
+                            Balance Sheets 
+                          </strong>
+                        : <strong 
+                            className={styles.statement}
+                            onClick={this.selectStatement}
+                            data-statement="Balance Sheet"
+                          > 
+                            Balance Sheets 
+                          </strong>
                       }
                     </div>
-                    <strong> Cashflow Statements </strong>
-                    <div className={styles.incomeStatements}>
-                      <div className={styles.incomeLabels}>
-                        <div>Date</div>
-                        <div>Acc Receivables</div>
-                        <div>Acc Payables</div>
-                        <div>Cap Expenditure</div>
-                        <div>Free Cashflow</div>
-                      </div>
-                      {
-                        this.state.cashflowStatements.map(cashflow => {
-                          return (
-                            <div className={styles.incomeChart}>
-                             <div>{cashflow.date}</div>
-                             <div>{cashflow.accountsReceivables}</div>
-                             <div>{cashflow.accountsPayables}</div>
-                             <div>{cashflow.capitalExpenditure}</div>
-                             <div>{cashflow.freeCashFlow}</div>
+
+                    {
+                      this.state.statement === "Income Statement"
+                      ? <div className={styles.finData}>
+                          <div className={styles.finChart}>
+                          </div>
+                          <div className={styles.finData}>
+                            <div className={styles.incomeStatements}>
+                              <div className={styles.incomeLabels}>
+                                <div>Date</div>
+                                <div>Revenue</div>
+                                <div>EBITDA</div>
+                                <div>Net Income</div>
+                              </div>
+                              {
+                                this.state.incomeStatements.map(income => {
+                                  return (
+                                    <div className={styles.incomeChart}>
+                                      <div>{income.date}</div>
+                                      <div>{income.revenue}</div>
+                                      <div>{income.ebitda}</div>
+                                      <div>{income.netIncome}</div>
+                                    </div>
+                                  )
+                                })
+                              }
                             </div>
-                          )
-                        })
-                      }
-                    </div>
-                    <strong> Balance Sheets </strong>
-                    <div className={styles.incomeStatements}>
-                      <div className={styles.incomeLabels}>
-                        <div>Date</div>
-                        <div>Total Assets</div>
-                        <div>Cash</div>
-                        <div>Inventory</div>
-                        <div>Shorterm Equity</div>
-                        <div>Shorterm Debt</div>
-                        <div>Longterm Debt</div>
-                      </div>
-                      {
-                        this.state.balanceSheets.map(balance => {
-                          return (
-                            <div className={styles.incomeChart}>
-                              <div>{balance.date}</div>
-                              <div>{balance.totalAssets}</div>
-                              <div>{balance.cashAndCashEquivalents}</div>
-                              <div>{balance.inventory}</div>
-                              <div>{balance.cashAndShortTermInvestments}</div>
-                              <div>{balance.shortTermDebt}</div>
-                              <div>{balance.longTermDebt}</div>
+                            <div></div>
+                          </div>
+                        </div>
+                      : <div></div>
+                    }
+
+                    {
+                      this.state.statement === "Cashflow Statement"
+                      ? <div className={styles.finData}>
+                          <div className={styles.finChart}>
+                          </div>
+                          <div className={styles.incomeStatements}>
+                            <div className={styles.incomeLabels}>
+                              <div>Date</div>
+                              <div>Acc Receivables</div>
+                              <div>Acc Payables</div>
+                              <div>Cap Expenditure</div>
+                              <div>Free Cashflow</div>
                             </div>
-                          )
-                        })
-                      }
-                    </div>
+                            {
+                              this.state.cashflowStatements.map(cashflow => {
+                                return (
+                                  <div className={styles.incomeChart}>
+                                   <div>{cashflow.date}</div>
+                                   <div>{cashflow.accountsReceivables}</div>
+                                   <div>{cashflow.accountsPayables}</div>
+                                   <div>{cashflow.capitalExpenditure}</div>
+                                   <div>{cashflow.freeCashFlow}</div>
+                                  </div>
+                                )
+                              })
+                            }
+                          </div>
+                        </div>
+                      : <div></div>
+                    }
+
+                    {
+                      this.state.statement === "Balance Sheet"
+                      ? <div className={styles.finData}>
+                          <div className={styles.finChart}>
+                          </div>
+                          <div className={styles.incomeStatements}>
+                            <div className={styles.incomeLabels}>
+                              <div>Date</div>
+                              <div>Total Assets</div>
+                              <div>Cash</div>
+                              <div>Inventory</div>
+                              <div>Shorterm Equity</div>
+                              <div>Shorterm Debt</div>
+                              <div>Longterm Debt</div>
+                            </div>
+                            {
+                              this.state.balanceSheets.map(balance => {
+                                return (
+                                  <div className={styles.incomeChart}>
+                                    <div>{balance.date}</div>
+                                    <div>{balance.totalAssets}</div>
+                                    <div>{balance.cashAndCashEquivalents}</div>
+                                    <div>{balance.inventory}</div>
+                                    <div>{balance.cashAndShortTermInvestments}</div>
+                                    <div>{balance.shortTermDebt}</div>
+                                    <div>{balance.longTermDebt}</div>
+                                  </div>
+                                )
+                              })
+                            }
+                          </div>
+                        </div>
+                      : <div></div>
+                    }
                   </div>     
                 : <ResponsivePieCanvas
                     data={this.state.topProducts}

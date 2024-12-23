@@ -500,11 +500,65 @@
   height: 100%;
 }
 
+.finStatePanel {
+  width: 100%;
+  height: 3vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  color: white;
+  margin: 0 0 10px 0;
+}
+
+.statement {
+  border: 1px solid #121C2B;
+  color: #121C2B;
+  background-color: white;
+  padding: 4px;
+}
+
+.statementSelected {
+  transform: scale(1.03);
+  background-color: #121C2B;
+  padding: 4px;
+}
+
+.statement:hover {
+  transform: scale(1.03);
+}
+
+.statement:active {
+  transform: scale(0.97);
+}
+
+.finChart {
+  background-color: #121C2B;
+  height: 24vh;
+}
+
+.finData {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .incomeStatements {
   font-size: 10px;
   font-weight: 700;
   display: flex;
   flex-direction: row;
+  width: 100%;
+  padding: 10px;
+/*  height: 12vh;*/
+  border: 1px solid #121C2B;
+}
+
+.incomeLabels {
+  background-color: #121C2B;
+  color: white;
+  width: 120px;
+  padding: 4px;
 }
 .incomeChart {
   margin: 0 3px;
