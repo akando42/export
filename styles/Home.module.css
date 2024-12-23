@@ -584,13 +584,45 @@
   }
 
   .table {
-    height: 50vh;
+    height: 90vh;
     width: 96vw;
+  }
+
+  .corpSummary {
+    flex-direction: column;
+  }
+
+  .pricing, .info, .metrics {
+    width: 90vw;
+  }
+
+  .corpLogo {
+    width: 30vw;
+    height: 30vw;
+  }
+
+  .description {
+    width: 90vw;
+    height: 100vh;
+    overflow-y: scroll;
+  }
+
+  .corpSummary {
+    height: 80vh;
+    text-align: center;
   }
 
   .tableData {
     overflow: scroll;
     min-height: 30vh;
+  }
+
+  .itemName {
+    width: 50vw;
+  }
+
+  .itemValue {
+    width: 30vw;
   }
 
   .rightPanel {
@@ -606,22 +638,46 @@
   }
 
   .footer {
-    height: 6vw;
+    height: 10vw;
     background-color: blue;
   }
 
   .floating {
-    height: 6vw;
-    width: 94vw;
+    height: 10vw;
+    width: 90vw;
+    font-size: 8px;
   }
 
   .logo {
-    height: 6vw;
-    width:  6vw;
+    height: 10vw;
+    width:  10vw;
     background-color: yellow;
   } 
 
   .currencies, .commodities {
-    height: 3vw;
+    height: 5vw;
+    font-size: 10px;
+  }
+
+  .stockSymbol, .price, .negChange, .posChange {
+    font-size: 10px;
+  }
+
+  .triangleUp {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 8px solid blue;
+    margin-right: 1px;
+  }
+
+  .triangleDown {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 8px solid red;
+    margin-right: 1px;
   }
 }

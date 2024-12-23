@@ -767,7 +767,7 @@ export default class Home extends Component {
       this.setState({
         mapSize: "90vw"
       })
-    }
+    } 
   }
 
   componentWillMount(){
@@ -993,7 +993,7 @@ export default class Home extends Component {
               {
                 this.state.showingCorps
                 ? <Map 
-                    width={this.state.mapSize}
+                    width='{this.state.mapSize}'
                     height="38vh"
                     styles={styles.mapBox}
                     data={this.state.markerData}
