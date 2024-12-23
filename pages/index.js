@@ -6,6 +6,8 @@ import styles from '../styles/Home.module.css'
 import Ticker from 'react-ticker'
 import NumberFormat from 'react-number-format'
 import { ResponsivePieCanvas } from '@nivo/pie'
+import { ResponsiveBar } from '@nivo/bar'
+
 import {Component} from "react"
 
 export default class Home extends Component {
@@ -232,6 +234,178 @@ export default class Home extends Component {
           "color": "hsl(20, 70%, 50%)"
         }
       ],
+      barSampleData: [
+        {
+          "year": "2001",
+
+          "Revenue": 92,
+          "RevenueColor": "hsl(123, 70%, 50%)",
+
+          "EBITDA": 6,
+          "EBITDAColor": "hsl(44, 70%, 50%)",
+          
+          "Net Income": 19,
+          "Net IncomeColor": "hsl(197, 70%, 50%)"
+        },
+        {
+          "year": "2002",
+
+          "Revenue": 92,
+          "RevenueColor": "hsl(123, 70%, 50%)",
+
+          "EBITDA": 6,
+          "EBITDAColor": "hsl(44, 70%, 50%)",
+          
+          "Net Income": 19,
+          "Net IncomeColor": "hsl(197, 70%, 50%)"
+        },
+        {
+          "year": "2003",
+
+          "Revenue": 92,
+          "RevenueColor": "hsl(123, 70%, 50%)",
+
+          "EBITDA": 6,
+          "EBITDAColor": "hsl(44, 70%, 50%)",
+          
+          "Net Income": 19,
+          "Net IncomeColor": "hsl(197, 70%, 50%)"
+        },
+        {
+          "year": "2004",
+
+          "Revenue": 92,
+          "RevenueColor": "hsl(123, 70%, 50%)",
+
+          "EBITDA": 6,
+          "EBITDAColor": "hsl(44, 70%, 50%)",
+          
+          "Net Income": 19,
+          "Net IncomeColor": "hsl(197, 70%, 50%)"
+        },
+        {
+          "year": "2005",
+
+          "Revenue": 92,
+          "RevenueColor": "hsl(123, 70%, 50%)",
+
+          "EBITDA": 6,
+          "EBITDAColor": "hsl(44, 70%, 50%)",
+          
+          "Net Income": 19,
+          "Net IncomeColor": "hsl(197, 70%, 50%)"
+        }
+      ],
+      barChartTheme: {
+          "background": "#000000",
+          "text": {
+              "fontSize": 11,
+              "fill": "#ffffff",
+              "outlineWidth": 0,
+              "outlineColor": "transparent"
+          },
+          "axis": {
+              "domain": {
+                  "line": {
+                      "stroke": "#777777",
+                      "strokeWidth": 1
+                  }
+              },
+              "legend": {
+                  "text": {
+                      "fontSize": 12,
+                      "fill": "#ffffff",
+                      "outlineWidth": 0,
+                      "outlineColor": "transparent"
+                  }
+              },
+              "ticks": {
+                  "line": {
+                      "stroke": "#777777",
+                      "strokeWidth": 1
+                  },
+                  "text": {
+                      "fontSize": 11,
+                      "fill": "#333333",
+                      "outlineWidth": 0,
+                      "outlineColor": "transparent"
+                  }
+              }
+          },
+          "grid": {
+              "line": {
+                  "stroke": "#dddddd",
+                  "strokeWidth": 1
+              }
+          },
+          "legends": {
+              "title": {
+                  "text": {
+                      "fontSize": 11,
+                      "fill": "#333333",
+                      "outlineWidth": 0,
+                      "outlineColor": "transparent"
+                  }
+              },
+              "text": {
+                  "fontSize": 11,
+                  "fill": "#ffffff",
+                  "outlineWidth": 0,
+                  "outlineColor": "#ffffff"
+              },
+              "ticks": {
+                  "line": {},
+                  "text": {
+                      "fontSize": 10,
+                      "fill": "#333333",
+                      "outlineWidth": 0,
+                      "outlineColor": "transparent"
+                  }
+              }
+          },
+          "annotations": {
+              "text": {
+                  "fontSize": 13,
+                  "fill": "#333333",
+                  "outlineWidth": 2,
+                  "outlineColor": "#ffffff",
+                  "outlineOpacity": 1
+              },
+              "link": {
+                  "stroke": "#000000",
+                  "strokeWidth": 1,
+                  "outlineWidth": 2,
+                  "outlineColor": "#ffffff",
+                  "outlineOpacity": 1
+              },
+              "outline": {
+                  "stroke": "#000000",
+                  "strokeWidth": 2,
+                  "outlineWidth": 2,
+                  "outlineColor": "#ffffff",
+                  "outlineOpacity": 1
+              },
+              "symbol": {
+                  "fill": "#000000",
+                  "outlineWidth": 2,
+                  "outlineColor": "#ffffff",
+                  "outlineOpacity": 1
+              }
+          },
+          "tooltip": {
+              "wrapper": {},
+              "container": {
+                  "background": "#ffffff",
+                  "color": "#333333",
+                  "fontSize": 12
+              },
+              "basic": {},
+              "chip": {},
+              "table": {},
+              "tableCell": {},
+              "tableCellValue": {}
+          }
+      },
       incomeStatements: [],
       cashflowStatements: [],
       balanceSheets: [],
@@ -582,7 +756,6 @@ export default class Home extends Component {
     this.setState({
       statement: event.target.dataset.statement
     })
-
   }
 
   componentWillMount(){
@@ -689,6 +862,121 @@ export default class Home extends Component {
                       this.state.statement === "Income Statement"
                       ? <div className={styles.finData}>
                           <div className={styles.finChart}>
+                            <ResponsiveBar
+                              data={this.state.barSampleData}
+                              keys={[
+                                  'Revenue',
+                                  'EBITDA',
+                                  'Net Income'
+                              ]}
+                              indexBy="year"
+                              margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+                              padding={0.2}
+                              groupMode="grouped"
+                              valueScale={{ type: 'linear' }}
+                              indexScale={{ type: 'band', round: true }}
+                              theme={this.state.barChartTheme}
+                              colors="#FFF"
+                              defs={[
+                                  {
+                                      id: 'dots',
+                                      type: 'patternDots',
+                                      background: 'inherit',
+                                      color: '#38bcb2',
+                                      size: 4,
+                                      padding: 1,
+                                      stagger: true
+                                  },
+                                  {
+                                      id: 'lines',
+                                      type: 'patternLines',
+                                      background: 'inherit',
+                                      color: '#eed312',
+                                      rotation: -45,
+                                      lineWidth: 6,
+                                      spacing: 10
+                                  }
+                              ]}
+                              fill={[
+                                  {
+                                      match: {
+                                          id: 'fries'
+                                      },
+                                      id: 'dots'
+                                  },
+                                  {
+                                      match: {
+                                          id: 'sandwich'
+                                      },
+                                      id: 'lines'
+                                  }
+                              ]}
+                              borderWidth={1}
+                              borderColor={{
+                                  from: 'color',
+                                  modifiers: [
+                                      [
+                                          'darker',
+                                          '1.2'
+                                      ]
+                                  ]
+                              }}
+                              axisTop={null}
+                              axisRight={null}
+                              axisBottom={{
+                                  tickSize: 5,
+                                  tickPadding: 5,
+                                  tickRotation: 0,
+                                  legend: 'Year',
+                                  legendPosition: 'middle',
+                                  legendOffset: 32,
+                                  color: '#FFF',
+                                  truncateTickAt: 0
+                              }}
+                              axisLeft={{
+                                  tickSize: 5,
+                                  tickPadding: 5,
+                                  tickRotation: 0,
+                                  legend: 'USD',
+                                  legendPosition: 'middle',
+                                  legendOffset: -40,
+                                  truncateTickAt: 0
+                              }}
+                              enableLabel={false}
+                              totalsOffset={9}
+                              labelSkipWidth={4}
+                              labelSkipHeight={12}
+                              labelTextColor="#121C2B"
+                              labelPosition="end"
+                              labelOffset={10}
+                              legends={[
+                                  {
+                                      dataFrom: 'keys',
+                                      anchor: 'bottom-right',
+                                      direction: 'column',
+                                      justify: false,
+                                      translateX: 120,
+                                      translateY: 0,
+                                      itemsSpacing: 2,
+                                      itemWidth: 100,
+                                      itemHeight: 20,
+                                      itemDirection: 'left-to-right',
+                                      itemOpacity: 0.85,
+                                      symbolSize: 20,
+                                      effects: [
+                                          {
+                                              on: 'hover',
+                                              style: {
+                                                  itemOpacity: 1
+                                              }
+                                          }
+                                      ]
+                                  }
+                              ]}
+                              role="application"
+                              ariaLabel="Nivo bar chart demo"
+                              barAriaLabel={e=>e.id+": "+e.formattedValue+" in country: "+e.indexValue}
+                            />
                           </div>
                           <div className={styles.finData}>
                             <div className={styles.incomeStatements}>
@@ -721,6 +1009,121 @@ export default class Home extends Component {
                       this.state.statement === "Cashflow Statement"
                       ? <div className={styles.finData}>
                           <div className={styles.finChart}>
+                            <ResponsiveBar
+                              data={this.state.barSampleData}
+                              keys={[
+                                  'Revenue',
+                                  'EBITDA',
+                                  'Net Income'
+                              ]}
+                              indexBy="year"
+                              margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+                              padding={0.2}
+                              groupMode="grouped"
+                              valueScale={{ type: 'linear' }}
+                              indexScale={{ type: 'band', round: true }}
+                              theme={this.state.barChartTheme}
+                              colors="#FFF"
+                              defs={[
+                                  {
+                                      id: 'dots',
+                                      type: 'patternDots',
+                                      background: 'inherit',
+                                      color: '#38bcb2',
+                                      size: 4,
+                                      padding: 1,
+                                      stagger: true
+                                  },
+                                  {
+                                      id: 'lines',
+                                      type: 'patternLines',
+                                      background: 'inherit',
+                                      color: '#eed312',
+                                      rotation: -45,
+                                      lineWidth: 6,
+                                      spacing: 10
+                                  }
+                              ]}
+                              fill={[
+                                  {
+                                      match: {
+                                          id: 'fries'
+                                      },
+                                      id: 'dots'
+                                  },
+                                  {
+                                      match: {
+                                          id: 'sandwich'
+                                      },
+                                      id: 'lines'
+                                  }
+                              ]}
+                              borderWidth={1}
+                              borderColor={{
+                                  from: 'color',
+                                  modifiers: [
+                                      [
+                                          'darker',
+                                          '1.2'
+                                      ]
+                                  ]
+                              }}
+                              axisTop={null}
+                              axisRight={null}
+                              axisBottom={{
+                                  tickSize: 5,
+                                  tickPadding: 5,
+                                  tickRotation: 0,
+                                  legend: 'Year',
+                                  legendPosition: 'middle',
+                                  legendOffset: 32,
+                                  color: '#FFF',
+                                  truncateTickAt: 0
+                              }}
+                              axisLeft={{
+                                  tickSize: 5,
+                                  tickPadding: 5,
+                                  tickRotation: 0,
+                                  legend: 'USD',
+                                  legendPosition: 'middle',
+                                  legendOffset: -40,
+                                  truncateTickAt: 0
+                              }}
+                              enableLabel={false}
+                              totalsOffset={9}
+                              labelSkipWidth={4}
+                              labelSkipHeight={12}
+                              labelTextColor="#121C2B"
+                              labelPosition="end"
+                              labelOffset={10}
+                              legends={[
+                                  {
+                                      dataFrom: 'keys',
+                                      anchor: 'bottom-right',
+                                      direction: 'column',
+                                      justify: false,
+                                      translateX: 120,
+                                      translateY: 0,
+                                      itemsSpacing: 2,
+                                      itemWidth: 100,
+                                      itemHeight: 20,
+                                      itemDirection: 'left-to-right',
+                                      itemOpacity: 0.85,
+                                      symbolSize: 20,
+                                      effects: [
+                                          {
+                                              on: 'hover',
+                                              style: {
+                                                  itemOpacity: 1
+                                              }
+                                          }
+                                      ]
+                                  }
+                              ]}
+                              role="application"
+                              ariaLabel="Nivo bar chart demo"
+                              barAriaLabel={e=>e.id+": "+e.formattedValue+" in country: "+e.indexValue}
+                            />
                           </div>
                           <div className={styles.incomeStatements}>
                             <div className={styles.incomeLabels}>
@@ -752,6 +1155,121 @@ export default class Home extends Component {
                       this.state.statement === "Balance Sheet"
                       ? <div className={styles.finData}>
                           <div className={styles.finChart}>
+                            <ResponsiveBar
+                              data={this.state.barSampleData}
+                              keys={[
+                                  'Revenue',
+                                  'EBITDA',
+                                  'Net Income'
+                              ]}
+                              indexBy="year"
+                              margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+                              padding={0.2}
+                              groupMode="grouped"
+                              valueScale={{ type: 'linear' }}
+                              indexScale={{ type: 'band', round: true }}
+                              theme={this.state.barChartTheme}
+                              colors="#FFF"
+                              defs={[
+                                  {
+                                      id: 'dots',
+                                      type: 'patternDots',
+                                      background: 'inherit',
+                                      color: '#38bcb2',
+                                      size: 4,
+                                      padding: 1,
+                                      stagger: true
+                                  },
+                                  {
+                                      id: 'lines',
+                                      type: 'patternLines',
+                                      background: 'inherit',
+                                      color: '#eed312',
+                                      rotation: -45,
+                                      lineWidth: 6,
+                                      spacing: 10
+                                  }
+                              ]}
+                              fill={[
+                                  {
+                                      match: {
+                                          id: 'fries'
+                                      },
+                                      id: 'dots'
+                                  },
+                                  {
+                                      match: {
+                                          id: 'sandwich'
+                                      },
+                                      id: 'lines'
+                                  }
+                              ]}
+                              borderWidth={1}
+                              borderColor={{
+                                  from: 'color',
+                                  modifiers: [
+                                      [
+                                          'darker',
+                                          '1.2'
+                                      ]
+                                  ]
+                              }}
+                              axisTop={null}
+                              axisRight={null}
+                              axisBottom={{
+                                  tickSize: 5,
+                                  tickPadding: 5,
+                                  tickRotation: 0,
+                                  legend: 'Year',
+                                  legendPosition: 'middle',
+                                  legendOffset: 32,
+                                  color: '#FFF',
+                                  truncateTickAt: 0
+                              }}
+                              axisLeft={{
+                                  tickSize: 5,
+                                  tickPadding: 5,
+                                  tickRotation: 0,
+                                  legend: 'USD',
+                                  legendPosition: 'middle',
+                                  legendOffset: -40,
+                                  truncateTickAt: 0
+                              }}
+                              enableLabel={false}
+                              totalsOffset={9}
+                              labelSkipWidth={4}
+                              labelSkipHeight={12}
+                              labelTextColor="#121C2B"
+                              labelPosition="end"
+                              labelOffset={10}
+                              legends={[
+                                  {
+                                      dataFrom: 'keys',
+                                      anchor: 'bottom-right',
+                                      direction: 'column',
+                                      justify: false,
+                                      translateX: 120,
+                                      translateY: 0,
+                                      itemsSpacing: 2,
+                                      itemWidth: 100,
+                                      itemHeight: 20,
+                                      itemDirection: 'left-to-right',
+                                      itemOpacity: 0.85,
+                                      symbolSize: 20,
+                                      effects: [
+                                          {
+                                              on: 'hover',
+                                              style: {
+                                                  itemOpacity: 1
+                                              }
+                                          }
+                                      ]
+                                  }
+                              ]}
+                              role="application"
+                              ariaLabel="Nivo bar chart demo"
+                              barAriaLabel={e=>e.id+": "+e.formattedValue+" in country: "+e.indexValue}
+                            />
                           </div>
                           <div className={styles.incomeStatements}>
                             <div className={styles.incomeLabels}>
