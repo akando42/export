@@ -508,7 +508,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
   color: white;
   margin: 0 0 10px 0;
 }
@@ -519,6 +519,7 @@
   background-color: white;
   padding: 4px;
   font-size: 12px;
+  margin-right: 10px;
 }
 
 .statementSelected {
@@ -526,6 +527,7 @@
   background-color: #121C2B;
   padding: 4px;
   font-size: 12px;
+  margin-right: 10px;
 }
 
 .statement:hover {

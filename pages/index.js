@@ -1270,7 +1270,7 @@ export default class Home extends Component {
                                   }
                               ]}
                               role="application"
-                              ariaLabel="Nivo bar chart demo"
+                              ariaLabel="Income Statement"
                               barAriaLabel={e=>e.id+": "+e.formattedValue+" in country: "+e.indexValue}
                             />
                           </div>
