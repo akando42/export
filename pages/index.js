@@ -237,13 +237,10 @@ export default class Home extends Component {
       barSampleData: [
         {
           "year": "2001",
-
           "Revenue": 92,
           "RevenueColor": "hsl(123, 70%, 50%)",
-
           "EBITDA": 6,
           "EBITDAColor": "hsl(44, 70%, 50%)",
-          
           "Net Income": 19,
           "Net IncomeColor": "hsl(197, 70%, 50%)"
         },
@@ -296,6 +293,7 @@ export default class Home extends Component {
           "Net IncomeColor": "hsl(197, 70%, 50%)"
         }
       ],
+      chartData: [],
       barChartTheme: {
           "background": "#000000",
           "text": {
@@ -733,8 +731,24 @@ export default class Home extends Component {
     await axios.get(`/api/income_statement?corps=${corpSymbol}`)
       .then(res => {
         console.log(res.data)
+        let incomeStatements = res.data.data
+
+        let chartData = incomeStatements.map(statement => {
+          console.log(statement)
+          return {
+            "year": statement.date,
+            "Revenue": statement.revenue,
+            "RevenueColor": "hsl(123, 70%, 50%)",
+            "EBITDA": statement.ebitda,
+            "EBITDAColor": "hsl(44, 70%, 50%)",
+            "Net Income": statement.netIncome,
+            "Net IncomeColor": "hsl(197, 70%, 50%)"
+          }
+        })
+
         this.setState({
-          incomeStatements: res.data.data
+          incomeStatements: incomeStatements,
+          chartData: chartData
         })
       })
 
@@ -756,9 +770,76 @@ export default class Home extends Component {
   }
 
   async selectStatement(event){
-    this.setState({
-      statement: event.target.dataset.statement
-    })
+
+    let selectedStatement = event.target.dataset.statement
+    this.setState({ statement: selectedStatement})
+
+    if (selectedStatement === "Income Statement"){
+      // console.log(selectedStatement)
+      let incomeStatements = this.state.incomeStatements.map(statement => {
+        console.log(statement)
+        return {
+          "year": statement.date,
+          "Revenue": statement.revenue,
+          "RevenueColor": "hsl(123, 70%, 50%)",
+          "EBITDA": statement.ebitda,
+          "EBITDAColor": "hsl(44, 70%, 50%)",
+          "Net Income": statement.netIncome,
+          "Net IncomeColor": "hsl(197, 70%, 50%)"
+        }
+      })
+      this.setState({
+        chartData: incomeStatements
+      })
+      // incomeStatements
+    } else if (selectedStatement === "Cashflow Statement"){
+      console.log(selectedStatement)
+      let cashflowStatements = this.state.cashflowStatements.map(statement => {
+        console.log(statement)
+        return {
+          "year": statement.date,
+          "Account Receivables": statement.accountsReceivables,
+          "Account ReceivablesColor": "hsl(123, 70%, 50%)",
+          "Account Payables": statement.accountsPayables,
+          "Account PayablesColor": "hsl(44, 70%, 50%)",
+          "Capital Expenditure": statement.capitalExpenditure,
+          "Capital ExpenditureColor": "hsl(197, 70%, 50%)",
+          "Free Cashflow": statement.freeCashFlow,
+          "Free CashflowColor": "hsl(197, 70%, 50%)"
+        }
+      })
+
+      this.setState({
+        chartData: cashflowStatements
+      })
+    } else if (selectedStatement === "Balance Sheet"){
+      console.log("setting Chart Data for ", selectedStatement)
+      let balanceSheets = this.state.balanceSheets.map(statement => {
+        console.log(statement)
+        return {
+          "year": statement.date,
+          "Total Assets": statement.accountsReceivables,
+          "Total AssetsColor": "hsl(123, 70%, 50%)",
+          "Cash": statement.cashAndCashEquivalents,
+          "CashColor": "hsl(44, 70%, 50%)",
+          "Inventory": statement.inventory,
+          "InventoryColor": "hsl(197, 70%, 50%)",
+          "Shorterm Equity": statement.cashAndShortTermInvestments,
+          "Shorterm EquityColor": "hsl(197, 70%, 50%)",
+          "Shorterm Debt": statement.shortTermDebt,
+          "Shorterm DebtColor": "hsl(197, 70%, 50%)",
+          "Longterm Debt": statement.longTermDebt,
+          "Longterm DebtColor": "hsl(197, 70%, 50%)"
+        }
+      })
+
+      this.setState({
+        chartData: balanceSheets
+      })
+    }
+   
+    // let statementData = this.state[event.target.dataset.statement]
+    // console.log(statementData)
   }
 
   async resizeMap(){
@@ -1078,7 +1159,7 @@ export default class Home extends Component {
                       ? <div className={styles.finData}>
                           <div className={styles.finChart}>
                             <ResponsiveBar
-                              data={this.state.barSampleData}
+                              data={this.state.chartData}
                               keys={[
                                   'Revenue',
                                   'EBITDA',
@@ -1225,11 +1306,12 @@ export default class Home extends Component {
                       ? <div className={styles.finData}>
                           <div className={styles.finChart}>
                             <ResponsiveBar
-                              data={this.state.barSampleData}
+                              data={this.state.chartData}
                               keys={[
-                                  'Revenue',
-                                  'EBITDA',
-                                  'Net Income'
+                                  'Account Receivables',
+                                  'Account Payables',
+                                  'Capital Expenditure',
+                                  'Free Cashflow'
                               ]}
                               indexBy="year"
                               margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
@@ -1373,9 +1455,12 @@ export default class Home extends Component {
                             <ResponsiveBar
                               data={this.state.barSampleData}
                               keys={[
-                                  'Revenue',
-                                  'EBITDA',
-                                  'Net Income'
+                                  'Total Assets',
+                                  'Cash',
+                                  'Inventory',
+                                  'Shorterm Equity',
+                                  'Shorterm Debt',
+                                  'Longterm Debt'
                               ]}
                               indexBy="year"
                               margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
@@ -1515,7 +1600,8 @@ export default class Home extends Component {
                         </div>
                       : <div></div>
                     }
-                  </div>     
+                  </div>  
+
                 : <ResponsivePieCanvas
                     data={this.state.topProducts}
                     margin={{ top: 10, bottom: 10, right: 10,  left: 10 }}
