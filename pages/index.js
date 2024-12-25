@@ -324,7 +324,7 @@ export default class Home extends Component {
                   },
                   "text": {
                       "fontSize": 11,
-                      "fill": "#333333",
+                      "fill": "transparent",
                       "outlineWidth": 0,
                       "outlineColor": "transparent"
                   }
@@ -340,7 +340,7 @@ export default class Home extends Component {
               "title": {
                   "text": {
                       "fontSize": 11,
-                      "fill": "#333333",
+                      "fill": "#ffffff",
                       "outlineWidth": 0,
                       "outlineColor": "transparent"
                   }
@@ -355,7 +355,7 @@ export default class Home extends Component {
                   "line": {},
                   "text": {
                       "fontSize": 10,
-                      "fill": "#333333",
+                      "fill": "#FFFFFF",
                       "outlineWidth": 0,
                       "outlineColor": "transparent"
                   }
@@ -364,7 +364,7 @@ export default class Home extends Component {
           "annotations": {
               "text": {
                   "fontSize": 13,
-                  "fill": "#333333",
+                  "fill": "#fff",
                   "outlineWidth": 2,
                   "outlineColor": "#ffffff",
                   "outlineOpacity": 1
@@ -781,11 +781,11 @@ export default class Home extends Component {
         return {
           "year": statement.date,
           "Revenue": statement.revenue,
-          "RevenueColor": "hsl(123, 70%, 50%)",
+          "RevenueColor": "hsl(59, 100%, 50%)",
           "EBITDA": statement.ebitda,
-          "EBITDAColor": "hsl(44, 70%, 50%)",
+          "EBITDAColor": "hsl(0, 100%, 50%)",
           "Net Income": statement.netIncome,
-          "Net IncomeColor": "hsl(197, 70%, 50%)"
+          "Net IncomeColor": "hsl(256, 100%, 50%)"
         }
       })
       this.setState({
@@ -818,7 +818,7 @@ export default class Home extends Component {
         console.log(statement)
         return {
           "year": statement.date,
-          "Total Assets": statement.accountsReceivables,
+          "Total Assets": statement.totalAssets,
           "Total AssetsColor": "hsl(123, 70%, 50%)",
           "Cash": statement.cashAndCashEquivalents,
           "CashColor": "hsl(44, 70%, 50%)",
@@ -1453,7 +1453,7 @@ export default class Home extends Component {
                       ? <div className={styles.finData}>
                           <div className={styles.finChart}>
                             <ResponsiveBar
-                              data={this.state.barSampleData}
+                              data={this.state.chartData}
                               keys={[
                                   'Total Assets',
                                   'Cash',
