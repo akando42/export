@@ -552,8 +552,9 @@ export default class Home extends Component {
      })
   }
 
-  pullCompanies(countryCode){
+  async pullCompanies(countryCode){
     let today = new Date().toLocaleDateString()
+
 
     axios.get(`/api/get_stocks`)
       .then(async(res) => {
@@ -567,6 +568,7 @@ export default class Home extends Component {
               return stock
             } else {
               // Update Stock in Database
+              console.log("PULLING DATA FOR ", today, stock.timestamp)
               axios.get(`/api/companies?corps=${stock.symbol}`)
                 .then(async(res) => {
                   let fresh_stock = res.data.data[0]
