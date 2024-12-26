@@ -555,56 +555,105 @@ export default class Home extends Component {
   async pullCompanies(countryCode){
     let today = new Date().toLocaleDateString()
 
-
-    axios.get(`/api/get_stocks`)
-      .then(async(res) => {
-        // console.log("All Stocks ",res.data.stocks)
-        let stocks = res.data.stocks.filter(
-          stock => stock.nation === this.state.selectedCountry
-        )
-        // console.log(`Stocks from ${this.state.selectedCountry} \n`, stocks)
-        stocks = stocks.map(stock => {
-            if (stock.timestamp === today){
-              return stock
-            } else {
-              // Update Stock in Database
-              console.log("PULLING DATA FOR ", today, stock.timestamp)
-              axios.get(`/api/companies?corps=${stock.symbol}`)
-                .then(async(res) => {
-                  let fresh_stock = res.data.data[0]
-                  console.log("Updated Stock", fresh_stock)
-
-                  let updated_stock = {
-                    'nation': this.state.selectedCountry,
-                    'timestamp': today,
-                    ...fresh_stock
-                  }
-
-                  axios.post(`/api/update_stock?id=${stock.id}`, updated_stock)
-                    .then(res => {
-                      console.log(
-                        updated_stock.symbol,
-                        " have been updated\n",
-                        res.data,
-                        updated_stock
-                      )
-                    })
-
-                  return updated_stock
-                })
-            }
-        })
-
-        let stockBasket = []
-        for(let i = 0; i < 10; i++){
-          stockBasket = stockBasket.concat(stocks)
-        }
-
-        this.setState({
-          stocks: stocks, 
-          stockBasket: stockBasket
-        })
+    // Pulling Stock Data by Country
+    let stocks = await axios.get(`/api/get_stocks`)
+      .then(res => {
+        return res.data.stocks
+          .filter(stock => stock.nation === this.state.selectedCountry)
       })
+
+    // Updating Stock Data for Outdated data
+    stocks = await Promise.all(stocks.map((stock) => {
+        if (stock.timestamp !== today){
+          console.log("PULLING DATA FOR ", today, stock.timestamp)
+          let updated_stock = axios.get(`/api/companies?corps=${stock.symbol}`)
+            .then(async(res) => {
+              let fresh_stock = res.data.data[0]
+              // console.log("Updated Stock", fresh_stock)
+
+              let updated_stock = {
+                'nation': this.state.selectedCountry,
+                'timestamp': today,
+                ...fresh_stock
+              }
+
+              await axios.post(`/api/update_stock?id=${stock.id}`, updated_stock)
+                .then(res => {
+                  console.log("Successfully updated stock ", res.data)
+                  console.log(updated_stock)
+                }
+              )
+
+              return updated_stock    
+            })
+
+          return updated_stock
+          } else {
+          // Update Stock in Database
+          return stock
+        }
+      })
+    )
+
+    console.log("STOCKS ", stocks)
+
+    // Create Stock Array for Sliding Row
+    let stockBasket = []
+    for(let i = 0; i < 10; i++){
+      stockBasket = stockBasket.concat(stocks)
+    }
+
+    this.setState({
+      stocks: stocks, 
+      stockBasket: stockBasket
+    })
+
+
+    // axios.get(`/api/get_stocks`)
+    //   .then(async(res) => {
+    //     // console.log("All Stocks ",res.data.stocks)
+    //     let stocks = res.data.stocks.filter(
+    //       stock => stock.nation === this.state.selectedCountry
+    //     )
+    //     // console.log(`Stocks from ${this.state.selectedCountry} \n`, stocks)
+    //     stocks = await stocks.map( async (stock) => {
+    //         if (stock.timestamp !== today){
+    //           console.log("PULLING DATA FOR ", today, stock.timestamp)
+    //           let updated_stock = await axios.get(`/api/companies?corps=${stock.symbol}`)
+    //             .then(async(res) => {
+    //               let fresh_stock = res.data.data[0]
+    //               // console.log("Updated Stock", fresh_stock)
+
+    //               let updated_stock = {
+    //                 'nation': this.state.selectedCountry,
+    //                 'timestamp': today,
+    //                 ...fresh_stock
+    //               }
+
+    //               await axios.post(`/api/update_stock?id=${stock.id}`, updated_stock)
+    //                 .then(res => {
+    //                   console.log("Successfully updated stock ", res.data)
+    //                   console.log(updated_stock)
+    //                 }
+    //               )
+
+    //               return updated_stock    
+    //             })
+    //           return updated_stock
+
+    //         } else {
+    //           // Update Stock in Database
+    //           return stock
+    //         }
+    //     })
+
+    //     console.log(
+    //       "Updated Stocks ", 
+    //       stocks
+    //     )
+
+        
+    //   })
   }
 
   async repopulateDB(countryCode){
