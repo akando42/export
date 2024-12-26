@@ -50,4 +50,4 @@ module.exports.handler = schedule('0 0 * * *', async (event) => {
           message: "Error Updating Stocks"
         }
 	}
-}
+})

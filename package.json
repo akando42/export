@@ -21,6 +21,7 @@
     "react-dom": "18.2.0",
     "react-number-format": "^4.6.0",
     "react-ticker": "^1.2.2",
-    "tradingeconomics": "^1.0.6"
+    "tradingeconomics": "^1.0.6",
+    "@netlify/functions": "1.6.0"
   }
 }
