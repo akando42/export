@@ -408,7 +408,8 @@ export default class Home extends Component {
       cashflowStatements: [],
       balanceSheets: [],
       statement: "Income Statement", 
-      mapSize: "32vw"
+      mapSize: "32vw",
+      device: "desktop"
     }
 
     this.resizeMap = this.resizeMap.bind(this)
@@ -897,9 +898,15 @@ export default class Home extends Component {
     console.log("Device Width", window.innerWidth)
     if (window.innerWidth < 610){
       this.setState({
-        mapSize: "90vw"
+        mapSize: "90vw",
+        device: "mobile"
       })
-    } 
+    } else {
+      this.setState({
+        mapSize: "32vw",
+        device: "desktop"
+      })
+    }
   }
 
   componentWillMount(){
@@ -989,12 +996,13 @@ export default class Home extends Component {
                   </div>
                 </div>
 
-                <div className={styles.corpDescription}>
-                  <strong> Description </strong>
-                  <div className={styles.description}>
-                    {this.state.currentCorpProfile.description}
-                  </div>
+                <strong> Description </strong>
+                <div className={styles.description}>
+                  {this.state.currentCorpProfile.description}
                 </div>
+
+    
+
               </div>
 
             : <div className={styles.table}>

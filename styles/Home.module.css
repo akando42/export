@@ -586,16 +586,25 @@
   }
 
   .export {
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     overflow: scroll;
     height: 96vh;
   }
 
   .table {
-    height: 90vh;
+    height: auto;
     width: 96vw;
+  }
+
+  .rightPanel {
+    height: 90vh !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 0 0 10px;
+    padding: 0px;
   }
 
   .statement, .statementSelected {
@@ -610,10 +619,6 @@
     font-size: 1.7vw;
   }
 
-  .corpSummary {
-    flex-direction: column;
-  }
-
   .pricing, .info, .metrics {
     width: 90vw;
   }
@@ -625,13 +630,17 @@
 
   .description {
     width: 90vw;
-    height: 100vh;
-    overflow-y: scroll;
+    height: 100%;
   }
 
   .corpSummary {
-    height: 80vh;
+    flex-direction: column;
     text-align: center;
+  }
+
+  .corpDescription {
+    background-color: blue;
+    height: 100%;
   }
 
   .tableData {
@@ -655,7 +664,7 @@
 
   .map, .chart {
     width: 96vw;
-    height: 40vh;
+    height: 45vh;
     margin: 4px 0;
   }
 
