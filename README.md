@@ -51,6 +51,10 @@ https://techblog.tomgreuter.nl/nextjs-api-routes/
 
 [X] Display Company Financial Statements Charts on Click
 
+[ ] Mobile Interface Optimization 
+
+[ ] Loading Speed Optimization
+
 ## Data Sources
 https://stockanalysis.com/list/uk-stocks-us/
 https://en.wikipedia.org/wiki/List_of_largest_French_companies

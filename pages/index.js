@@ -997,12 +997,10 @@ export default class Home extends Component {
                 </div>
 
                 <strong> Description </strong>
+                
                 <div className={styles.description}>
                   {this.state.currentCorpProfile.description}
                 </div>
-
-    
-
               </div>
 
             : <div className={styles.table}>
