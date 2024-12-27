@@ -295,24 +295,24 @@ export default class Home extends Component {
       ],
       chartData: [],
       barChartTheme: {
-          "background": "#000000",
+          "background": "#FFF",
           "text": {
               "fontSize": 11,
-              "fill": "#ffffff",
+              "fill": "#121C2B",
               "outlineWidth": 0,
               "outlineColor": "transparent"
           },
           "axis": {
               "domain": {
                   "line": {
-                      "stroke": "#777777",
+                      "stroke": "#121C2B",
                       "strokeWidth": 1
                   }
               },
               "legend": {
                   "text": {
                       "fontSize": 12,
-                      "fill": "#ffffff",
+                      "fill": "#121C2B",
                       "outlineWidth": 0,
                       "outlineColor": "transparent"
                   }
@@ -324,7 +324,7 @@ export default class Home extends Component {
                   },
                   "text": {
                       "fontSize": 11,
-                      "fill": "transparent",
+                      "fill": "#121C2B",
                       "outlineWidth": 0,
                       "outlineColor": "transparent"
                   }
@@ -340,22 +340,22 @@ export default class Home extends Component {
               "title": {
                   "text": {
                       "fontSize": 11,
-                      "fill": "#ffffff",
+                      "fill": "#121C2B",
                       "outlineWidth": 0,
                       "outlineColor": "transparent"
                   }
               },
               "text": {
                   "fontSize": 11,
-                  "fill": "#ffffff",
+                  "fill": "#121C2B",
                   "outlineWidth": 0,
-                  "outlineColor": "#ffffff"
+                  "outlineColor": "#121C2B"
               },
               "ticks": {
                   "line": {},
                   "text": {
                       "fontSize": 10,
-                      "fill": "#FFFFFF",
+                      "fill": "#121C2B",
                       "outlineWidth": 0,
                       "outlineColor": "transparent"
                   }
@@ -831,7 +831,7 @@ export default class Home extends Component {
       let incomeStatements = this.state.incomeStatements.map(statement => {
         console.log(statement)
         return {
-          "year": statement.date,
+          "year": statement.date.split("-")[0],
           "Revenue": statement.revenue,
           "RevenueColor": "hsl(59, 100%, 50%)",
           "EBITDA": statement.ebitda,
@@ -849,7 +849,7 @@ export default class Home extends Component {
       let cashflowStatements = this.state.cashflowStatements.map(statement => {
         console.log(statement)
         return {
-          "year": statement.date,
+          "year": statement.date.split("-")[0],
           "Account Receivables": statement.accountsReceivables,
           "Account ReceivablesColor": "hsl(123, 70%, 50%)",
           "Account Payables": statement.accountsPayables,
@@ -869,7 +869,7 @@ export default class Home extends Component {
       let balanceSheets = this.state.balanceSheets.map(statement => {
         console.log(statement)
         return {
-          "year": statement.date,
+          "year": statement.date.split("-")[0],
           "Total Assets": statement.totalAssets,
           "Total AssetsColor": "hsl(123, 70%, 50%)",
           "Cash": statement.cashAndCashEquivalents,
@@ -997,7 +997,7 @@ export default class Home extends Component {
                 </div>
 
                 <strong> Description </strong>
-                
+
                 <div className={styles.description}>
                   {this.state.currentCorpProfile.description}
                 </div>
@@ -1223,13 +1223,13 @@ export default class Home extends Component {
                                   'Net Income'
                               ]}
                               indexBy="year"
-                              margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+                              margin={{ top: 10, right: 130, bottom: 45, left: 20 }}
                               padding={0.2}
                               groupMode="grouped"
                               valueScale={{ type: 'linear' }}
                               indexScale={{ type: 'band', round: true }}
                               theme={this.state.barChartTheme}
-                              colors="#FFF"
+                              colors={{ scheme: 'purple_orange' }}
                               defs={[
                                   {
                                       id: 'dots',
@@ -1286,15 +1286,7 @@ export default class Home extends Component {
                                   color: '#FFF',
                                   truncateTickAt: 0
                               }}
-                              axisLeft={{
-                                  tickSize: 5,
-                                  tickPadding: 5,
-                                  tickRotation: 0,
-                                  legend: 'USD',
-                                  legendPosition: 'middle',
-                                  legendOffset: -40,
-                                  truncateTickAt: 0
-                              }}
+                              axisLeft={null}
                               enableLabel={false}
                               totalsOffset={9}
                               labelSkipWidth={4}
@@ -1315,7 +1307,7 @@ export default class Home extends Component {
                                       itemHeight: 20,
                                       itemDirection: 'left-to-right',
                                       itemOpacity: 0.85,
-                                      symbolSize: 20,
+                                      symbolSize: 6,
                                       effects: [
                                           {
                                               on: 'hover',
@@ -1371,13 +1363,13 @@ export default class Home extends Component {
                                   'Free Cashflow'
                               ]}
                               indexBy="year"
-                              margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+                              margin={{ top: 10, right: 130, bottom: 45, left: 20 }}
                               padding={0.2}
                               groupMode="grouped"
                               valueScale={{ type: 'linear' }}
                               indexScale={{ type: 'band', round: true }}
                               theme={this.state.barChartTheme}
-                              colors="#FFF"
+                              colors={{ scheme: 'purple_orange' }}
                               defs={[
                                   {
                                       id: 'dots',
@@ -1434,15 +1426,7 @@ export default class Home extends Component {
                                   color: '#FFF',
                                   truncateTickAt: 0
                               }}
-                              axisLeft={{
-                                  tickSize: 5,
-                                  tickPadding: 5,
-                                  tickRotation: 0,
-                                  legend: 'USD',
-                                  legendPosition: 'middle',
-                                  legendOffset: -40,
-                                  truncateTickAt: 0
-                              }}
+                              axisLeft={null}
                               enableLabel={false}
                               totalsOffset={9}
                               labelSkipWidth={4}
@@ -1463,7 +1447,7 @@ export default class Home extends Component {
                                       itemHeight: 20,
                                       itemDirection: 'left-to-right',
                                       itemOpacity: 0.85,
-                                      symbolSize: 20,
+                                      symbolSize: 6,
                                       effects: [
                                           {
                                               on: 'hover',
@@ -1520,13 +1504,13 @@ export default class Home extends Component {
                                   'Longterm Debt'
                               ]}
                               indexBy="year"
-                              margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+                              margin={{ top: 10, right: 130, bottom: 45, left: 20 }}
                               padding={0.2}
                               groupMode="grouped"
                               valueScale={{ type: 'linear' }}
                               indexScale={{ type: 'band', round: true }}
                               theme={this.state.barChartTheme}
-                              colors="#FFF"
+                              colors={{ scheme: 'purple_orange' }}
                               defs={[
                                   {
                                       id: 'dots',
@@ -1580,18 +1564,10 @@ export default class Home extends Component {
                                   legend: 'Year',
                                   legendPosition: 'middle',
                                   legendOffset: 32,
-                                  color: '#FFF',
+                                  color: '#121C2B',
                                   truncateTickAt: 0
                               }}
-                              axisLeft={{
-                                  tickSize: 5,
-                                  tickPadding: 5,
-                                  tickRotation: 0,
-                                  legend: 'USD',
-                                  legendPosition: 'middle',
-                                  legendOffset: -40,
-                                  truncateTickAt: 0
-                              }}
+                              axisLeft={null}
                               enableLabel={false}
                               totalsOffset={9}
                               labelSkipWidth={4}
@@ -1612,7 +1588,7 @@ export default class Home extends Component {
                                       itemHeight: 20,
                                       itemDirection: 'left-to-right',
                                       itemOpacity: 0.85,
-                                      symbolSize: 20,
+                                      symbolSize: 6,
                                       effects: [
                                           {
                                               on: 'hover',

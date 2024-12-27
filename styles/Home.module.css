@@ -666,6 +666,15 @@
     margin: 4px 0;
   }
 
+  .finData {
+    /*background-color: yellow;*/
+  }
+
+  .finChart {
+    padding: 3px;
+    background-color:#121C2B;
+  }
+
   .footer {
     height: 10vw;
     background-color: blue;
