@@ -775,8 +775,7 @@ export default class Home extends Component {
         trigger.setAttribute("data-lng", hqCoordinate.longitude)
         trigger.click()
       })
-   }
-
+  }
 
   async showFinancials(corpSymbol){
     console.log("LOL ", corpSymbol)
